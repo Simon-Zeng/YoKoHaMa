@@ -1,0 +1,43 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#import "Macro.h"
+
+#import "AFNetworking.h"
+#import "AMSmoothAlertView.h"
+#import "BlockActionSheet.h"
+#import "CocoaSecurity.h"
+#import "FlatUIKit.h"
+#import "JASidePanelController.h"
+#import "JSONModelLib.h"
+#import "POP.h"
+#import "RACAFNetworking.h"
+#import "RACEXTScope.h"
+#import "ReactiveCocoa.h"
+#import "ReactiveCoreData.h"
+#import "ReactiveViewModel.h"
+#import "SVProgressHUD.h"
+#import "YLMoment.h"
+
+#endif
+
+#define UIDEBUG 1
+
+#define kServericeName @"com.conggen.yokohama"
+
+#define kUMengAppKey @"53526bc156240b09ef0853af"
+
+#define kWeChatAppID @"wx793ae5a616200019"
+#define kWeChatCallBackURL @"http://www.umeng.com/social"
