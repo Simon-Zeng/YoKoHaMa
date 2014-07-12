@@ -28,7 +28,7 @@ target :YoKoHaMa do
   pod 'UIColor-Utilities'
   pod 'UMengSocial'
   pod 'YLMoment'
-  pod 'FMDB'
+  pod 'FMDB', :git => 'https://github.com/Simon-Zeng/fmdb.git'
 end
 
 target :YoKoHaMaTests do
