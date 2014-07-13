@@ -10,4 +10,15 @@
 
 @implementation HMFocus
 
+- (NSString *)description
+{
+    NSMutableString * description = [super.description mutableCopy];
+    
+    [description appendFormat:@"_identifier: %@, ", _identifier];
+    [description appendFormat:@"_title: %@, ", _title];
+    [description appendFormat:@"_imageURLString: %@, ", _imageURLString];
+    
+    return description;
+}
+
 @end

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HMEquipmentViewController : UIViewController
+#import "HMViewController.h"
+
+@interface HMEquipmentViewController : HMViewController
 
 @end

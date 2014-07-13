@@ -10,7 +10,7 @@
 
 @interface HMGridContentView : UIView
 
-@property (nonatomic, strong) RACSignal * openSignal;
+@property (nonatomic, strong, readonly) RACSignal * openSignal;
 
 - (void)updateWithFocuses:(NSArray *)focuses;
 

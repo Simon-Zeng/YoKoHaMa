@@ -26,7 +26,6 @@
 #import "POP.h"
 #import "RACAFNetworking.h"
 #import "RACEXTScope.h"
-#import "SDImageManager.h"
 #import "ReactiveCocoa.h"
 #import "ReactiveCoreData.h"
 #import "ReactiveViewModel.h"

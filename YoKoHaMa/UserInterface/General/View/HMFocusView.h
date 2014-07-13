@@ -11,7 +11,7 @@
 
 @interface HMFocusView : UIView
 
-@property (nonatomic, readonly) RACSignal * tapSignal;
+@property (nonatomic, strong, readonly) RACSignal * openSignal;
 
 - (void)updateWithFocus:(HMFocus *)focus;
 

@@ -21,12 +21,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.contentView.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
         
         UILabel * titleLabel = [[UILabel alloc] initWithFrame:self.contentView.bounds];
         
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.font = [UIFont boldFlatFontOfSize:18.0f];
         
         [self.contentView addSubview:titleLabel];
@@ -38,7 +39,7 @@
 
 - (void)setTitle:(NSString *)title
 {
-    if ([title isEqual:self.titleLabel.text])
+    if (![title isEqual:self.titleLabel.text])
     {
         self.titleLabel.text = title;
     }

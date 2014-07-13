@@ -27,6 +27,29 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.tabBar.barTintColor = [UIColor colorWithRed:0./255
+                                               green:2.0/255
+                                                blue:11.0/255
+                                               alpha:1.0];
+    
+    UINavigationItem * topItem = [[UINavigationItem alloc] init];
+    
+    
+    UIImageView * logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
+    UIBarButtonItem * logoItem = [[UIBarButtonItem alloc] initWithCustomView:logoView];
+    
+    topItem.leftBarButtonItem = logoItem;
+    
+    UIImageView * dotView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Nav-Dot"]];
+    UIBarButtonItem * dotItem = [[UIBarButtonItem alloc] initWithCustomView:dotView];
+    
+    topItem.rightBarButtonItem = dotItem;
+    
+    CGRect bounds = self.view.bounds;
+    UINavigationBar * navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
+    navigationBar.items = @[topItem];
+    
+    [self.view addSubview:navigationBar];
 }
 
 - (void)didReceiveMemoryWarning

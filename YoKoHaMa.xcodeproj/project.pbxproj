@@ -29,6 +29,8 @@
 		530AE1F319712044002D69FD /* HMCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1F219712044002D69FD /* HMCheckBox.m */; };
 		530AE1F619712E35002D69FD /* HMFocus.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1F519712E35002D69FD /* HMFocus.m */; };
 		530AE1F919716462002D69FD /* HMGridMenuViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1F819716462002D69FD /* HMGridMenuViewCell.m */; };
+		530AE1FD1972518A002D69FD /* HMCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1FC1972518A002D69FD /* HMCollectionViewLayout.m */; };
+		530AE200197255C9002D69FD /* HMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1FF197255C9002D69FD /* HMViewController.m */; };
 		5365ADDA196AC38900146C54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5365ADD9196AC38900146C54 /* Foundation.framework */; };
 		5365ADDC196AC38900146C54 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5365ADDB196AC38900146C54 /* CoreGraphics.framework */; };
 		5365ADDE196AC38900146C54 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5365ADDD196AC38900146C54 /* UIKit.framework */; };
@@ -100,6 +102,10 @@
 		530AE1F519712E35002D69FD /* HMFocus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFocus.m; sourceTree = "<group>"; };
 		530AE1F719716462002D69FD /* HMGridMenuViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGridMenuViewCell.h; sourceTree = "<group>"; };
 		530AE1F819716462002D69FD /* HMGridMenuViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGridMenuViewCell.m; sourceTree = "<group>"; };
+		530AE1FB1972518A002D69FD /* HMCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCollectionViewLayout.h; sourceTree = "<group>"; };
+		530AE1FC1972518A002D69FD /* HMCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMCollectionViewLayout.m; sourceTree = "<group>"; };
+		530AE1FE197255C9002D69FD /* HMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMViewController.h; sourceTree = "<group>"; };
+		530AE1FF197255C9002D69FD /* HMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMViewController.m; sourceTree = "<group>"; };
 		5365ADD6196AC38900146C54 /* YoKoHaMa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YoKoHaMa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5365ADD9196AC38900146C54 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5365ADDB196AC38900146C54 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -216,6 +222,8 @@
 				530AE1F219712044002D69FD /* HMCheckBox.m */,
 				530AE1F719716462002D69FD /* HMGridMenuViewCell.h */,
 				530AE1F819716462002D69FD /* HMGridMenuViewCell.m */,
+				530AE1FB1972518A002D69FD /* HMCollectionViewLayout.h */,
+				530AE1FC1972518A002D69FD /* HMCollectionViewLayout.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -448,6 +456,8 @@
 				530AE1E219711907002D69FD /* HMNavigationController.m */,
 				530AE1E41971192E002D69FD /* HMTabBarController.h */,
 				530AE1E51971192E002D69FD /* HMTabBarController.m */,
+				530AE1FE197255C9002D69FD /* HMViewController.h */,
+				530AE1FF197255C9002D69FD /* HMViewController.m */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -659,7 +669,9 @@
 				530AE1E319711907002D69FD /* HMNavigationController.m in Sources */,
 				530AE1E0197118AA002D69FD /* HMLauncherView.m in Sources */,
 				53B239B9196AD2EF0071E92E /* LKPopupMenuController.m in Sources */,
+				530AE200197255C9002D69FD /* HMViewController.m in Sources */,
 				530AE1D4197117A4002D69FD /* HMAssistantViewController.m in Sources */,
+				530AE1FD1972518A002D69FD /* HMCollectionViewLayout.m in Sources */,
 				530AE1EF19711A8F002D69FD /* HMGridContentView.m in Sources */,
 				530AE1F919716462002D69FD /* HMGridMenuViewCell.m in Sources */,
 			);

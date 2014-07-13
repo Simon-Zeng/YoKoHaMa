@@ -10,13 +10,15 @@
 #import "HMFocus.h"
 
 #import "HMGridMenuViewCell.h"
+#import "HMCollectionViewLayout.h"
 
 @interface HMGridContentView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView * collectionView;
 
 @property (nonatomic, strong) NSArray * focuses;
-@property (nonatomic, strong) HMFocus * selectedFocus;
+
+@property (nonatomic, strong, readwrite) RACSubject * openSignal;
 
 @end
 
@@ -29,15 +31,25 @@
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
         
-        UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:self.bounds];
-        collectionView.backgroundColor = [UIColor clearColor];
-        collectionView.delegate = self;
-        collectionView.dataSource = self;
+        HMCollectionViewLayout * layout = [[HMCollectionViewLayout alloc] init];
+        
+        UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         
         [collectionView registerClass:[HMGridMenuViewCell class]
            forCellWithReuseIdentifier:@"Cell"];
+
+        collectionView.backgroundColor = [UIColor clearColor];
+        collectionView.delegate = self;
+        collectionView.dataSource = self;
+        collectionView.bounces = YES;
+        collectionView.alwaysBounceVertical = YES;
+        
         
         [self addSubview:collectionView];
+        
+        RACSubject * signal = [RACSubject subject];
+        
+        self.openSignal = signal;
     }
     return self;
 }
@@ -67,7 +79,7 @@
 {
     HMFocus * focus = [self.focuses objectAtIndex:indexPath.row];
     
-    self.selectedFocus = focus;
+    [(RACSubject *)self.openSignal sendNext:focus];
 }
 
 
@@ -93,16 +105,6 @@
 
 
 #pragma mark -
-- (RACSignal *)openSignal
-{
-    RACSignal * signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        return [RACObserve(self, selectedFocus) subscribeNext:^(id x) {
-            [subscriber sendNext:x];
-        }];
-    }];
-    
-    return signal;
-}
 
 - (void)updateWithFocuses:(NSArray *)focuses
 {

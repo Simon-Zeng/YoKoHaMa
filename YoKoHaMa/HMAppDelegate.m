@@ -11,6 +11,15 @@
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 
+#import "HMTabBarController.h"
+#import "HMNavigationController.h"
+
+#import "HMLauncherViewController.h"
+#import "HMRouteViewController.h"
+#import "HMEquipmentViewController.h"
+#import "HMAssistantViewController.h"
+#import "HMMoreViewController.h"
+
 @implementation HMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -46,10 +55,41 @@
     // Set up view controllers
     NSMutableArray * viewControllers = [NSMutableArray array];
     
-    UITabBarController * rootTabController = [[UITabBarController alloc] init];
+    HMRouteViewController * routeViewController = [[HMRouteViewController alloc] init];
+    routeViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"优路线", nil)
+                                                                   image:[UIImage imageNamed:@"Tab-Route"]
+                                                           selectedImage:[UIImage imageNamed:@"Tab-Route"]];
+    
+    [viewControllers addObject:routeViewController];
+    
+    HMEquipmentViewController * equipViewController = [[HMEquipmentViewController alloc] init];
+    equipViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"优设备", nil)
+                                                                   image:[UIImage imageNamed:@"Tab-Equipment"]
+                                                           selectedImage:[UIImage imageNamed:@"Tab-Equipment"]];
+    [viewControllers addObject:equipViewController];
+    
+    HMAssistantViewController * assisViewController = [[HMAssistantViewController alloc] init];
+    assisViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"优助手", nil)
+                                                                   image:[UIImage imageNamed:@"Tab-Assistant"]
+                                                           selectedImage:[UIImage imageNamed:@"Tab-Assistant"]];
+    [viewControllers addObject:assisViewController];
+
+    HMMoreViewController * moreViewController = [[HMMoreViewController alloc] init];
+    moreViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"更多", nil)
+                                                                  image:[UIImage imageNamed:@"Tab-More"]
+                                                          selectedImage:[UIImage imageNamed:@"Tab-More"]];
+    [viewControllers addObject:moreViewController];
+
+    UITabBarController * rootTabController = [[HMTabBarController alloc] init];
     [rootTabController setViewControllers:viewControllers];
     
-    self.window.rootViewController = rootTabController;
+    HMNavigationController * rootNavController = [[HMNavigationController alloc] initWithRootViewController:rootTabController];
+    rootNavController.navigationBarHidden = YES;
+    // Push launcher
+    HMLauncherViewController * laucherViewController = [[HMLauncherViewController alloc] init];
+    [rootNavController pushViewController:laucherViewController animated:NO];
+    
+    self.window.rootViewController = rootNavController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

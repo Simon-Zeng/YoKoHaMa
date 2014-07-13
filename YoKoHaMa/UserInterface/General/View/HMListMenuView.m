@@ -16,7 +16,8 @@
 @property (nonatomic, strong) UILabel * titleLabel;
 @property (nonatomic, strong) UIView * optionsContainer;
 
-@property (nonatomic, strong) NSString * selectedOption;
+@property (nonatomic, strong, readwrite) RACSubject * openSignal;
+
 
 @end
 
@@ -27,6 +28,10 @@
 {
     if (self = [super init])
     {
+        self.layer.borderWidth = 1.0f;
+        self.layer.borderColor = [UIColor blackColor].CGColor;
+        
+        
         self.title = title;
         self.options = options;
         
@@ -71,7 +76,7 @@
             
             CGRect buttonFrame = button.frame;
             
-            buttonFrame.origin.x += containerWidth;
+            buttonFrame.origin.x += containerWidth - button.bounds.size.width;
             buttonFrame.size.height = containerHeight;
             
             button.frame = buttonFrame;
@@ -82,23 +87,15 @@
         CGRect containerFrame = self.optionsContainer.frame;
         
         containerFrame.size.width = containerWidth;
+        
+        self.optionsContainer.frame = containerFrame;
+        
+        RACSubject * signal = [RACSubject subject];
+        
+        self.openSignal = signal;
     }
     
     return self;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    NSAssert(NO, @"The designed initializer is not used");
-    
-    return nil;
-}
-
-- (id)init
-{
-    NSAssert(NO, @"The designed initializer is not used");
-    
-    return nil;
 }
 
 - (void)layoutSubviews
@@ -108,14 +105,16 @@
     CGRect bounds = self.bounds;
     
     CGRect titleFrame = bounds;
-    titleFrame.origin.x -= 8.0f;
+    titleFrame.origin.x += 8.0f;
     titleFrame.size.width -= 8.0f;
     
     self.titleLabel.frame = titleFrame;
     
     
-    CGRect optionsFrame = bounds;
-    optionsFrame.origin.x = bounds.size.width - CGRectGetWidth(optionsFrame);
+    CGRect optionsFrame = self.optionsContainer.bounds;
+    optionsFrame.size.height = bounds.size.height;
+    optionsFrame.origin.x = bounds.size.width - CGRectGetWidth(optionsFrame) - 10.0f;
+    optionsFrame.origin.y = truncf((bounds.size.height- optionsFrame.size.height)/2);
     
     self.optionsContainer.frame = optionsFrame;
 }
@@ -131,10 +130,15 @@
             if ([input isKindOfClass:[UIButton class]])
             {
                 UIButton * button = (UIButton *)input;
-                self.selectedOption = button.accessibilityIdentifier;
+                NSString * option = button.accessibilityIdentifier;
+                
+                if (option) {
+                    [(RACSubject *)self.openSignal sendNext:option];
+                }
             }
             
-            [subscriber sendNext:self.selectedOption];
+            // Must send completed signal to enable button command again.
+            [subscriber sendCompleted];
             
             return [RACDisposable disposableWithBlock:^{
                 
@@ -145,15 +149,5 @@
 
 
 #pragma mark -
-- (RACSignal *)openSignal
-{
-    RACSignal * signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        return [RACObserve(self, selectedOption) subscribeNext:^(id x) {
-            [subscriber sendNext:x];
-        }];
-    }];
-    
-    return signal;
-}
 
 @end

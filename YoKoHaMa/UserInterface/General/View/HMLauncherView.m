@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIScrollView * pageScrollView;
 @property (nonatomic, assign) NSInteger currentPage;
 
+@property (nonatomic, strong) RACSubject * subjectClose;
+
 
 - (void)loadScrollViewWithPage:(int)page;
 - (void)scrollViewDidScroll:(UIScrollView *)sender;
@@ -33,6 +35,7 @@
         for (UIImage * image in images)
         {
             UIImageView * imageView = [[UIImageView alloc] initWithImage:image];
+            imageView.contentMode = UIViewContentModeCenter;
             
             [self.lauchImageViews addObject:imageView];
         }
@@ -48,6 +51,10 @@
         scrollView.scrollsToTop = NO;
         scrollView.delegate = self;
         
+        [self addSubview:scrollView];
+        
+        self.pageScrollView = scrollView;
+        
         // pages are created on demand
         // load the visible page
         // load the page on either side to avoid flashes when the user starts scrolling
@@ -59,22 +66,11 @@
         tapRecognizer.numberOfTouchesRequired = 1;
         
         [self addGestureRecognizer:tapRecognizer];
+        
+        self.subjectClose = [[RACSubject alloc] init];
     }
     
     return self;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    NSAssert(NO, @"The designed initializer is not used");
-    
-    return nil;
-}
-- (id)init
-{
-    NSAssert(NO, @"The designed initializer is not used");
-    
-    return nil;
 }
 
 - (void)layoutSubviews
@@ -134,21 +130,22 @@
 {
     if (_currentPage == _lauchImageViews.count - 1)
     {
-        [self removeFromSuperview];
+        [self.subjectClose sendNext:[NSNumber numberWithBool:YES]];
     }
 }
 
 #pragma mark - Public
 - (RACSignal *)closeSignal
 {
-    RACSignal * signal = [RACObserve(self, superview) map:^id(id value) {
-        if (value) {
-            return @(NO);
-        }
-        else
-        {
-            return @(YES);
-        }
+    @weakify(self);
+    RACSignal * signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        @strongify(self);
+        RACDisposable * disposable = [self.subjectClose subscribe:subscriber];
+        
+        return [RACDisposable disposableWithBlock:^{
+            [disposable dispose];
+        }];
     }];
     
     return signal;

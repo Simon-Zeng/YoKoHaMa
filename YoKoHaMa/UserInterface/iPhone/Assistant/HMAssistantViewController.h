@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HMAssistantViewController : UIViewController
+#import "HMViewController.h"
+
+@interface HMAssistantViewController : HMViewController
 
 @end

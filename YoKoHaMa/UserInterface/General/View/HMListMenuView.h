@@ -10,7 +10,7 @@
 
 @interface HMListMenuView : UIView
 
-@property (nonatomic, strong) RACSignal * openSignal;
+@property (nonatomic, strong, readonly) RACSignal * openSignal;
 
 - (instancetype)initWithTitle:(NSString *)title
                       options:(NSArray *)options;

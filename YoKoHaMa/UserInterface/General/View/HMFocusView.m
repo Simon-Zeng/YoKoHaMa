@@ -16,6 +16,7 @@
 @property (nonatomic, strong) HMFocus * focus;
 
 @property (nonatomic, strong) UITapGestureRecognizer * tapRecognizer;
+@property (nonatomic, strong, readwrite) RACSignal * openSignal;
 
 @end
 
@@ -28,6 +29,7 @@
         // Initialization code
         _focusImageView = [[UIImageView alloc] init];
         _focusImageView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        _focusImageView.image = [UIImage imageNamed:@"Focus-Default"];
         
         [self addSubview:_focusImageView];
         
@@ -39,26 +41,23 @@
         [self addGestureRecognizer:tapRecognizer];
         
         self.tapRecognizer = tapRecognizer;
+        
+        @weakify(self);
+        RACSignal * signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            
+            RACDisposable *disposable = [self.tapRecognizer.rac_gestureSignal subscribeNext:^(id x) {
+                [subscriber sendNext:self.focus];
+            }];
+            
+            return [RACDisposable disposableWithBlock:^{
+                [disposable dispose];
+            }];
+        }];
+        
+        self.openSignal = signal;
     }
     return self;
-}
-
-- (RACSignal *)tapSignal
-{
-    @weakify(self);
-    RACSignal * signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        @strongify(self);
-        
-        RACDisposable *disposable = [self.tapRecognizer.rac_gestureSignal subscribeNext:^(id x) {
-            [subscriber sendNext:self.focus];
-        }];
-        
-        return [RACDisposable disposableWithBlock:^{
-            [disposable dispose];
-        }];
-    }];
-    
-    return signal;
 }
 
 - (void)updateWithFocus:(HMFocus *)focus

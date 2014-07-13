@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HMRouteViewController : UIViewController
+#import "HMViewController.h"
+
+@interface HMRouteViewController : HMViewController
 
 @end
