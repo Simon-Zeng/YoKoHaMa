@@ -12,5 +12,6 @@
 
 + (instancetype) apiCenter;
 
+- (RACSignal *)refreshFocusForCategory:(NSNumber *)catID;
 
 @end

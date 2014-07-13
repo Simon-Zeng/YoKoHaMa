@@ -15,6 +15,7 @@
     NSMutableString * description = [super.description mutableCopy];
     
     [description appendFormat:@"_identifier: %@, ", _identifier];
+    [description appendFormat:@"_categoryIdentifier: %@, ", _categoryIdentifier];
     [description appendFormat:@"_title: %@, ", _title];
     [description appendFormat:@"_imageURLString: %@, ", _imageURLString];
     

@@ -1,20 +1,20 @@
 //
-//  HMMoreViewController.m
+//  HMWebViewController.m
 //  YoKoHaMa
 //
-//  Created by zeng songgen on 14-7-12.
+//  Created by zeng songgen on 14-7-13.
 //  Copyright (c) 2014年 Conggen. All rights reserved.
 //
 
-#import "HMMoreViewController.h"
+#import "HMWebViewController.h"
 
-@interface HMMoreViewController ()<UIWebViewDelegate>
+@interface HMWebViewController ()<UIWebViewDelegate>
 
 @property (nonatomic, strong) UIWebView * webView;
 
 @end
 
-@implementation HMMoreViewController
+@implementation HMWebViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,8 +36,6 @@
     [self.view addSubview:webView];
     
     self.webView = webView;
-    
-    [self loadURL:[NSURL URLWithString:@"http://youke.feelpoid.com/more.html"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +54,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {

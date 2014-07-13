@@ -63,4 +63,23 @@
 
 #pragma mark -
 
+- (RACSignal *)refreshFocusForCategory:(NSNumber *)catID
+{
+    RACSignal * signal = [RACSignal empty];
+    
+    if (catID)
+    {
+        _getManager.responseSerializer = self.jsonResponseSerializer;
+        
+        signal = [_getManager rac_GET:@"http://youke.feelpoid.com/index.php"
+                           parameters:(@{
+                                         @"a" : @"shows",
+                                         @"catid": catID,
+                                         @"id": @1
+                                         })];
+    }
+    
+    return signal;
+}
+
 @end

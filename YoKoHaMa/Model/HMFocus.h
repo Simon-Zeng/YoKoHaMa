@@ -11,6 +11,7 @@
 @interface HMFocus : NSObject
 
 @property (nonatomic, strong) NSNumber * identifier;
+@property (nonatomic, strong) NSNumber * categoryIdentifier;
 @property (nonatomic, strong) NSString * imageURLString;
 @property (nonatomic, strong) NSString * title;
 

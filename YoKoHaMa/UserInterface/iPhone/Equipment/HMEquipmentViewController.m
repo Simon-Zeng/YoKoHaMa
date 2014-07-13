@@ -12,7 +12,11 @@
 #import "HMListMenuView.h"
 #import "HMGridContentView.h"
 
+#import "HMCommonViewModel.h"
+
 @interface HMEquipmentViewController ()
+
+@property (nonatomic, strong) HMCommonViewModel * viewModel;
 
 @property (nonatomic, strong) HMFocusView * focusView;
 @property (nonatomic, strong) HMListMenuView * listMenu;
@@ -28,6 +32,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.viewModel = [[HMCommonViewModel alloc] init];
     }
     return self;
 }
@@ -87,16 +92,28 @@
 #endif
     [self.gridContent updateWithFocuses:focuses];
 
+    @weakify(self);
     [self.focusView.openSignal subscribeNext:^(id x) {
+        @strongify(self);
         NSLog(@"Open focus: %@", x);
+        if (x)
+        {
+            [self.viewModel showDetailForFocus:x];
+        }
     }];
     
     [self.listMenu.openSignal subscribeNext:^(id x) {
+        @strongify(self);
         NSLog(@"List Menu selected: %@", x);
+        [self.viewModel showDetailForListCommand:x];
     }];
     
     [self.gridContent.openSignal subscribeNext:^(id x) {
+        @strongify(self);
         NSLog(@"Content Menu selected: %@", x);
+        HMFocus * focus = (HMFocus *)x;
+        [self.viewModel showListFor:focus.title
+                          withCatID:focus.identifier];
     }];
 }
 
