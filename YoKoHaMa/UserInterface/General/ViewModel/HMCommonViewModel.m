@@ -25,13 +25,78 @@
         
         RACSignal * signal = [[HMAPI apiCenter] refreshFocusForCategory:@33];
         
-        RACDisposable * disposable = [signal subscribe:subscriber];
+        RACDisposable * disposable = [signal subscribeNext:^(id x) {
+            if ([x isKindOfClass:[NSDictionary class]])
+            {
+                HMFocus * focus = [HMFocus focusFromDictionary:x];
+                
+                [subscriber sendNext:focus];
+            }
+            else
+            {
+                [subscriber sendNext:nil];
+            }
+        } error:^(NSError *error) {
+            [subscriber sendError:error];
+        }];
         
         return [RACDisposable disposableWithBlock:^{
             [disposable dispose];
         }];
     }];
 }
+
+- (RACSignal *)refreshTypesSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        RACSignal * signal = [[HMAPI apiCenter] refreshTypesForCategory:@33];
+        
+        RACDisposable * disposable = [signal subscribeNext:^(id x) {
+            if ([x isKindOfClass:[NSArray class]])
+            {
+                NSArray * response = (NSArray *)x;
+                NSMutableArray * array = [NSMutableArray array];
+                
+                for (int i=0; i < response.count; i++)
+                {
+                    HMFocus * focus = [HMFocus focusFromDictionary:[response objectAtIndex:i]];
+                    [array addObject:focus];
+                }
+                
+#if DEBUG
+                if (array.count == 0)
+                {
+                    NSInteger numberOfFocuses = arc4random()%6 +1;
+                    for (int i = 0; i< numberOfFocuses; i++)
+                    {
+                        HMFocus * focus = [[HMFocus alloc] init];
+                        
+                        focus.title = [NSString stringWithFormat:@"Item %d", i ];
+                        focus.identifier = @(i);
+                        focus.imageURLString = nil;
+                        
+                        [array addObject:focus];
+                    }
+                }
+#endif
+                
+                [subscriber sendNext:array];
+            }
+            else
+            {
+                [subscriber sendNext:nil];
+            }
+        } error:^(NSError *error) {
+            [subscriber sendError:error];
+        }];
+        
+        return [RACDisposable disposableWithBlock:^{
+            [disposable dispose];
+        }];
+    }];
+}
+
 
 
 - (void)showListFor:(NSString *)stype withCatID:(NSNumber *)cid

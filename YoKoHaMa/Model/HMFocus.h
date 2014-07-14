@@ -15,4 +15,6 @@
 @property (nonatomic, strong) NSString * imageURLString;
 @property (nonatomic, strong) NSString * title;
 
++ (HMFocus *)focusFromDictionary:(NSDictionary *)dict;
+
 @end

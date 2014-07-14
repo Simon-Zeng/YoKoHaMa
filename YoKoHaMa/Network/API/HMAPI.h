@@ -14,4 +14,6 @@
 
 - (RACSignal *)refreshFocusForCategory:(NSNumber *)catID;
 
+- (RACSignal *)refreshTypesForCategory:(NSNumber *)catID;
+
 @end

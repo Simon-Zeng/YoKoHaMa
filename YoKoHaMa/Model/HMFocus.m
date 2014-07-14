@@ -10,6 +10,18 @@
 
 @implementation HMFocus
 
++ (HMFocus *)focusFromDictionary:(NSDictionary *)dict
+{
+    HMFocus * focus = [[HMFocus alloc] init];
+    
+    focus.identifier = [dict objectForKey:@"id"];
+    focus.title = [dict objectForKey:@"title"];
+    focus.imageURLString = [dict objectForKey:@"image"];
+
+    
+    return focus;
+}
+
 - (NSString *)description
 {
     NSMutableString * description = [super.description mutableCopy];

@@ -12,7 +12,10 @@
 
 @interface HMCommonViewModel : HMBasicViewModel
 
+@property (nonatomic, strong) NSNumber * catID;
+
 @property (nonatomic, strong, readonly) RACSignal * refreshFocusSignal;
+@property (nonatomic, strong, readonly) RACSignal * refreshTypesSignal;
 
 
 - (void)showListFor:(NSString *)stype withCatID:(NSNumber *)cid;

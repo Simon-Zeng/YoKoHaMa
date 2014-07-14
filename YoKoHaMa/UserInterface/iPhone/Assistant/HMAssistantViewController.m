@@ -73,27 +73,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // Request data from SS, and Update view
-    [self.focusView updateWithFocus:nil];
-    
-    NSMutableArray * focuses = [[NSMutableArray alloc] init];
-    
-#if DEBUG
-    NSInteger numberOfFocuses = arc4random()%6 +1;
-    for (int i = 0; i< numberOfFocuses; i++)
-    {
-        HMFocus * focus = [[HMFocus alloc] init];
-        
-        focus.title = [NSString stringWithFormat:@"Item %d", i ];
-        focus.identifier = @(i);
-        focus.imageURLString = nil;
-        
-        [focuses addObject:focus];
-    }
-#endif
-    [self.gridContent updateWithFocuses:focuses];
-
     @weakify(self);
+    
+    // Request data from SS, and Update view
+    [self.viewModel.refreshFocusSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self.focusView updateWithFocus:x];
+    } error:^(NSError *error) {
+        NSLog(@"Error in refreshing focus: %@", error);
+    }];
+    
+    [self.viewModel.refreshTypesSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self.gridContent updateWithFocuses:nil];
+    } error:^(NSError *error) {
+        NSLog(@"Error in refreshing types: %@", error);
+    }];
+
     [self.focusView.openSignal subscribeNext:^(id x) {
         @strongify(self);
         NSLog(@"Open focus: %@", x);
