@@ -51,6 +51,21 @@
 		53B239BB196AD2EF0071E92E /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B239B7196AD2EF0071E92E /* UIImage+StackBlur.m */; };
 		53B239BC196AD2EF0071E92E /* zoomPopupClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */; };
 		7208499E79454F1D84B73DF0 /* libPods-YoKoHaMa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */; };
+		A96EDFC21973D178007715F4 /* HMFeeDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFAF1973D178007715F4 /* HMFeeDao.m */; };
+		A96EDFC31973D178007715F4 /* HMItemDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFB11973D178007715F4 /* HMItemDao.m */; };
+		A96EDFC41973D178007715F4 /* HMTravelDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFB31973D178007715F4 /* HMTravelDao.m */; };
+		A96EDFC51973D178007715F4 /* HMTripDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFB51973D178007715F4 /* HMTripDao.m */; };
+		A96EDFC61973D178007715F4 /* HMTripItemDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFB71973D178007715F4 /* HMTripItemDao.m */; };
+		A96EDFC71973D178007715F4 /* HMTripItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFBD1973D178007715F4 /* HMTripItem.m */; };
+		A96EDFC81973D178007715F4 /* HMItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFBE1973D178007715F4 /* HMItem.m */; };
+		A96EDFC91973D178007715F4 /* HMTrip.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFBF1973D178007715F4 /* HMTrip.m */; };
+		A96EDFCA1973D178007715F4 /* HMTravel.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFC01973D178007715F4 /* HMTravel.m */; };
+		A96EDFCB1973D178007715F4 /* HMFee.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFC11973D178007715F4 /* HMFee.m */; };
+		A96EDFD01973D18D007715F4 /* HMTripViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFCC1973D18D007715F4 /* HMTripViewModel.m */; };
+		A96EDFD11973D18D007715F4 /* HMFeeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFCE1973D18D007715F4 /* HMFeeViewModel.m */; };
+		A96EDFD51973D49D007715F4 /* fee.sql in Resources */ = {isa = PBXBuildFile; fileRef = A96EDFD31973D49D007715F4 /* fee.sql */; };
+		A96EDFD61973D49D007715F4 /* trip.sql in Resources */ = {isa = PBXBuildFile; fileRef = A96EDFD41973D49D007715F4 /* trip.sql */; };
+		A96EDFD91973D4C5007715F4 /* HMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFD81973D4C5007715F4 /* HMDatabaseQueue.m */; };
 		D1C53798B4004B9780F9FE09 /* libPods-YoKoHaMaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB773CEC68F4410B4B73FB0 /* libPods-YoKoHaMaTests.a */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +156,34 @@
 		53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoomPopupClose@2x.png"; sourceTree = "<group>"; };
 		796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YoKoHaMa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D1E57026514EB090108446 /* Pods-YoKoHaMa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoKoHaMa.xcconfig"; path = "Pods/Pods-YoKoHaMa.xcconfig"; sourceTree = "<group>"; };
+		A96EDFAE1973D178007715F4 /* HMFeeDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFeeDao.h; sourceTree = "<group>"; };
+		A96EDFAF1973D178007715F4 /* HMFeeDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFeeDao.m; sourceTree = "<group>"; };
+		A96EDFB01973D178007715F4 /* HMItemDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMItemDao.h; sourceTree = "<group>"; };
+		A96EDFB11973D178007715F4 /* HMItemDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMItemDao.m; sourceTree = "<group>"; };
+		A96EDFB21973D178007715F4 /* HMTravelDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTravelDao.h; sourceTree = "<group>"; };
+		A96EDFB31973D178007715F4 /* HMTravelDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTravelDao.m; sourceTree = "<group>"; };
+		A96EDFB41973D178007715F4 /* HMTripDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTripDao.h; sourceTree = "<group>"; };
+		A96EDFB51973D178007715F4 /* HMTripDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTripDao.m; sourceTree = "<group>"; };
+		A96EDFB61973D178007715F4 /* HMTripItemDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTripItemDao.h; sourceTree = "<group>"; };
+		A96EDFB71973D178007715F4 /* HMTripItemDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTripItemDao.m; sourceTree = "<group>"; };
+		A96EDFB81973D178007715F4 /* HMItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMItem.h; sourceTree = "<group>"; };
+		A96EDFB91973D178007715F4 /* HMTripItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTripItem.h; sourceTree = "<group>"; };
+		A96EDFBA1973D178007715F4 /* HMTrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTrip.h; sourceTree = "<group>"; };
+		A96EDFBB1973D178007715F4 /* HMTravel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTravel.h; sourceTree = "<group>"; };
+		A96EDFBC1973D178007715F4 /* HMFee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFee.h; sourceTree = "<group>"; };
+		A96EDFBD1973D178007715F4 /* HMTripItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTripItem.m; sourceTree = "<group>"; };
+		A96EDFBE1973D178007715F4 /* HMItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMItem.m; sourceTree = "<group>"; };
+		A96EDFBF1973D178007715F4 /* HMTrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTrip.m; sourceTree = "<group>"; };
+		A96EDFC01973D178007715F4 /* HMTravel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTravel.m; sourceTree = "<group>"; };
+		A96EDFC11973D178007715F4 /* HMFee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFee.m; sourceTree = "<group>"; };
+		A96EDFCC1973D18D007715F4 /* HMTripViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTripViewModel.m; sourceTree = "<group>"; };
+		A96EDFCD1973D18D007715F4 /* HMTripViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTripViewModel.h; sourceTree = "<group>"; };
+		A96EDFCE1973D18D007715F4 /* HMFeeViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFeeViewModel.m; sourceTree = "<group>"; };
+		A96EDFCF1973D18D007715F4 /* HMFeeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFeeViewModel.h; sourceTree = "<group>"; };
+		A96EDFD31973D49D007715F4 /* fee.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fee.sql; sourceTree = "<group>"; };
+		A96EDFD41973D49D007715F4 /* trip.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = trip.sql; sourceTree = "<group>"; };
+		A96EDFD71973D4C5007715F4 /* HMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDatabaseQueue.h; sourceTree = "<group>"; };
+		A96EDFD81973D4C5007715F4 /* HMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDatabaseQueue.m; sourceTree = "<group>"; };
 		ADB773CEC68F4410B4B73FB0 /* libPods-YoKoHaMaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YoKoHaMaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71CEFF9604A4D5889E14A2C /* Pods-YoKoHaMaTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoKoHaMaTests.xcconfig"; path = "Pods/Pods-YoKoHaMaTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -243,9 +286,9 @@
 				5365ADDF196AC38900146C54 /* YoKoHaMa */,
 				5365AE01196AC38A00146C54 /* YoKoHaMaTests */,
 				5365ADD8196AC38900146C54 /* Frameworks */,
-				5365ADD7196AC38900146C54 /* Products */,
 				87D1E57026514EB090108446 /* Pods-YoKoHaMa.xcconfig */,
 				B71CEFF9604A4D5889E14A2C /* Pods-YoKoHaMaTests.xcconfig */,
+				5365ADD7196AC38900146C54 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -274,6 +317,7 @@
 		5365ADDF196AC38900146C54 /* YoKoHaMa */ = {
 			isa = PBXGroup;
 			children = (
+				A96EDFD21973D49D007715F4 /* Database */,
 				5391979A1972D8380027FF55 /* Helper */,
 				530AE1BD19710E2C002D69FD /* Settings */,
 				530AE1B519710C82002D69FD /* Network */,
@@ -361,8 +405,19 @@
 		53B239BD196AD8510071E92E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A96EDFAD1973D178007715F4 /* Dao */,
+				A96EDFBC1973D178007715F4 /* HMFee.h */,
+				A96EDFC11973D178007715F4 /* HMFee.m */,
 				530AE1F419712E35002D69FD /* HMFocus.h */,
 				530AE1F519712E35002D69FD /* HMFocus.m */,
+				A96EDFB81973D178007715F4 /* HMItem.h */,
+				A96EDFBE1973D178007715F4 /* HMItem.m */,
+				A96EDFBB1973D178007715F4 /* HMTravel.h */,
+				A96EDFC01973D178007715F4 /* HMTravel.m */,
+				A96EDFBA1973D178007715F4 /* HMTrip.h */,
+				A96EDFBF1973D178007715F4 /* HMTrip.m */,
+				A96EDFB91973D178007715F4 /* HMTripItem.h */,
+				A96EDFBD1973D178007715F4 /* HMTripItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -435,6 +490,10 @@
 				530AE1C219710ECD002D69FD /* HMBasicViewModel.m */,
 				539197971972D65C0027FF55 /* HMCommonViewModel.h */,
 				539197981972D65C0027FF55 /* HMCommonViewModel.m */,
+				A96EDFCF1973D18D007715F4 /* HMFeeViewModel.h */,
+				A96EDFCE1973D18D007715F4 /* HMFeeViewModel.m */,
+				A96EDFCD1973D18D007715F4 /* HMTripViewModel.h */,
+				A96EDFCC1973D18D007715F4 /* HMTripViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -501,6 +560,34 @@
 				530AE1DC197117F7002D69FD /* HMRouteViewController.m */,
 			);
 			path = Route;
+			sourceTree = "<group>";
+		};
+		A96EDFAD1973D178007715F4 /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				A96EDFAE1973D178007715F4 /* HMFeeDao.h */,
+				A96EDFAF1973D178007715F4 /* HMFeeDao.m */,
+				A96EDFB01973D178007715F4 /* HMItemDao.h */,
+				A96EDFB11973D178007715F4 /* HMItemDao.m */,
+				A96EDFB21973D178007715F4 /* HMTravelDao.h */,
+				A96EDFB31973D178007715F4 /* HMTravelDao.m */,
+				A96EDFB41973D178007715F4 /* HMTripDao.h */,
+				A96EDFB51973D178007715F4 /* HMTripDao.m */,
+				A96EDFB61973D178007715F4 /* HMTripItemDao.h */,
+				A96EDFB71973D178007715F4 /* HMTripItemDao.m */,
+			);
+			path = Dao;
+			sourceTree = "<group>";
+		};
+		A96EDFD21973D49D007715F4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				A96EDFD31973D49D007715F4 /* fee.sql */,
+				A96EDFD41973D49D007715F4 /* trip.sql */,
+				A96EDFD71973D4C5007715F4 /* HMDatabaseQueue.h */,
+				A96EDFD81973D4C5007715F4 /* HMDatabaseQueue.m */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -584,11 +671,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A96EDFD61973D49D007715F4 /* trip.sql in Resources */,
 				530AE1C91971108F002D69FD /* Launcher.xcassets in Resources */,
 				530AE1C719711079002D69FD /* Common.xcassets in Resources */,
 				53B239BC196AD2EF0071E92E /* zoomPopupClose@2x.png in Resources */,
 				530AE1CB1971117A002D69FD /* Button.xcassets in Resources */,
 				5365ADF5196AC38900146C54 /* Images.xcassets in Resources */,
+				A96EDFD51973D49D007715F4 /* fee.sql in Resources */,
 				530AE1CD1971168A002D69FD /* Launcher.xcassets in Resources */,
 				5365ADE4196AC38900146C54 /* InfoPlist.strings in Resources */,
 			);
@@ -677,18 +766,28 @@
 				530AE1D7197117B1002D69FD /* HMEquipmentViewController.m in Sources */,
 				53B239BA196AD2EF0071E92E /* THZoomPopup.m in Sources */,
 				539197991972D65C0027FF55 /* HMCommonViewModel.m in Sources */,
+				A96EDFC61973D178007715F4 /* HMTripItemDao.m in Sources */,
+				A96EDFC21973D178007715F4 /* HMFeeDao.m in Sources */,
+				A96EDFC91973D178007715F4 /* HMTrip.m in Sources */,
 				539197961972D43E0027FF55 /* HMWebViewController.m in Sources */,
+				A96EDFD01973D18D007715F4 /* HMTripViewModel.m in Sources */,
 				530AE1B919710CC8002D69FD /* HMNetwork.m in Sources */,
 				5365ADEA196AC38900146C54 /* HMAppDelegate.m in Sources */,
 				530AE1F319712044002D69FD /* HMCheckBox.m in Sources */,
+				A96EDFCA1973D178007715F4 /* HMTravel.m in Sources */,
 				530AE1C019710E3A002D69FD /* HMSettings.m in Sources */,
 				530AE1EC19711A67002D69FD /* HMListMenuView.m in Sources */,
 				530AE1C319710ECD002D69FD /* HMBasicViewModel.m in Sources */,
+				A96EDFD91973D4C5007715F4 /* HMDatabaseQueue.m in Sources */,
 				530AE1DA197117C6002D69FD /* HMMoreViewController.m in Sources */,
+				A96EDFC51973D178007715F4 /* HMTripDao.m in Sources */,
+				A96EDFC71973D178007715F4 /* HMTripItem.m in Sources */,
 				530AE1D119711795002D69FD /* HMLauncherViewController.m in Sources */,
 				530AE1E919711A47002D69FD /* HMFocusView.m in Sources */,
+				A96EDFC81973D178007715F4 /* HMItem.m in Sources */,
 				530AE1BC19710D29002D69FD /* HMAPI.m in Sources */,
 				530AE1DD197117F7002D69FD /* HMRouteViewController.m in Sources */,
+				A96EDFC31973D178007715F4 /* HMItemDao.m in Sources */,
 				530AE1F619712E35002D69FD /* HMFocus.m in Sources */,
 				530AE1E61971192E002D69FD /* HMTabBarController.m in Sources */,
 				530AE1E319711907002D69FD /* HMNavigationController.m in Sources */,
@@ -699,7 +798,10 @@
 				530AE1D4197117A4002D69FD /* HMAssistantViewController.m in Sources */,
 				530AE1FD1972518A002D69FD /* HMCollectionViewLayout.m in Sources */,
 				530AE1EF19711A8F002D69FD /* HMGridContentView.m in Sources */,
+				A96EDFD11973D18D007715F4 /* HMFeeViewModel.m in Sources */,
+				A96EDFC41973D178007715F4 /* HMTravelDao.m in Sources */,
 				530AE1F919716462002D69FD /* HMGridMenuViewCell.m in Sources */,
+				A96EDFCB1973D178007715F4 /* HMFee.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

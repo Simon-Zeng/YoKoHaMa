@@ -12,6 +12,16 @@
 
 @implementation HMHelper
 
++ (NSString *)projectName
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
+}
+
++ (NSString *)appDisplayName
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+}
+
 + (UINavigationController *)rootNavigationController
 {
     HMAppDelegate * appDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];

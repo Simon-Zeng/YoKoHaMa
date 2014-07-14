@@ -10,6 +10,9 @@
 
 @interface HMHelper : NSObject
 
++ (NSString *)projectName;
++ (NSString *)appDisplayName;
+
 + (UINavigationController *)rootNavigationController;
 
 @end
