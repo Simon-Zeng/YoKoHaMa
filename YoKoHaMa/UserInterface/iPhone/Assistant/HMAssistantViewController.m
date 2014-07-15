@@ -83,9 +83,9 @@
         NSLog(@"Error in refreshing focus: %@", error);
     }];
     
-    [self.viewModel.refreshTypesSignal subscribeNext:^(id x) {
+    [[self.viewModel refreshTypesSignalForCID:@33] subscribeNext:^(id x) {
         @strongify(self);
-        [self.gridContent updateWithEntities:nil];
+        [self.gridContent updateWithEntities:x];
     } error:^(NSError *error) {
         NSLog(@"Error in refreshing types: %@", error);
     }];

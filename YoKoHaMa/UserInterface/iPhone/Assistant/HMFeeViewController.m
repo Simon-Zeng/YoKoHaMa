@@ -12,6 +12,8 @@
 #import "HMFeeDao.h"
 #import "HMFeeViewModel.h"
 
+#import "HMHelper.h"
+
 #import "HMAddFeeView.h"
 #import "HMSumFeeView.h"
 
@@ -76,7 +78,7 @@
     
     [aView addSubview:navigationBar];
     
-    self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 88)];
+    self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 98)];
     [aView addSubview:self.addFeeView];
     
     self.sumFeeView = [[HMSumFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 68)];
@@ -123,6 +125,35 @@
             [self.sumFeeView updateWithFees:x];
             [self.tableView reloadData];
         }
+    }];
+    self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            
+            [self.viewModel back];
+            
+            // Delay this to avoid multi-touch on back button
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [subscriber sendCompleted];
+            });
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
+    }];
+    self.shareButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            UIImage * screenShot = [HMHelper screenShot:self.view];
+            
+            [self.viewModel shareImage:screenShot];
+            [subscriber sendCompleted];
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
     }];
 }
 

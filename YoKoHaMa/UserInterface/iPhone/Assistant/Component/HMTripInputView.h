@@ -10,6 +10,6 @@
 
 @interface HMTripInputView : UIView
 
-@property (nonatomic, strong) RACSignal * addTripItemSignal;
+@property (nonatomic, strong, readonly) RACSignal * addTripItemSignal;
 
 @end

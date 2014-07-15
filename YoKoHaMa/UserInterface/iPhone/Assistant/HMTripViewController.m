@@ -12,6 +12,8 @@
 #import "HMItem.h"
 #import "HMTripItem.h"
 
+#import "HMHelper.h"
+
 #import "HMTripViewModel.h"
 
 #import "HMTripStepView.h"
@@ -89,7 +91,7 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     self.stepView = [[HMTripStepView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 60)];
     [aView addSubview:self.stepView];
     
-    self.inputView = [[HMTripInputView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 50)];
+    self.inputView = [[HMTripInputView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.stepView.frame), bounds.size.width, 50)];
     [aView addSubview:self.inputView];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.inputView.frame), bounds.size.width, bounds.size.height-44)
@@ -113,6 +115,7 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.listMode = TripListModeCheck;
     
     @weakify(self);
     [self.stepView.changeStepSignal subscribeNext:^(id x) {
@@ -127,6 +130,35 @@ typedef NS_ENUM(NSUInteger, TripListMode){
         {
             [self.viewModel addItem:x];
         }
+    }];
+    self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            
+            [self.viewModel back];
+            
+            // Delay this to avoid multi-touch on back button
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [subscriber sendCompleted];
+            });
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
+    }];
+    self.shareButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            UIImage * screenShot = [HMHelper screenShot:self.view];
+            
+            [self.viewModel shareImage:screenShot];
+            [subscriber sendCompleted];
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
     }];
 }
 
@@ -146,6 +178,44 @@ typedef NS_ENUM(NSUInteger, TripListMode){
  // Pass the selected object to the new view controller.
  }
  */
+
+- (void)setListMode:(TripListMode)listMode
+{
+    if (_listMode != listMode)
+    {
+        _listMode = listMode;
+    }
+    
+    [self updateLayout];
+    [self.tableView reloadData];
+}
+
+- (void)updateLayout
+{
+    CGRect bounds = self.view.bounds;
+    
+    if (_listMode == TripListModeAdd)
+    {
+        self.inputView.frame = CGRectMake(0, CGRectGetMaxY(self.stepView.frame), bounds.size.width, 50);
+    }
+    else
+    {
+        self.inputView.frame = CGRectZero;
+    }
+    
+    if (_listMode == TripListModeCheck)
+    {
+        self.shareButton.hidden = YES;
+    }
+    else
+    {
+        self.shareButton.hidden = NO;
+    }
+    
+    CGRect tableViewFrame = self.tableView.frame;
+    tableViewFrame.origin.y = CGRectGetMaxY(self.inputView.frame);
+    tableViewFrame.size.height = bounds.size.height - CGRectGetMaxY(self.inputView.frame);
+}
 
 #pragma mark - UITableViewDelegate
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -223,6 +293,11 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     }
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [self.viewModel titleForSection:section];
 }
 
 @end

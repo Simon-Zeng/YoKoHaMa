@@ -52,11 +52,11 @@
     }];
 }
 
-- (RACSignal *)refreshTypesSignal
+- (RACSignal *)refreshTypesSignalForCID:(NSNumber *)cid
 {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         
-        RACSignal * signal = [[HMAPI apiCenter] refreshTypesForCategory:@33];
+        RACSignal * signal = [[HMAPI apiCenter] refreshTypesForCategory:cid];
         
         RACDisposable * disposable = [signal subscribeNext:^(id x) {
             if ([x isKindOfClass:[NSArray class]])
@@ -78,7 +78,7 @@
                     {
                         HMFocus * focus = [[HMFocus alloc] init];
                         
-                        focus.title = [NSString stringWithFormat:@"Item %d", i ];
+                        focus.name = [NSString stringWithFormat:@"Item %d", i ];
                         focus.identifier = @(i);
                         focus.imageURLString = nil;
                         
@@ -143,7 +143,10 @@
     {
         [self showRoadTripHelp];
     }
-
+    else if ([command isEqual:@"花销统计"])
+    {
+        [self feeCalculate];
+    }
 }
 
 - (void)showEquipmentGuide
@@ -184,14 +187,12 @@
 {
     HMFeeViewController * feeViewController = [[HMFeeViewController alloc] init];
     
-    
     [[HMHelper rootNavigationController] pushViewController:feeViewController animated:YES];
 }
 
 
 - (void)showTripGuideForTrip:(HMTrip *)aTrip
 {
-    
     HMTripViewModel * viewModel = [[HMTripViewModel alloc] initWithTripIdentifier:aTrip.identifier];
     
     HMTripViewController * tripViewController = [[HMTripViewController alloc] init];
@@ -199,17 +200,5 @@
     
     [[HMHelper rootNavigationController] pushViewController:tripViewController animated:YES];
 }
-
-- (void)shareScreen
-{
-
-}
-
-- (void)shareURLString:(NSString *)string
-{
-    
-}
-
-
 
 @end

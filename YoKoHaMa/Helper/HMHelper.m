@@ -9,6 +9,7 @@
 #import "HMHelper.h"
 
 #import "HMAppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation HMHelper
 
@@ -29,6 +30,21 @@
     UINavigationController * navController = (UINavigationController *)appDelegate.window.rootViewController;
     
     return navController;
+}
+
++ (UIImage *)screenShot:(UIView *)aView
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    UIGraphicsBeginImageContextWithOptions(screenRect.size, NO, 0.0);
+    
+    [aView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return img;
 }
 
 @end

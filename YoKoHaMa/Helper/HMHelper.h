@@ -15,4 +15,6 @@
 
 + (UINavigationController *)rootNavigationController;
 
++ (UIImage *)screenShot:(UIView *)aView;
+
 @end

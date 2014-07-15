@@ -76,9 +76,9 @@
         NSLog(@"Error in refreshing focus: %@", error);
     }];
     
-    [self.viewModel.refreshTypesSignal subscribeNext:^(id x) {
+    [[self.viewModel refreshTypesSignalForCID:@33] subscribeNext:^(id x) {
         @strongify(self);
-        [self.gridContent updateWithFocuses:nil];
+        [self.gridContent updateWithEntities:x];
     } error:^(NSError *error) {
         NSLog(@"Error in refreshing types: %@", error);
     }];
@@ -102,7 +102,7 @@
         @strongify(self);
         NSLog(@"Content Menu selected: %@", x);
         HMFocus * focus = (HMFocus *)x;
-        [self.viewModel showListFor:focus.title
+        [self.viewModel showListFor:focus.name
                           withCatID:focus.identifier];
     }];
 

@@ -12,4 +12,9 @@
 
 @interface HMBasicViewModel : RVMViewModel
 
+- (RACSignal *)shareImage:(UIImage *)image;
+- (RACSignal *)shareURLString:(NSString *)string;
+
+- (void)back;
+
 @end

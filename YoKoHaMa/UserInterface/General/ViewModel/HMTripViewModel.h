@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "HMBasicViewModel.h"
+
 @class HMItem;
 @class HMTripItem;
 
-@interface HMTripViewModel : NSObject
+@interface HMTripViewModel : HMBasicViewModel
 
 @property (nonatomic, readonly) RACSignal * updateContentSignal;
 
@@ -20,12 +22,10 @@
 - (void)addItem:(HMItem *)aItem;
 - (void)removeTripItem:(HMTripItem *)aTripItem;
 
-- (RACSignal *)shareImage:(UIImage *)image;
-
-
 #pragma mark -
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsInSection:(NSInteger)section;
+- (NSString *)titleForSection:(NSInteger)section;
 - (HMTripItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

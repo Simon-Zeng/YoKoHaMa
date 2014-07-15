@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #import "HMFee.h"
+#import "HMBasicViewModel.h"
 
-@interface HMFeeViewModel : NSObject
+@interface HMFeeViewModel : HMBasicViewModel
 
 @property (nonatomic, strong) NSNumber * membersCount;
 @property (nonatomic, readonly) RACCommand * calculateAverageCommand;
@@ -21,7 +22,6 @@
 - (void)addFee:(HMFee *)aFee;
 - (void)removeFee:(HMFee *)aFee;
 
-- (RACSignal *)shareImage:(UIImage *)image;
 
 
 #pragma mark - 

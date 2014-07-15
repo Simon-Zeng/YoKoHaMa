@@ -10,7 +10,12 @@
 
 #import "SVProgressHUD.h"
 
+#import "HMHelper.h"
+#import "HMCommonViewModel.h"
+
 @interface HMWebViewController ()<UIWebViewDelegate>
+
+@property (nonatomic, strong) HMCommonViewModel * viewModel;
 
 @property (nonatomic, strong) UIWebView * webView;
 
@@ -23,6 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.viewModel = [[HMCommonViewModel alloc] init];
     }
     return self;
 }
@@ -61,6 +67,37 @@
     [self.view addSubview:webView];
     
     self.webView = webView;
+    
+    @weakify(self);
+    backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            
+            [self.viewModel back];
+            
+            // Delay this to avoid multi-touch on back button
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [subscriber sendCompleted];
+            });
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
+    }];
+    
+    shareButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            
+            [self.viewModel shareURLString:self.webView.request.URL.absoluteString];
+            [subscriber sendCompleted];
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
+    }];
 }
 
 - (void)didReceiveMemoryWarning

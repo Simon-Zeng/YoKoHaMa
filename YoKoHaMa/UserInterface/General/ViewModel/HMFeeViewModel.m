@@ -78,14 +78,6 @@
     [(RACSubject *)_updateContentSignal sendNext:self.fees];
 }
 
-- (RACSignal *)shareImage:(UIImage *)image
-{
-    RACSignal * signal = [RACSignal empty];
-    
-    // TODO: Share
-    
-    return signal;
-}
 
 - (RACSignal *)travelIsValidSignal
 {

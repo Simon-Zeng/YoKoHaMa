@@ -26,8 +26,9 @@ CREATE TABLE IF NOT EXISTS TripItems(
 
  CREATE UNIQUE INDEX IF NOT EXISTS TripItems_trip_item ON TripItems (tripIdentifier, itemIdentifier);
  
- -- Initialize data
+ -- Initialize Category data
 INSERT OR REPLACE INTO ItemCategories (name) VALUES ('自定义'), ('文本'), ('日用品'), ('药品'), ('其他'), ('c车辆备件');
+ -- Initialize item data
 INSERT OR REPLACE INTO Items (name, categoryIdentifier) VALUES ('身份证', 2), ('驾驶证',2), ('保险单',2), ('养路费及购置税/车辆使用税缴税凭证',2), ('公路地图',2), ('信用卡',2), ('笔记本和笔',2);
 
 INSERT OR REPLACE INTO Items (name, categoryIdentifier) VALUES ('适时衣服', 3), ('遮阳帽',3), ('手套',3), ('适宜驾驶的软底鞋',3), ('雨具',3), ('电筒',3), ('照相器材',3), ('洗漱用品等',3);

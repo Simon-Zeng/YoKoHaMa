@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSArray * dataSource;
 
 @property (nonatomic, strong) NSMutableDictionary * cachedTripItems;
-
+@property (nonatomic, strong) NSMutableDictionary * cachedItemCategories;
 
 @property (nonatomic, strong, readwrite) RACSubject * updateContentSignal;
 
@@ -39,6 +39,7 @@
         self.dataSource = nil;
         
         self.cachedTripItems = [[NSMutableDictionary alloc] init];
+        self.cachedItemCategories = [[NSMutableDictionary alloc] init];
         
         _updateContentSignal = [RACSubject subject];
     }
@@ -99,16 +100,6 @@
     }
 }
 
-- (RACSignal *)shareImage:(UIImage *)image
-{
-    RACSignal * signal = [RACSignal empty];
-    
-    // TODO: Share
-    
-    return signal;
-}
-
-
 #pragma mark -
 - (NSInteger)numberOfSections
 {
@@ -118,6 +109,34 @@
 - (NSInteger)numberOfItemsInSection:(NSInteger)section
 {
     return [[self.dataSource objectAtIndex:section] count];
+}
+
+- (NSString *)titleForSection:(NSInteger)section
+{
+    HMItem * aItem = nil;
+    
+    if (section < self.itemsMap.count)
+    {
+        NSArray * itemsInSection = [self.dataSource objectAtIndex:section];
+        aItem = [itemsInSection firstObject];
+    }
+    
+    if (aItem)
+    {
+        HMItemCategory * category = [self.cachedItemCategories objectForKey:aItem.categoryIdentifier];
+        
+        if (!category)
+        {
+            category = [HMItemCategoryDao ItemCategoryWithIdentifier:aItem.categoryIdentifier];
+            [self.cachedItemCategories setObject:category forKey:aItem.identifier];
+        }
+        
+        return category.name;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (HMTripItem *)itemAtIndexPath:(NSIndexPath *)indexPath

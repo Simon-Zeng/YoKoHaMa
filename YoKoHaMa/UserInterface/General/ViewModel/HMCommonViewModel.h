@@ -16,8 +16,8 @@
 @property (nonatomic, strong) NSNumber * catID;
 
 @property (nonatomic, strong, readonly) RACSignal * refreshFocusSignal;
-@property (nonatomic, strong, readonly) RACSignal * refreshTypesSignal;
 
+- (RACSignal *)refreshTypesSignalForCID:(NSNumber *)cid;
 
 - (void)showListFor:(NSString *)stype withCatID:(NSNumber *)cid;
 - (void)showDetailForFocus:(HMFocus *)focus;
@@ -28,7 +28,5 @@
 
 - (void)showTripGuideForTrip:(HMTrip *)aTrip;
 
-- (void)shareScreen;
-- (void)shareURLString:(NSString *)string;
 
 @end
