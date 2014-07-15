@@ -12,7 +12,7 @@
 
 @interface HMItemDao : NSObject
 
-+ (BOOL)saveItem:(HMItem *)aItem;
++ (NSNumber *)saveItem:(HMItem *)aItem;
 
 + (HMItem *)itemWithIdentifier:(NSNumber *)identifier;
 + (NSArray *)itemsWithCategoryIdentifier:(NSNumber *)cid;
@@ -27,7 +27,7 @@
 
 @interface HMItemCategoryDao : NSObject
 
-+ (BOOL)saveItemCategory:(HMItemCategory *)aItemCategory;
++ (NSNumber *)saveItemCategory:(HMItemCategory *)aItemCategory;
 
 + (HMItemCategory *)ItemCategoryWithIdentifier:(NSNumber *)identifier;
 

@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong, readonly) RACSignal * openSignal;
 
-- (void)updateWithFocuses:(NSArray *)focuses;
+- (void)updateWithEntities:(NSArray *)entities;
 
 @end

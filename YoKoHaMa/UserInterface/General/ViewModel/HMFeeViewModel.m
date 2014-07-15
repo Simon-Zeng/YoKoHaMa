@@ -68,14 +68,14 @@
 {
     [self.fees addObject:aFee];
     
-    [(RACSubject *)_updateContentSignal sendNext:aFee];
+    [(RACSubject *)_updateContentSignal sendNext:self.fees];
 }
 
 - (void)removeFee:(HMFee *)aFee
 {
     [self.fees removeObject:aFee];
     
-    [(RACSubject *)_updateContentSignal sendNext:aFee];
+    [(RACSubject *)_updateContentSignal sendNext:self.fees];
 }
 
 - (RACSignal *)shareImage:(UIImage *)image

@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HMItem : NSObject
+#import "HMEntity.h"
+
+@interface HMItem : NSObject<HMEntity>
 
 @property (nonatomic, strong) NSNumber * identifier;
 @property (nonatomic, strong) NSNumber * categoryIdentifier;

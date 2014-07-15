@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSNumber * tripIdentifier;
 @property (nonatomic, strong) NSNumber * itemIdentifier;
+@property (nonatomic, strong) NSString * itemName;
 @property (nonatomic, strong) NSNumber * required;
 @property (nonatomic, strong) NSNumber * state;
 

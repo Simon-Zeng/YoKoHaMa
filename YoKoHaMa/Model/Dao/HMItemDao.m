@@ -12,19 +12,24 @@
 
 @implementation HMItemDao
 
-+ (BOOL)saveItem:(HMItem *)aItem
++ (NSNumber *)saveItem:(HMItem *)aItem
 {
-    __block BOOL saved = NO;
+    __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        saved = [db executeUpdate:@"INSERT OR REPLACE INTO Items (identifier, categoryIdentifier, name) VALUES (:identifier, :categoryIdentifier, :name)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO Items (identifier, categoryIdentifier, name) VALUES (:identifier, :categoryIdentifier, :name)"
           withParameterDictionary:(@{
                                      @"identifier": aItem.identifier,
                                      @"categoryIdentifier": aItem.categoryIdentifier,
                                      @"name": aItem.name
                                      })];
+        
+        if (saved)
+        {
+            insertId = @(db.lastInsertRowId);
+        }
     }];
     
-    return saved;
+    return insertId;
 }
 
 + (HMItem *)itemWithIdentifier:(NSNumber *)identifier
@@ -125,18 +130,23 @@
 
 @implementation HMItemCategoryDao
 
-+ (BOOL)saveItemCategory:(HMItemCategory *)aItemCategory
++ (NSNumber *)saveItemCategory:(HMItemCategory *)aItemCategory
 {
-    __block BOOL saved = NO;
+    __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        saved = [db executeUpdate:@"INSERT OR REPLACE INTO ItemCategories (identifier, name) VALUES (:identifier, :name)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO ItemCategories (identifier, name) VALUES (:identifier, :name)"
           withParameterDictionary:(@{
                                      @"identifier": aItemCategory.identifier,
                                      @"name": aItemCategory.name
                                      })];
+        
+        if (saved)
+        {
+            insertId = @(db.lastInsertRowId);
+        }
     }];
     
-    return saved;
+    return insertId;
 }
 
 + (HMItemCategory *)ItemCategoryWithIdentifier:(NSNumber *)identifier

@@ -12,20 +12,26 @@
 
 @implementation HMTripItemDao
 
-+ (BOOL)saveTripItem:(HMTripItem *)aTripItem
++ (NSNumber *)saveTripItem:(HMTripItem *)aTripItem
 {
-    __block BOOL saved = NO;
+    __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        saved = [db executeUpdate:@"INSERT OR REPLACE INTO TripItems (tripIdentifier, itemIdentifier, required, state) VALUES (:tripIdentifier, :itemIdentifier, :required, :state)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO TripItems (tripIdentifier, itemIdentifier, itemName, required, state) VALUES (:tripIdentifier, :itemIdentifier, :itemName, :required, :state)"
           withParameterDictionary:(@{
                                      @"tripIdentifier": aTripItem.tripIdentifier,
                                      @"itemIdentifier": aTripItem.itemIdentifier,
+                                     @"itemName": aTripItem.itemName,
                                      @"required": aTripItem.required,
                                      @"state": aTripItem.state
                                      })];
+        
+        if (saved)
+        {
+            insertId = @(db.lastInsertRowId);
+        }
     }];
     
-    return saved;
+    return insertId;
 }
 
 + (HMTripItem *)tripItemWithTripIdentifier:(NSNumber *)identifier
@@ -46,6 +52,7 @@
             
             aTripItem.tripIdentifier = [resultSet objectForColumnName:@"tripIdentifier"];
             aTripItem.itemIdentifier = [resultSet objectForColumnName:@"itemIdentifier"];
+            aTripItem.itemName       = [resultSet objectForColumnName:@"itemName"];
             aTripItem.required = [resultSet objectForColumnName:@"required"];
             aTripItem.state = [resultSet objectForColumnName:@"state"];
         }
@@ -70,6 +77,7 @@
             
             aTripItem.tripIdentifier = [resultSet objectForColumnName:@"tripIdentifier"];
             aTripItem.itemIdentifier = [resultSet objectForColumnName:@"itemIdentifier"];
+            aTripItem.itemName       = [resultSet objectForColumnName:@"itemName"];
             aTripItem.required = [resultSet objectForColumnName:@"required"];
             aTripItem.state = [resultSet objectForColumnName:@"state"];
             
@@ -85,14 +93,14 @@
     __block BOOL saved = NO;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
         saved = [db executeUpdate:(@"UPDATE TripItems SET \n"
+                                   @"   itemName = :itemName, \n"
                                    @"   required = :required, \n"
-                                   @"   name = :name, \n"
-                                   @"   cost = :cost, \n"
-                                   @"   desc = :desc \n"
+                                   @"   state = :state \n"
                                    @"WHERE tripIdentifier == :tripIdentifier AND itemIdentifier == :itemIdentifier \n")
           withParameterDictionary:(@{
                                      @"tripIdentifier": aTripItem.tripIdentifier,
                                      @"itemIdentifier": aTripItem.itemIdentifier,
+                                     @"itemName": aTripItem.itemName,
                                      @"required": aTripItem.required,
                                      @"state": aTripItem.state
                                      })];

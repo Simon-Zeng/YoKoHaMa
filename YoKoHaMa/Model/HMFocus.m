@@ -15,7 +15,7 @@
     HMFocus * focus = [[HMFocus alloc] init];
     
     focus.identifier = [dict objectForKey:@"id"];
-    focus.title = [dict objectForKey:@"title"];
+    focus.name = [dict objectForKey:@"title"];
     focus.imageURLString = [dict objectForKey:@"image"];
 
     
@@ -28,7 +28,7 @@
     
     [description appendFormat:@"_identifier: %@, ", _identifier];
     [description appendFormat:@"_categoryIdentifier: %@, ", _categoryIdentifier];
-    [description appendFormat:@"_title: %@, ", _title];
+    [description appendFormat:@"_name: %@, ", _name];
     [description appendFormat:@"_imageURLString: %@, ", _imageURLString];
     
     return description;

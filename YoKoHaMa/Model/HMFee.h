@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HMFee : NSObject
+#import "HMEntity.h"
+
+@interface HMFee : NSObject<HMEntity>
 
 @property (nonatomic, strong) NSNumber * identifier;
 @property (nonatomic, strong) NSNumber * travelIdentifier;

@@ -11,7 +11,7 @@ target :YoKoHaMa do
   #pod 'ASDepthModal'
   pod 'ASProgressPopUpView'
   pod 'BlockAlertsAnd-ActionSheets' 
-  pod 'CocoaSecurity'
+  #pod 'CocoaSecurity'
   #pod 'FlatUIKit'
   #pod 'GPUImage'
   #pod 'JASidePanels'
@@ -22,12 +22,12 @@ target :YoKoHaMa do
   #pod 'ReactiveCoreData'
   pod 'ReactiveViewModel'
   pod 'SDWebImage'
-  pod 'SimpleSyncService'
+  #pod 'SimpleSyncService'
   pod 'SVProgressHUD'
   pod 'UICKeyChainStore'
   pod 'UIColor-Utilities'
   pod 'UMengSocial'
-  pod 'YLMoment'
+  #pod 'YLMoment'
   pod 'FMDB', :git => 'https://github.com/Simon-Zeng/fmdb.git'
 end
 

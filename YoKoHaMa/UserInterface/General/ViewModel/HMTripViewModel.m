@@ -9,13 +9,19 @@
 #import "HMTripViewModel.h"
 
 #import "HMItem.h"
+#import "HMItemDao.h"
 #import "HMTrip.h"
+#import "HMTripDao.h"
+#import "HMTripItem.h"
+#import "HMTripItemDao.h"
 
 @interface HMTripViewModel ()
 
 @property (nonatomic, strong) HMTrip * trip;
 @property (nonatomic, strong) NSMutableDictionary * itemsMap;
 @property (nonatomic, strong) NSArray * dataSource;
+
+@property (nonatomic, strong) NSMutableDictionary * cachedTripItems;
 
 
 @property (nonatomic, strong, readwrite) RACSubject * updateContentSignal;
@@ -28,9 +34,11 @@
 {
     if (self = [super init])
     {
-        self.trip = nil;
+        self.trip = [HMTripDao tripWithIdentifier:tid];
         self.itemsMap = [[NSMutableDictionary alloc] init];
         self.dataSource = nil;
+        
+        self.cachedTripItems = [[NSMutableDictionary alloc] init];
         
         _updateContentSignal = [RACSubject subject];
     }
@@ -53,6 +61,12 @@
 #pragma mark - Public Methods
 - (void)addItem:(HMItem *)aItem
 {
+    if (!aItem.identifier)
+    {
+        NSNumber * identifier = [HMItemDao saveItem:aItem];
+        aItem.identifier = identifier;
+    }
+    
     NSMutableArray * itemsGroup = [self.itemsMap objectForKey:aItem.categoryIdentifier];
     
     if (!itemsGroup)
@@ -67,16 +81,22 @@
     [self reloadData];
 }
 
-- (void)removeItem:(HMItem *)aItem
+- (void)removeTripItem:(HMTripItem *)aTripItem
 {
-    NSMutableArray * itemsGroup = [self.itemsMap objectForKey:aItem.categoryIdentifier];
+    HMItem * anItem = [HMItemDao itemWithIdentifier:aTripItem.itemIdentifier];
     
-    if (itemsGroup)
+    if (anItem)
     {
-        [itemsGroup removeObject:aItem];
+        NSMutableArray * itemsGroup = [self.itemsMap objectForKey:anItem.categoryIdentifier];
+        
+        if (itemsGroup)
+        {
+            [itemsGroup removeObject:anItem];
+        }
+        
+        [self reloadData];
+
     }
-    
-    [self reloadData];
 }
 
 - (RACSignal *)shareImage:(UIImage *)image
@@ -90,12 +110,17 @@
 
 
 #pragma mark -
+- (NSInteger)numberOfSections
+{
+    return [self.dataSource count];
+}
+    
 - (NSInteger)numberOfItemsInSection:(NSInteger)section
 {
     return [[self.dataSource objectAtIndex:section] count];
 }
 
-- (HMItem *)itemAtIndexPath:(NSIndexPath *)indexPath
+- (HMTripItem *)itemAtIndexPath:(NSIndexPath *)indexPath
 {
     HMItem * aItem = nil;
     
@@ -108,7 +133,23 @@
         }
     }
     
-    return aItem;
+    if (aItem)
+    {
+        HMTripItem * aTripItem = [self.cachedTripItems objectForKey:aItem.identifier];
+        
+        if (!aTripItem)
+        {
+            aTripItem = [HMTripItemDao tripItemWithTripIdentifier:self.trip.identifier
+                                                   itemIdentifier:aItem.identifier];
+            [self.cachedTripItems setObject:aTripItem forKey:aItem.identifier];
+        }
+        
+        return aTripItem;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 

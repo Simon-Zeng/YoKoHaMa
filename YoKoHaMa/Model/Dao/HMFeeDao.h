@@ -12,7 +12,7 @@
 
 @interface HMFeeDao : NSObject
 
-+ (BOOL)saveFee:(HMFee *)aFee;
++ (NSNumber *)saveFee:(HMFee *)aFee;
 
 + (HMFee *)feeWithIdentifier:(NSNumber *)identifier;
 + (NSArray *)feesWithTravelIdentifier:(NSNumber *)travelIdentifier;

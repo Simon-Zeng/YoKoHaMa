@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) UICollectionView * collectionView;
 
-@property (nonatomic, strong) NSArray * focuses;
+@property (nonatomic, strong) NSArray * entities;
 
 @property (nonatomic, strong, readwrite) RACSubject * openSignal;
 
@@ -77,9 +77,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMFocus * focus = [self.focuses objectAtIndex:indexPath.row];
+    id<HMEntity> entity = [self.entities objectAtIndex:indexPath.row];
     
-    [(RACSubject *)self.openSignal sendNext:focus];
+    [(RACSubject *)self.openSignal sendNext:entity];
 }
 
 
@@ -87,7 +87,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.focuses.count;
+    return self.entities.count;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
@@ -95,9 +95,9 @@
 {
     HMGridMenuViewCell * cell = (HMGridMenuViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    HMFocus * focus = [self.focuses objectAtIndex:indexPath.row];
+    id<HMEntity> entity = [self.entities objectAtIndex:indexPath.row];
     
-    cell.title = focus.title;
+    cell.title = entity.name;
     
     return cell;
 }
@@ -106,9 +106,9 @@
 
 #pragma mark -
 
-- (void)updateWithFocuses:(NSArray *)focuses
+- (void)updateWithEntities:(NSArray *)entities
 {
-    self.focuses = focuses;
+    self.entities = entities;
     
     [self.collectionView reloadData];
 }

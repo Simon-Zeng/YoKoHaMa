@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HMTrip : NSObject
+#import "HMEntity.h"
+
+@interface HMTrip : NSObject<HMEntity>
 
 @property (nonatomic, strong) NSNumber * identifier;
 @property (nonatomic, strong) NSString * name;

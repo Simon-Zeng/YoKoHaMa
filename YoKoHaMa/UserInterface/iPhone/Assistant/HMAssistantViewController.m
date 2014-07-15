@@ -85,7 +85,7 @@
     
     [self.viewModel.refreshTypesSignal subscribeNext:^(id x) {
         @strongify(self);
-        [self.gridContent updateWithFocuses:nil];
+        [self.gridContent updateWithEntities:nil];
     } error:^(NSError *error) {
         NSLog(@"Error in refreshing types: %@", error);
     }];
@@ -108,9 +108,8 @@
     [self.gridContent.openSignal subscribeNext:^(id x) {
         @strongify(self);
         NSLog(@"Content Menu selected: %@", x);
-        HMFocus * focus = (HMFocus *)x;
-        [self.viewModel showListFor:focus.title
-                          withCatID:focus.identifier];
+        HMTrip * trip = (HMTrip *)x;
+        [self.viewModel showTripGuideForTrip:trip];
     }];
 
 }

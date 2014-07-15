@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class HMItem;
+@class HMTripItem;
 
 @interface HMTripViewModel : NSObject
 
@@ -17,13 +18,14 @@
 - (instancetype)initWithTripIdentifier:(NSNumber *)tid;
 
 - (void)addItem:(HMItem *)aItem;
-- (void)removeItem:(HMItem *)aItem;
+- (void)removeTripItem:(HMTripItem *)aTripItem;
 
 - (RACSignal *)shareImage:(UIImage *)image;
 
 
 #pragma mark -
+- (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsInSection:(NSInteger)section;
-- (HMItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (HMTripItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

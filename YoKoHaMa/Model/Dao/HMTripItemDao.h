@@ -12,7 +12,7 @@
 
 @interface HMTripItemDao : NSObject
 
-+ (BOOL)saveTripItem:(HMTripItem *)aTripItem;
++ (NSNumber *)saveTripItem:(HMTripItem *)aTripItem;
 
 + (HMTripItem *)tripItemWithTripIdentifier:(NSNumber *)identifier
                             itemIdentifier:(NSNumber *)itemIdentifier;
@@ -21,7 +21,7 @@
 
 + (BOOL)updateTripItem:(HMTripItem *)aTripItem;
 
-+ (BOOL)deleteTripItemWithIdentifier:(NSNumber *)identifier
++ (BOOL)deleteTripItemWithTripIdentifier:(NSNumber *)identifier
                       itemIdentifier:(NSNumber *)itemIdentifier;
 
 + (BOOL)deleteTripItemWithTripIdentifier:(NSNumber *)tripIdentifier;

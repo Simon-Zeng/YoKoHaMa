@@ -9,6 +9,7 @@
 #import "HMBasicViewModel.h"
 
 @class HMFocus;
+@class HMTrip;
 
 @interface HMCommonViewModel : HMBasicViewModel
 
@@ -24,6 +25,8 @@
 - (void)showDetailForListCommand:(NSString *)command;
 
 - (void)feeCalculate;
+
+- (void)showTripGuideForTrip:(HMTrip *)aTrip;
 
 - (void)shareScreen;
 - (void)shareURLString:(NSString *)string;

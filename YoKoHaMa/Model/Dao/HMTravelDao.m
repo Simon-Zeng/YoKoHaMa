@@ -12,20 +12,25 @@
 
 @implementation HMTravelDao
 
-+ (BOOL)saveTravel:(HMTravel *)aTravel
++ (NSNumber *)saveTravel:(HMTravel *)aTravel
 {
-    __block BOOL saved = NO;
+    __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        saved = [db executeUpdate:@"INSERT OR REPLACE INTO Travels (identifier, name, membersCount, averageCost) VALUES (:identifier, :name, :membersCount, :averageCost)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO Travels (identifier, name, membersCount, averageCost) VALUES (:identifier, :name, :membersCount, :averageCost)"
           withParameterDictionary:(@{
                                      @"identifier": aTravel.identifier,
                                      @"name": aTravel.name,
                                      @"membersCount": aTravel.membersCount,
                                      @"averageCost": aTravel.averageCost
                                      })];
+        
+        if (saved)
+        {
+            insertId = @(db.lastInsertRowId);
+        }
     }];
     
-    return saved;
+    return insertId;
 }
 
 + (HMTravel *)travelWithIdentifier:(NSNumber *)identifier

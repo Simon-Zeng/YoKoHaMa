@@ -12,20 +12,25 @@
 
 @implementation HMFeeDao
 
-+ (BOOL)saveFee:(HMFee *)aFee
++ (NSNumber *)saveFee:(HMFee *)aFee
 {
-    __block BOOL saved = NO;
+    __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        saved = [db executeUpdate:@"INSERT OR REPLACE INTO Fees (travelIdentifier, name, cost, desc) VALUES (:travelIdentifier, :name, :cost, :desc)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO Fees (travelIdentifier, name, cost, desc) VALUES (:travelIdentifier, :name, :cost, :desc)"
           withParameterDictionary:(@{
                                      @"travelIdentifier": aFee.travelIdentifier,
                                      @"name": aFee.name,
                                      @"cost": aFee.cost,
                                      @"desc": aFee.desc
                                      })];
+        
+        if (saved)
+        {
+            insertId = @(db.lastInsertRowId);
+        }
     }];
     
-    return saved;
+    return insertId;
 }
 
 + (HMFee *)feeWithIdentifier:(NSNumber *)identifier

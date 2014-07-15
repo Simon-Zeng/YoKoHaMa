@@ -12,7 +12,7 @@
 
 @interface HMTripDao : NSObject
 
-+ (BOOL)saveTrip:(HMTrip *)aTrip;
++ (NSNumber *)saveTrip:(HMTrip *)aTrip;
 
 + (HMTrip *)tripWithIdentifier:(NSNumber *)identifier;
 

@@ -11,7 +11,13 @@
 #import "HMAPI.h"
 #import "HMFocus.h"
 #import "HMHelper.h"
+#import "HMTrip.h"
+
+#import "HMFeeViewController.h"
+#import "HMTripViewController.h"
 #import "HMWebViewController.h"
+
+#import "HMTripViewModel.h"
 
 @interface HMCommonViewModel ()
 
@@ -176,9 +182,23 @@
 
 - (void)feeCalculate
 {
+    HMFeeViewController * feeViewController = [[HMFeeViewController alloc] init];
     
+    
+    [[HMHelper rootNavigationController] pushViewController:feeViewController animated:YES];
 }
 
+
+- (void)showTripGuideForTrip:(HMTrip *)aTrip
+{
+    
+    HMTripViewModel * viewModel = [[HMTripViewModel alloc] initWithTripIdentifier:aTrip.identifier];
+    
+    HMTripViewController * tripViewController = [[HMTripViewController alloc] init];
+    tripViewController.viewModel = viewModel;
+    
+    [[HMHelper rootNavigationController] pushViewController:tripViewController animated:YES];
+}
 
 - (void)shareScreen
 {
