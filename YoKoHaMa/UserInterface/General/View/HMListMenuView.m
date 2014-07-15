@@ -37,7 +37,7 @@
         
         UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         
-        titleLabel.font = [UIFont flatFontOfSize:16.0];
+        titleLabel.font = [UIFont systemFontOfSize:16.0];
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.textAlignment = NSTextAlignmentLeft;
@@ -64,7 +64,7 @@
                     forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor]
                          forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont flatFontOfSize:12.0];
+            button.titleLabel.font = [UIFont systemFontOfSize:12.0];
             button.accessibilityIdentifier = anOption;
             button.autoresizingMask = UIViewAutoresizingFlexibleHeight;
             

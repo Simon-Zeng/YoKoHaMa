@@ -11,3 +11,8 @@
 @implementation HMItem
 
 @end
+
+
+@implementation HMItemCategory
+
+@end

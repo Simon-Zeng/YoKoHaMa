@@ -18,19 +18,16 @@
 #import "AFNetworking.h"
 #import "AMSmoothAlertView.h"
 #import "BlockActionSheet.h"
-#import "CocoaSecurity.h"
-#import "FlatUIKit.h"
+//#import "CocoaSecurity.h"
+//#import "FlatUIKit.h"
 #import "FMDB.h"
-#import "JASidePanelController.h"
-#import "JSONModelLib.h"
 #import "POP.h"
 #import "RACAFNetworking.h"
 #import "RACEXTScope.h"
 #import "ReactiveCocoa.h"
-#import "ReactiveCoreData.h"
 #import "ReactiveViewModel.h"
 #import "SVProgressHUD.h"
-#import "YLMoment.h"
+//#import "YLMoment.h"
 
 #endif
 

@@ -18,7 +18,7 @@
 
 @end
 
-@interface HMItemCategory : NSObject
+@interface HMItemCategory : NSObject<HMEntity>
 
 @property (nonatomic, strong) NSNumber * identifier;
 @property (nonatomic, strong) NSString * name;

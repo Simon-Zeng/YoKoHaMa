@@ -12,7 +12,6 @@
 		530AE1C019710E3A002D69FD /* HMSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1BF19710E3A002D69FD /* HMSettings.m */; };
 		530AE1C319710ECD002D69FD /* HMBasicViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1C219710ECD002D69FD /* HMBasicViewModel.m */; };
 		530AE1C719711079002D69FD /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 530AE1C619711079002D69FD /* Common.xcassets */; };
-		530AE1C91971108F002D69FD /* Launcher.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 530AE1C81971108F002D69FD /* Launcher.xcassets */; };
 		530AE1CB1971117A002D69FD /* Button.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 530AE1CA1971117A002D69FD /* Button.xcassets */; };
 		530AE1CD1971168A002D69FD /* Launcher.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 530AE1CC1971168A002D69FD /* Launcher.xcassets */; };
 		530AE1D119711795002D69FD /* HMLauncherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530AE1D019711795002D69FD /* HMLauncherViewController.m */; };
@@ -99,7 +98,6 @@
 		530AE1C119710ECD002D69FD /* HMBasicViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBasicViewModel.h; sourceTree = "<group>"; };
 		530AE1C219710ECD002D69FD /* HMBasicViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMBasicViewModel.m; sourceTree = "<group>"; };
 		530AE1C619711079002D69FD /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
-		530AE1C81971108F002D69FD /* Launcher.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Launcher.xcassets; sourceTree = "<group>"; };
 		530AE1CA1971117A002D69FD /* Button.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Button.xcassets; sourceTree = "<group>"; };
 		530AE1CC1971168A002D69FD /* Launcher.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Launcher.xcassets; sourceTree = "<group>"; };
 		530AE1CF19711795002D69FD /* HMLauncherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLauncherViewController.h; sourceTree = "<group>"; };
@@ -279,14 +277,6 @@
 				530AE1C619711079002D69FD /* Common.xcassets */,
 			);
 			path = common;
-			sourceTree = "<group>";
-		};
-		530AE1C51971104B002D69FD /* launcher */ = {
-			isa = PBXGroup;
-			children = (
-				530AE1C81971108F002D69FD /* Launcher.xcassets */,
-			);
-			path = launcher;
 			sourceTree = "<group>";
 		};
 		530AE1CE1971177B002D69FD /* Launcher */ = {
@@ -497,7 +487,6 @@
 			isa = PBXGroup;
 			children = (
 				530AE1C41971104B002D69FD /* common */,
-				530AE1C51971104B002D69FD /* launcher */,
 				530AE1CA1971117A002D69FD /* Button.xcassets */,
 				530AE1CC1971168A002D69FD /* Launcher.xcassets */,
 			);
@@ -732,7 +721,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A96EDFD61973D49D007715F4 /* trip.sql in Resources */,
-				530AE1C91971108F002D69FD /* Launcher.xcassets in Resources */,
 				530AE1C719711079002D69FD /* Common.xcassets in Resources */,
 				53B239BC196AD2EF0071E92E /* zoomPopupClose@2x.png in Resources */,
 				530AE1CB1971117A002D69FD /* Button.xcassets in Resources */,
