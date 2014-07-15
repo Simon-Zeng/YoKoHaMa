@@ -25,22 +25,44 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         CGRect bounds = self.contentView.bounds;
+        self.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = [UIColor clearColor];
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         // Initialization code
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(18, 5, bounds.size.width - 120, 24)];
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(18, 3, bounds.size.width - 120, 20)];
         self.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.backgroundColor = [UIColor clearColor];
         
         [self.contentView addSubview:self.titleLabel];
-        
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(18, 5, bounds.size.width-120, 24)];
-        self.descriptionLabel.font = [UIFont systemFontOfSize:12.0];
-        self.descriptionLabel.textColor = [UIColor grayColor];
-        
-        [self.contentView addSubview:self.descriptionLabel];
 
-        self.costLabel = [[UILabel alloc] initWithFrame:CGRectMake(bounds.size.width - 100, 5, 80, 24)];
+
+        self.costLabel = [[UILabel alloc] initWithFrame:CGRectMake(bounds.size.width - 100, 3, 80, 20)];
         self.costLabel.font = [UIFont systemFontOfSize:14.0];
+        self.costLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        self.costLabel.textColor = [UIColor colorWithRed:225.0/255
+                                                          green:225.0/255
+                                                           blue:225.0/255
+                                                          alpha:1.0];
+
+        self.costLabel.backgroundColor = [UIColor clearColor];
         
         [self.contentView addSubview:self.costLabel];
+        
+        
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(18, 20, bounds.size.width-120, 20)];
+        self.descriptionLabel.font = [UIFont systemFontOfSize:12.0];
+        self.descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        self.descriptionLabel.textColor = [UIColor colorWithRed:225.0/255
+                                                          green:225.0/255
+                                                           blue:225.0/255
+                                                          alpha:1.0];
+        self.descriptionLabel.backgroundColor = [UIColor clearColor];
+        
+        [self.contentView addSubview:self.descriptionLabel];
 
     }
     return self;

@@ -81,7 +81,7 @@
 - (RACSignal *)isNameValidSignal
 {
     return [RACSignal combineLatest:(@[
-                                       RACObserve(self.nameField, text)
+                                       self.nameField.rac_textSignal
                                        ])
                              reduce:^id(NSString * name){
                                  NSString * trimmedName = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

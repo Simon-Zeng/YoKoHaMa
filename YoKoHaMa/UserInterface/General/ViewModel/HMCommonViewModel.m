@@ -13,6 +13,8 @@
 #import "HMHelper.h"
 #import "HMTrip.h"
 
+#import "HMNetwork.h"
+
 #import "HMFeeViewController.h"
 #import "HMTripViewController.h"
 #import "HMWebViewController.h"
@@ -107,7 +109,12 @@
 
 - (void)showListFor:(NSString *)stype withCatID:(NSNumber *)cid
 {
-    NSString * urlString = [NSString stringWithFormat:@"http://youke.feelpoid.com/index.php?a=lists&catid=%@&stype=%@", cid, stype];
+    NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
+    
+    NSString * pathComponent = [NSString stringWithFormat:@"/index.php?a=lists&catid=%@&stype=%@", cid, stype];
+
+    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
+    
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
     
@@ -119,7 +126,12 @@
 
 - (void)showDetailForFocus:(HMFocus *)focus
 {
-    NSString * urlString = [NSString stringWithFormat:@"http://youke.feelpoid.com/index.php?a=shows&catid=1&id=%@", focus.identifier];
+    
+    NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
+    
+    NSString * pathComponent = [NSString stringWithFormat:@"/index.php?a=shows&catid=1&id=%@", focus.identifier];
+    
+    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
     
@@ -151,7 +163,12 @@
 
 - (void)showEquipmentGuide
 {
-    NSString * urlString = @"http://youke.feelpoid.com/zbzd.html";
+    
+    NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
+    
+    NSString * pathComponent = [NSString stringWithFormat:@"/zbzd.html"];
+    
+    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
     
@@ -162,7 +179,11 @@
 
 - (void)showRoadTripGuide
 {
-    NSString * urlString = @"http://youke.feelpoid.com/zjzd.html";
+    NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
+    
+    NSString * pathComponent = [NSString stringWithFormat:@"/zjzd.html"];
+    
+    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
     
@@ -173,7 +194,11 @@
 
 - (void)showRoadTripHelp
 {
-    NSString * urlString = @"http://youke.feelpoid.com/zjbz.html";
+    NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
+    
+    NSString * pathComponent = [NSString stringWithFormat:@"/zjbz.html"];
+    
+    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
     

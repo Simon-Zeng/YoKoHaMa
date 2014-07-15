@@ -27,38 +27,51 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
         
-        self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 8, 150, 20)];
-        self.countLabel.font = [UIFont systemFontOfSize:14.0];
+        // Initialization code
+        self.backgroundColor = [UIColor whiteColor];
+        
+        self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 8, 130, 20)];
+        self.countLabel.font = [UIFont systemFontOfSize:12.0];
         self.countLabel.text = nil;
         [self addSubview:self.countLabel];
         
         
-        self.sumLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 8, 150, 20)];
-        self.sumLabel.font = [UIFont systemFontOfSize:14.0];
+        self.sumLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 8, 130, 20)];
+        self.sumLabel.font = [UIFont systemFontOfSize:12.0];
         self.sumLabel.text = nil;
         [self addSubview:self.sumLabel];
         
-        self.membersCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(self.countLabel.frame) + 10, 50, 20)];
-        self.membersCountLabel.font = [UIFont systemFontOfSize:14.0];
-        self.membersCountLabel.text = NSLocalizedString(@"人数: ", nil);
+        self.membersCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.countLabel.frame) + 10, 65, 20)];
+        self.membersCountLabel.font = [UIFont systemFontOfSize:12.0];
+        self.membersCountLabel.text = NSLocalizedString(@"请输入人数: ", nil);
         [self addSubview:self.membersCountLabel];
         
-        self.membersCountField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.membersCountLabel.frame), CGRectGetMaxY(self.countLabel.frame) + 5, 45, 31)];
+        self.membersCountField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.membersCountLabel.frame), CGRectGetMaxY(self.countLabel.frame) + 10, 30, 20)];
+        self.membersCountField.borderStyle = UITextBorderStyleRoundedRect;
         self.membersCountField.keyboardType = UIKeyboardTypeNumberPad;
+        self.membersCountField.returnKeyType = UIReturnKeyDone;
+//        self.membersCountField.delegate = self;
         [self addSubview:self.membersCountField];
         
         self.calculateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.calculateButton.frame = CGRectMake(CGRectGetMaxX(self.membersCountField.frame), CGRectGetMaxY(self.countLabel.frame) + 5, 45, 31);
-        self.calculateButton.backgroundColor = [UIColor blueColor];
+        self.calculateButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
+        [self.calculateButton setTitle:NSLocalizedString(@"AA制", nil)
+                              forState:UIControlStateNormal];
+        self.calculateButton.frame = CGRectMake(CGRectGetMaxX(self.membersCountField.frame) +3,
+                                                CGRectGetMaxY(self.countLabel.frame) + 5,
+                                                40,
+                                                28);
+        self.calculateButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
         [self addSubview:self.calculateButton];
         
         
-        self.averageLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, CGRectGetMaxY(self.countLabel.frame) + 10, 150, 20)];
-        self.averageLabel.font = [UIFont systemFontOfSize:14.0];
-        self.averageLabel.text = NSLocalizedString(@"人均: ", nil);
+        self.averageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.calculateButton.frame) + 10, CGRectGetMaxY(self.countLabel.frame) + 10, 120, 20)];
+        self.averageLabel.font = [UIFont systemFontOfSize:12.0];
+        self.averageLabel.text = NSLocalizedString(@"人均费用: 0 元", nil);
         [self addSubview:self.averageLabel];
+        
+        [self updateWithFees:nil];
     }
     return self;
 }
@@ -66,6 +79,11 @@
 - (void)setCalculateAverageCommand:(RACCommand *)calculateAverageCommand
 {
     self.calculateButton.rac_command = calculateAverageCommand;
+}
+
+- (RACCommand *)calculateAverageCommand
+{
+    return self.calculateButton.rac_command;
 }
 
 /*
@@ -77,21 +95,30 @@
 }
 */
 
+- (RACSignal *)memberCountsSignal
+{
+    return [self.membersCountField.rac_textSignal map:^id(id value) {
+        return @([value longLongValue]);
+    }];
+}
+
 - (void)updateWithFees:(NSArray *)fees
 {
     NSInteger count = fees.count;
-    NSNumber * total = [fees valueForKeyPath:@"@sum.self.cost"];
+    NSNumber * total = @([[fees valueForKeyPath:@"@sum.self.cost"] longLongValue]);
     
-    self.countLabel.text = [NSString stringWithFormat:NSLocalizedString(@"合计: %ld项", nil), count];
-    self.sumLabel.text = [NSString stringWithFormat:NSLocalizedString(@"费用: %@", nil), total];
+    self.countLabel.text = [NSString stringWithFormat:NSLocalizedString(@"已添加统计: %ld 项", nil), count];
+    self.sumLabel.text = [NSString stringWithFormat:NSLocalizedString(@"合计: %@ 元", nil), total];
     
     if (self.membersCountField.text.length > 0)
     {
         NSInteger membersCount = self.membersCountField.text.intValue;
         float average = total.longLongValue * 1.0 / membersCount;
         
-        self.averageLabel.text = [NSString stringWithFormat:NSLocalizedString(@"人均: %.2f", nil), average];
+        self.averageLabel.text = [NSString stringWithFormat:NSLocalizedString(@"人均费用: %.2f 元", nil), average];
     }
+    
+    [self.membersCountField resignFirstResponder];
 }
 
 @end

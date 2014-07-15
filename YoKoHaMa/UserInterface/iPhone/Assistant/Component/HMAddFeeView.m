@@ -10,7 +10,7 @@
 
 #import "HMFee.h"
 
-@interface HMAddFeeView ()
+@interface HMAddFeeView ()<UITextFieldDelegate>
 
 @property (nonatomic, strong, readwrite) RACSubject * addFeeSignal;
 
@@ -30,42 +30,87 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         // Initialization code
         self.addFeeSignal = [RACSubject subject];
         
-        UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 8, 50, 20)];
-        nameLabel.font = [UIFont systemFontOfSize:14.0];
-        nameLabel.text = NSLocalizedString(@"标题: ", nil);
+        UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 8, 290, 20)];
+        titleLabel.font = [UIFont systemFontOfSize:12.0];
+        titleLabel.text = NSLocalizedString(@"请输入你需要统计的项目", nil);
+        [self addSubview:titleLabel];
+
+        UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, 35, 20)];
+        nameLabel.font = [UIFont systemFontOfSize:12.0];
+        nameLabel.text = NSLocalizedString(@"名称: ", nil);
         [self addSubview:nameLabel];
         
-        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(nameLabel.frame), 3, 150, 31)];
+        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(nameLabel.frame), 30, 100, 20)];
+        self.nameField.borderStyle = UITextBorderStyleRoundedRect;
+        self.nameField.returnKeyType = UIReturnKeyNext;
+        self.nameField.delegate = self;
         [self addSubview:self.nameField];
         
-        UILabel * costLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.nameField.frame)+ 5, 8, 50, 20)];
-        costLabel.font = [UIFont systemFontOfSize:14.0];
+        UILabel * costLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 30, 35, 20)];
+        costLabel.font = [UIFont systemFontOfSize:12.0];
         costLabel.text = NSLocalizedString(@"费用: ", nil);
         [self addSubview:costLabel];
         
-        self.costField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(costLabel.frame), 8, frame.size.width - CGRectGetMaxX(costLabel.frame) - 5, 31)];
+        self.costField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(costLabel.frame), 30, 100, 20)];
+        self.costField.borderStyle = UITextBorderStyleRoundedRect;
         self.costField.keyboardType = UIKeyboardTypeNumberPad;
+        self.costField.returnKeyType = UIReturnKeyNext;
+        self.costField.delegate = self;
         [self addSubview:self.costField];
         
-        UILabel * descLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(self.nameField.frame) + 10, 50, 20)];
-        descLabel.font = [UIFont systemFontOfSize:14.0];
-        descLabel.text = NSLocalizedString(@"说明: ", nil);
+        UILabel * yuanLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.costField.frame)+5.0f, 30, 20, 20)];
+        yuanLabel.font = [UIFont systemFontOfSize:12.0];
+        yuanLabel.text = NSLocalizedString(@"元", nil);
+        [self addSubview:yuanLabel];
+        
+        UILabel * descLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.nameField.frame) + 10, 35, 20)];
+        descLabel.font = [UIFont systemFontOfSize:12.0];
+        descLabel.text = NSLocalizedString(@"备注: ", nil);
         [self addSubview:descLabel];
         
-        self.descField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(descLabel.frame), CGRectGetMaxY(self.nameField.frame) + 5, frame.size.width - CGRectGetMaxX(descLabel.frame) - 5, 31)];
+        self.descField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(descLabel.frame), CGRectGetMaxY(self.nameField.frame) + 4, 245, 20)];
+        self.descField.borderStyle = UITextBorderStyleRoundedRect;
+        self.descField.returnKeyType = UIReturnKeyDone;
+        self.descField.delegate = self;
         [self addSubview:self.descField];
         
         self.addFeeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.addFeeButton.backgroundColor = [UIColor blueColor];
-        self.addFeeButton.frame = CGRectMake(20, CGRectGetMaxY(self.descField.frame) + 5, 280, 31);
+        self.addFeeButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
+        [self.addFeeButton setTitle:NSLocalizedString(@"+                 添加计算                 ", nil)
+                           forState:UIControlStateNormal];
+        [self.addFeeButton setTitleColor:[UIColor whiteColor]
+                                forState:UIControlStateNormal];
+        self.addFeeButton.titleEdgeInsets = UIEdgeInsetsZero;
+        self.addFeeButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+        self.addFeeButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        self.addFeeButton.frame = CGRectMake(15, CGRectGetMaxY(self.descField.frame) + 5, 290, 28);
         [self addSubview:self.addFeeButton];
         
         self.addFeeButton.rac_command = [self addFeeCommand];
     }
     return self;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.nameField)
+    {
+        [self.costField becomeFirstResponder];
+    }
+    else if (textField == self.costField)
+    {
+        [self.descField becomeFirstResponder];
+    }
+    else
+    {
+        [self.descField resignFirstResponder];
+    }
+    
+    return NO;
 }
 
 /*
@@ -88,6 +133,7 @@
                                                            aFee.identifier = nil;
                                                            aFee.name = self.nameField.text;
                                                            aFee.desc = self.descField.text;
+                                                           aFee.cost = @(self.costField.text.longLongValue);
                                                            
                                                            [(RACSubject *)self.addFeeSignal sendNext:aFee];
                                                            
@@ -105,9 +151,9 @@
 - (RACSignal *)isFeeValidSignal
 {
     RACSignal * signal = [RACSignal combineLatest:(@[
-                                                     RACObserve(self, nameField),
-                                                     RACObserve(self, costField),
-                                                     RACObserve(self, descField)
+                                                     self.nameField.rac_textSignal,
+                                                     self.costField.rac_textSignal,
+                                                     self.descField.rac_textSignal
                                                      ])
                                            reduce:^id(NSString * name, NSString * cost, NSString * desc){
                                                if (name.length > 0 && cost.length > 0 && desc.length > 0)

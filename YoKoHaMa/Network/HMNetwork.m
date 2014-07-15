@@ -8,8 +8,8 @@
 
 #import "HMNetwork.h"
 
-#define kBaseURLDomain @"www.gjsm.com"
-#define kAdminURLDomain @"admin.gjsm.com"
+#define kBaseURLDomain @"youke.feelpoid.com"
+#define kAdminURLDomain @"youke.feelpoid.com"
 
 @implementation HMNetwork
 #pragma mark Class methods

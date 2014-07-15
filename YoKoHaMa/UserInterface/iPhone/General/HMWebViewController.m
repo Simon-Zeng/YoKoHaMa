@@ -42,8 +42,8 @@
     
     
     UIButton * backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"Button-Back"]
-                forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"Button-Back"]
+                          forState:UIControlStateNormal];
     UIBarButtonItem * logoItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
     topItem.leftBarButtonItem = logoItem;

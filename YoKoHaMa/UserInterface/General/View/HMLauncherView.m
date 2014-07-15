@@ -35,7 +35,7 @@
         for (UIImage * image in images)
         {
             UIImageView * imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.contentMode = UIViewContentModeCenter;
+            imageView.contentMode = UIViewContentModeScaleToFill;
             
             [self.lauchImageViews addObject:imageView];
         }
@@ -48,6 +48,7 @@
         scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * images.count, scrollView.frame.size.height);
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
+        scrollView.bounces = NO;
         scrollView.scrollsToTop = NO;
         scrollView.delegate = self;
         
@@ -117,6 +118,8 @@
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = _pageScrollView.frame.size.width;
     int page = floor((_pageScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    
+    self.currentPage = page;
     
     // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
     [self loadScrollViewWithPage:page - 1];

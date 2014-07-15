@@ -72,7 +72,7 @@
             
             [button sizeToFit];
             
-            containerWidth += button.bounds.size.width + 5.0f;
+            containerWidth += button.bounds.size.width + 8.0f;
             
             CGRect buttonFrame = button.frame;
             

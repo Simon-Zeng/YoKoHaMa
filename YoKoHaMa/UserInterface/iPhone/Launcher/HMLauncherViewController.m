@@ -49,6 +49,7 @@
     
     HMLauncherView * launcherView = [[HMLauncherView alloc] initWithLaunchImages:laucherImages];
     launcherView.frame = bounds;
+    [launcherView layoutSubviews];
     
     [aView addSubview:launcherView];
     
@@ -77,6 +78,20 @@
 
         }
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [UIApplication sharedApplication].statusBarHidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+//    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning

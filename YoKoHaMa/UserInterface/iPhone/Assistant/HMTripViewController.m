@@ -105,6 +105,7 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.contentInset = UIEdgeInsetsZero;
     
     [aView addSubview:self.tableView];
     

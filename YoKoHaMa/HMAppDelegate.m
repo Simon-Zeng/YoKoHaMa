@@ -41,10 +41,7 @@
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:barButtonItemTitleAttribute
                                                                                             forState:UIControlStateNormal];
     
-    UIColor * cursorColor = [[UIColor colorWithRed:242.0/255
-                                             green:39.0/255
-                                              blue:131.0/255
-                                             alpha:1.0] colorWithAlphaComponent:0.3];
+    UIColor * cursorColor = [UIColor blackColor];
     
     [[UITextField appearance] setTintColor:cursorColor];
     [[UITextView appearance] setTintColor:cursorColor];

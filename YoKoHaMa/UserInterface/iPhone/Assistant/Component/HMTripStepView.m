@@ -27,7 +27,10 @@
     if (self) {
         // Initialization code
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height/2)];
-        self.titleLabel.backgroundColor = [UIColor blackColor];
+        self.titleLabel.backgroundColor = [UIColor colorWithRed:32.0/255
+                                                          green:39.0/255
+                                                           blue:72.0/255
+                                                          alpha:1.0];
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
         

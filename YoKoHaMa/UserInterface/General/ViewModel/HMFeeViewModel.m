@@ -39,19 +39,21 @@
 #pragma mark - Getters/Setters
 - (RACCommand *)calculateAverageCommand
 {
+    @weakify(self);
     RACCommand * command = [[RACCommand alloc] initWithEnabled:[self travelIsValidSignal]
                                                    signalBlock:^RACSignal *(id input) {
                                                        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+                                                           @strongify(self);
                                                            // Do calculate
-                                                           NSNumber * sum = [self.fees valueForKeyPath:@"@sum.self.cost"];
-                                                           NSNumber * count = self.travel.membersCount;
-                                                           
-                                                           if (count.longLongValue > 0)
-                                                           {
-                                                               NSNumber * avg = @(sum.longLongValue * 1.0 /count.integerValue);
-                                                               [subscriber sendNext:avg];
-                                                           }
-                                                           
+//                                                           NSNumber * sum = [self.fees valueForKeyPath:@"@sum.self.cost"];
+//                                                           NSNumber * count = self.travel.membersCount;
+//                                                           
+//                                                           if (count.longLongValue > 0)
+//                                                           {
+//                                                               NSNumber * avg = @(sum.longLongValue * 1.0 /count.integerValue);
+//                                                               [subscriber sendNext:avg];
+//                                                           }
+                                                           [subscriber sendNext:self.fees];
                                                            [subscriber sendCompleted];
                                                            
                                                            return [RACDisposable disposableWithBlock:^{
@@ -81,7 +83,7 @@
 
 - (RACSignal *)travelIsValidSignal
 {
-    RACSignal * signal = [[RACObserve(self, membersCount) switchToLatest] map:^id(id value) {
+    RACSignal * signal = [RACObserve(self, membersCount) map:^id(id value) {
         if (value && [value longLongValue] > 0)
         {
             return @(YES);

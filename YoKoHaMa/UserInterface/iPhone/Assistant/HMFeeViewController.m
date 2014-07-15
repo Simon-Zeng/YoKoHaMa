@@ -57,7 +57,7 @@
     UINavigationItem * topItem = [[UINavigationItem alloc] init];
     
     UIButton * backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"Button-Back"]
+    [backButton setBackgroundImage:[UIImage imageNamed:@"Button-Back"]
                 forState:UIControlStateNormal];
     UIBarButtonItem * logoItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
@@ -66,7 +66,7 @@
     topItem.leftBarButtonItem = logoItem;
     
     UIButton * shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareButton setImage:[UIImage imageNamed:@"Button-Share"]
+    [shareButton setBackgroundImage:[UIImage imageNamed:@"Button-Share"]
                  forState:UIControlStateNormal];
     UIBarButtonItem * dotItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
     self.shareButton = shareButton;
@@ -78,22 +78,25 @@
     
     [aView addSubview:navigationBar];
     
-    self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 98)];
+    self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 106)];
     [aView addSubview:self.addFeeView];
     
-    self.sumFeeView = [[HMSumFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 68)];
+    self.sumFeeView = [[HMSumFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 60)];
     [aView addSubview:self.sumFeeView];
     
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sumFeeView.frame), bounds.size.width, bounds.size.height-44)
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sumFeeView.frame) - 30, bounds.size.width, bounds.size.height-44)
                                                   style:UITableViewStyleGrouped];
     [self.tableView registerClass:[HMFeeTableViewCell class]
            forCellReuseIdentifier:@"Cell"];
-    
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.contentInset = UIEdgeInsetsZero;
     
     [aView addSubview:self.tableView];
+    
+    [aView sendSubviewToBack:self.tableView];
     
     self.view = aView;
 }
@@ -114,8 +117,20 @@
             [self.viewModel addFee:aFee];
         }
     }];
+    
+    [self.sumFeeView.memberCountsSignal subscribeNext:^(id x) {
+        @strongify(self);
+        self.viewModel.membersCount = x;
+    }];
 
     self.sumFeeView.calculateAverageCommand = self.viewModel.calculateAverageCommand;
+    
+    [[self.sumFeeView.calculateAverageCommand.executionSignals switchToLatest] subscribeNext:^(id x) {
+        if (x)
+        {
+            [self.sumFeeView updateWithFees:x];
+        }
+    }];
     
     [self.viewModel.updateContentSignal subscribeNext:^(id x) {
         @strongify(self);
@@ -211,6 +226,11 @@
     [cell updateWithFee:aFee];
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return NSLocalizedString(@"您已输入的费用明细清单:", nil);
 }
 
 @end

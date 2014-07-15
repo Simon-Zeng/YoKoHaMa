@@ -10,6 +10,8 @@
 
 @interface HMSumFeeView : UIView
 
+@property (nonatomic, readonly) RACSignal * memberCountsSignal;
+
 @property (nonatomic, strong) RACCommand * calculateAverageCommand; // Incoming command
 
 - (void)updateWithFees:(NSArray *)fees;
