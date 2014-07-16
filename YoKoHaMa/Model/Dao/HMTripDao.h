@@ -14,6 +14,7 @@
 
 + (NSNumber *)saveTrip:(HMTrip *)aTrip;
 
++ (NSArray *)allTrips;
 + (HMTrip *)tripWithIdentifier:(NSNumber *)identifier;
 
 + (BOOL)updateTrip:(HMTrip *)aTrip;

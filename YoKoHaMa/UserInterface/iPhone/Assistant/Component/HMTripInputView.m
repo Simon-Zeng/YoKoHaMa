@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong, readwrite) RACSubject * addTripItemSignal;
 
+@property (nonatomic, strong, readwrite) RACSubject * frameChangedSignal;
+
 @property (nonatomic, strong) RACCommand * addButtonCommand;
 
 @property (nonatomic, strong) UILabel * nameLabel;
@@ -28,24 +30,71 @@
     if (self) {
         // Initialization code
         self.addTripItemSignal = [RACSubject subject];
+        self.frameChangedSignal = [RACSubject subject];
         
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, frame.size.width, 20)];
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 3, frame.size.width, 20)];
         self.nameLabel.font = [UIFont systemFontOfSize:13.0];
+        self.nameLabel.text = NSLocalizedString(@"请添加自定义项", nil);
         self.nameLabel.textColor = [UIColor grayColor];
         
         [self addSubview:self.nameLabel];
         
-        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(10, 25, 200, 31)];
+        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(10, 25, 230, 24)];
+        self.nameField.borderStyle = UITextBorderStyleRoundedRect;
+        self.nameField.returnKeyType = UIReturnKeyDone;
         [self addSubview:self.nameField];
         
         self.addButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.addButton setImage:[UIImage imageNamed:@"Button-Add"]
                         forState:UIControlStateNormal];
+        self.addButton.frame = CGRectMake(frame.size.width-47, 25, 27, 24);
         [self addSubview:self.addButton];
         
         self.addButton.rac_command = [self addButtonCommand];
     }
     return self;
+}
+
+- (void)setInputFieldHidden:(BOOL)inputFieldHidden
+{
+    self.nameLabel.hidden = inputFieldHidden;
+    self.nameField.hidden = inputFieldHidden;
+    self.addButton.hidden = inputFieldHidden;
+    
+    [self updateLayout];
+}
+
+- (BOOL)inputFieldHidden
+{
+    return self.nameField.hidden;
+}
+
+- (void)updateLayout
+{
+    CGRect frame = self.frame;
+    
+    if (self.inputFieldHidden)
+    {
+        frame.size.height = 0;
+    }
+    else
+    {
+        frame.size.height = CGRectGetMaxY(self.addButton.frame);
+    }
+    
+    self.frame = frame;
+    
+    [(RACSubject *)self.frameChangedSignal sendNext:NSStringFromCGRect(frame)];
+}
+
+- (void)setTitle:(NSString *)title
+{
+    self.nameLabel.text = title;
+}
+
+- (NSString *)title
+{
+    return self.nameLabel.text;
 }
 
 /*

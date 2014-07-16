@@ -10,6 +10,13 @@
 
 @interface HMTripInputView : UIView
 
+
 @property (nonatomic, strong, readonly) RACSignal * addTripItemSignal;
+
+@property (nonatomic, strong, readonly) RACSignal * frameChangedSignal;
+
+//@property (nonatomic, strong) NSString * title;
+
+@property (nonatomic, assign) BOOL inputFieldHidden;
 
 @end

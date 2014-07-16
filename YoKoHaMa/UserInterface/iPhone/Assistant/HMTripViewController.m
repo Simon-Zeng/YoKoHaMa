@@ -41,6 +41,8 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 @property (nonatomic, strong) HMTripStepView * stepView;
 @property (nonatomic, strong) HMTripInputView * inputView;
 
+@property (nonatomic, strong) UILabel * tableHeaderLabel;
+
 @property (nonatomic, strong) UITableView * tableView;
 
 @end
@@ -107,6 +109,16 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     self.tableView.dataSource = self;
     self.tableView.contentInset = UIEdgeInsetsZero;
     
+    UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width, 30)];
+    UILabel * tableHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width-20, 30)];
+    tableHeaderLabel.text = NSLocalizedString(@"您已添加的检查项目", nil);
+    tableHeaderLabel.font = [UIFont systemFontOfSize:13.0];
+//    tableHeaderLabel.textColor = [UIColor whiteColor];
+    [headerView addSubview:tableHeaderLabel];
+    self.tableView.tableHeaderView = headerView;
+    self.tableHeaderLabel = tableHeaderLabel;
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    
     [aView addSubview:self.tableView];
     
     self.view = aView;
@@ -116,7 +128,6 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.listMode = TripListModeCheck;
     
     @weakify(self);
     [self.stepView.changeStepSignal subscribeNext:^(id x) {
@@ -132,6 +143,19 @@ typedef NS_ENUM(NSUInteger, TripListMode){
             [self.viewModel addItem:x];
         }
     }];
+    [self.inputView.frameChangedSignal subscribeNext:^(id x) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            @strongify(self);
+            CGRect bounds = self.view.bounds;
+            
+            CGRect tableViewFrame = self.tableView.frame;
+            tableViewFrame.origin.y = CGRectGetMaxY(self.inputView.frame);
+            tableViewFrame.size.height = bounds.size.height - CGRectGetMaxY(self.inputView.frame);
+            
+            self.tableView.frame = tableViewFrame;
+        });
+    }];
+    
     self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             @strongify(self);
@@ -163,6 +187,16 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.stepView setSelectedIndex:0];
+    self.listMode = TripListModeCheck;
+    
+    self.stepView.title = [NSString stringWithFormat:@"%@出行列表", self.viewModel.trip.name];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -187,21 +221,34 @@ typedef NS_ENUM(NSUInteger, TripListMode){
         _listMode = listMode;
     }
     
+    switch (listMode)
+    {
+        case TripListModeCheck:
+        {
+            self.tableHeaderLabel.text = NSLocalizedString(@"请在您需要的选项打勾", nil);
+        }
+            break;
+        default:
+        {
+            self.tableHeaderLabel.text = NSLocalizedString(@"您已添加的项目", nil);
+        }
+
+            break;
+    }
+    
     [self updateLayout];
     [self.tableView reloadData];
 }
 
 - (void)updateLayout
 {
-    CGRect bounds = self.view.bounds;
-    
     if (_listMode == TripListModeAdd)
     {
-        self.inputView.frame = CGRectMake(0, CGRectGetMaxY(self.stepView.frame), bounds.size.width, 50);
+        self.inputView.inputFieldHidden = NO;
     }
     else
     {
-        self.inputView.frame = CGRectZero;
+        self.inputView.inputFieldHidden = YES;
     }
     
     if (_listMode == TripListModeCheck)
@@ -212,10 +259,6 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     {
         self.shareButton.hidden = NO;
     }
-    
-    CGRect tableViewFrame = self.tableView.frame;
-    tableViewFrame.origin.y = CGRectGetMaxY(self.inputView.frame);
-    tableViewFrame.size.height = bounds.size.height - CGRectGetMaxY(self.inputView.frame);
 }
 
 #pragma mark - UITableViewDelegate
@@ -300,5 +343,6 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 {
     return [self.viewModel titleForSection:section];
 }
+
 
 @end

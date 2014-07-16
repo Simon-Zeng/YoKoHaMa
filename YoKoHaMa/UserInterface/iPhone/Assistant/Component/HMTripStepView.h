@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong, readonly) RACSignal * changeStepSignal;
 
+- (void)setSelectedIndex:(NSInteger)index;
+
 @end

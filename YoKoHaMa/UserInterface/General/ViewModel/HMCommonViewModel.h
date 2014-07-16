@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSNumber * catID;
 
 @property (nonatomic, strong, readonly) RACSignal * refreshFocusSignal;
+@property (nonatomic, strong, readonly) RACSignal * refreshTripsSignal;
 
 - (RACSignal *)refreshTypesSignalForCID:(NSNumber *)cid;
 

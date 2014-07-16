@@ -30,6 +30,26 @@
     
     return insertId;
 }
++ (NSArray *)allTrips
+{
+    NSMutableArray * allTrips = [[NSMutableArray alloc] init];
+    
+    [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
+        FMResultSet * resultSet = [db executeQuery:@"SELECT * FROM Trips"];
+        
+        while ([resultSet next])
+        {
+            HMTrip * aTrip = [[HMTrip alloc] init];
+            
+            aTrip.identifier = [resultSet objectForColumnName:@"identifier"];
+            aTrip.name = [resultSet objectForColumnName:@"name"];
+            
+            [allTrips addObject:aTrip];
+        }
+    }];
+    
+    return allTrips;
+}
 
 + (HMTrip *)tripWithIdentifier:(NSNumber *)identifier
 {

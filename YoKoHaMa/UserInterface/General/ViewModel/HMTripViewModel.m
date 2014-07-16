@@ -17,7 +17,7 @@
 
 @interface HMTripViewModel ()
 
-@property (nonatomic, strong) HMTrip * trip;
+@property (nonatomic, strong, readwrite) HMTrip * trip;
 @property (nonatomic, strong) NSMutableDictionary * itemsMap;
 @property (nonatomic, strong) NSArray * dataSource;
 
@@ -42,9 +42,38 @@
         self.cachedItemCategories = [[NSMutableDictionary alloc] init];
         
         _updateContentSignal = [RACSubject subject];
+        
+        [self loadInitialData];
     }
     
     return self;
+}
+
+- (void)loadInitialData
+{
+    NSArray * allItems = [HMTripItemDao itemsWithTripIdentifier:self.trip.identifier];
+    NSArray * allTripItems = [HMTripItemDao tripItemsWithTripIdentifier:self.trip.identifier];
+    
+    for (HMTripItem * aTripItem in allTripItems)
+    {
+        [self.cachedTripItems setObject:aTripItem forKey:aTripItem.itemIdentifier];
+    }
+    
+    for (HMItem * anItem in allItems)
+    {
+        NSMutableArray * itemsGroup = [self.itemsMap objectForKey:anItem.categoryIdentifier];
+        
+        if (!itemsGroup)
+        {
+            itemsGroup = [[NSMutableArray alloc] init];
+        }
+        
+        [itemsGroup addObject:anItem];
+        
+        [self.itemsMap setObject:itemsGroup forKey:anItem.categoryIdentifier];
+    }
+    
+    [self reloadData];
 }
 
 - (void)reloadData

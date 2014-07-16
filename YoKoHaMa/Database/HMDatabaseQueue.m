@@ -19,7 +19,7 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString * dataSupportPath = [HMSettings sharedSettings].applicationDataSupportDirectoryPathString;
+        NSString * dataSupportPath = [HMSettings sharedSettings].documentDirectoryPathString;
         NSString * projectName = [HMHelper projectName];
         
         sharedQueue = [[HMDatabaseQueue alloc] initWithPath:[dataSupportPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite3",projectName]]];
@@ -34,27 +34,39 @@
 - (void)initialization
 {
     [self inDatabase:^(FMDatabase *db) {
-        NSError * error = nil;
-        
+
         NSString * tripSQLFilePath = [[NSBundle mainBundle] pathForResource:@"trip" ofType:@"sql"];
         
-        NSString * tripSQL = [NSString stringWithContentsOfFile:tripSQLFilePath
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-        NSAssert(!error, @"Failed to get trip database structure");
+        NSArray * tripCommands = [self commandsFromFile:tripSQLFilePath];
         
+        for (NSString * aCommand in tripCommands)
+        {
+            [db executeUpdate:aCommand];
+        }
         
         NSString * feeSQLFilePath = [[NSBundle mainBundle] pathForResource:@"trip" ofType:@"sql"];
         
-        NSString * feeSQL = [NSString stringWithContentsOfFile:feeSQLFilePath
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-        NSAssert(!error, @"Failed to get fee database structure");
-
+        NSArray * feeCommands = [self commandsFromFile:feeSQLFilePath];
         
-        [db executeUpdate:tripSQL];
-        [db executeUpdate:feeSQL];
+        for (NSString * aCommand in feeCommands)
+        {
+            [db executeUpdate:aCommand];
+        }
     }];
+}
+
+- (NSArray *)commandsFromFile:(NSString *)filePath
+{
+    NSError * error = nil;
+    
+    NSString * SQLs = [NSString stringWithContentsOfFile:filePath
+                                                encoding:NSUTF8StringEncoding
+                                                   error:&error];
+    NSAssert(!error, @"Failed to get database structure: %@", filePath);
+    
+    NSArray * commands = [SQLs componentsSeparatedByString:@"\n\n"];
+    
+    return commands;
 }
 
 @end

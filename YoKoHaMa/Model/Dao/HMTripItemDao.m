@@ -9,6 +9,7 @@
 #import "HMTripItemDao.h"
 
 #import "HMDatabaseQueue.h"
+#import "HMItem.h"
 
 @implementation HMTripItemDao
 
@@ -59,6 +60,32 @@
     }];
     
     return aTripItem;
+}
+
++ (NSArray *)itemsWithTripIdentifier:(NSNumber *)tripIdentifier
+{
+    NSMutableArray * tripItems = [NSMutableArray array];
+    
+    [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
+        FMResultSet * resultSet = [db executeQuery:@"SELECT * FROM Items WHERE identifier IN (SELECT itemIdentifier FROM TripItems WHERE tripIdentifier == :tripIdentifier)"
+                           withParameterDictionary:(@{
+                                                      @"tripIdentifier": tripIdentifier
+                                                      })];
+        
+        while ([resultSet next])
+        {
+            HMItem * anItem = [[HMItem alloc] init];
+            
+            anItem.identifier = [resultSet objectForColumnName:@"identifier"];
+            anItem.categoryIdentifier = [resultSet objectForColumnName:@"categoryIdentifier"];
+            anItem.name       = [resultSet objectForColumnName:@"name"];
+            
+            [tripItems addObject:anItem];
+        }
+    }];
+    
+    return tripItems;
+
 }
 
 + (NSArray *)tripItemsWithTripIdentifier:(NSNumber *)tripIdentifier

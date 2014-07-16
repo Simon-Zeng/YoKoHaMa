@@ -26,22 +26,33 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height/2)];
-        self.titleLabel.backgroundColor = [UIColor colorWithRed:32.0/255
-                                                          green:39.0/255
-                                                           blue:72.0/255
-                                                          alpha:1.0];
+        self.backgroundColor = [UIColor colorWithRed:32.0/255
+                                               green:39.0/255
+                                                blue:72.0/255
+                                               alpha:1.0];
+
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, frame.size.width, frame.size.height/2)];
         self.titleLabel.textColor = [UIColor whiteColor];
-        self.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+        self.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
         
         [self addSubview:self.titleLabel];
         
         self.segmentedControl = [[UISegmentedControl alloc] initWithItems:(@[
                                                                              NSLocalizedString(@"1, 检查出行列表", nil),
-                                                                             NSLocalizedString(@"2, 添加自定义选项", nil),
-                                                                             NSLocalizedString(@"1, 我的出行列表", nil)
+                                                                             NSLocalizedString(@"2, 添加自定义项", nil),
+                                                                             NSLocalizedString(@"3, 我的出行列表", nil)
                                                                              ])];
-        self.segmentedControl.tintColor = [UIColor blackColor];
+        self.segmentedControl.frame = CGRectMake(0, frame.size.height/2, frame.size.width, frame.size.height/2);
+        self.segmentedControl.tintColor = [UIColor whiteColor];
+        [self.segmentedControl setTitleTextAttributes:(@{
+                                                         NSFontAttributeName: [UIFont systemFontOfSize:12]
+                                                         })
+                                             forState:UIControlStateSelected];
+        [self.segmentedControl setTitleTextAttributes:(@{
+                                                         NSFontAttributeName: [UIFont systemFontOfSize:12]
+                                                         })
+                                             forState:UIControlStateNormal];
+        
         [self addSubview:self.segmentedControl];
         
         self.changeStepSignal = [RACSubject subject];
@@ -66,6 +77,11 @@
 - (NSString *)title
 {
     return self.titleLabel.text;
+}
+
+- (void)setSelectedIndex:(NSInteger)index
+{
+    self.segmentedControl.selectedSegmentIndex = index;
 }
 
 /*

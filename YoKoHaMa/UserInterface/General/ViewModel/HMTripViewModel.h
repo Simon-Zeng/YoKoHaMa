@@ -12,9 +12,11 @@
 
 @class HMItem;
 @class HMTripItem;
+@class HMTrip;
 
 @interface HMTripViewModel : HMBasicViewModel
 
+@property (nonatomic, strong, readonly) HMTrip * trip;
 @property (nonatomic, readonly) RACSignal * updateContentSignal;
 
 - (instancetype)initWithTripIdentifier:(NSNumber *)tid;

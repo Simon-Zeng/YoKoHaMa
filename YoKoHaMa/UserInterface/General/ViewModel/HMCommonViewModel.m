@@ -12,6 +12,7 @@
 #import "HMFocus.h"
 #import "HMHelper.h"
 #import "HMTrip.h"
+#import "HMTripDao.h"
 
 #import "HMNetwork.h"
 
@@ -53,6 +54,23 @@
         }];
     }];
 }
+
+- (RACSignal *)refreshTripsSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        NSArray * allTrips = [HMTripDao allTrips];
+        
+        [subscriber sendNext:allTrips];
+        
+        [subscriber sendCompleted];
+        
+        return [RACDisposable disposableWithBlock:^{
+            
+        }];
+    }];
+}
+
 
 - (RACSignal *)refreshTypesSignalForCID:(NSNumber *)cid
 {

@@ -17,6 +17,8 @@
 + (HMTripItem *)tripItemWithTripIdentifier:(NSNumber *)identifier
                             itemIdentifier:(NSNumber *)itemIdentifier;
 
++ (NSArray *)itemsWithTripIdentifier:(NSNumber *)tripIdentifier;
+
 + (NSArray *)tripItemsWithTripIdentifier:(NSNumber *)tripIdentifier;
 
 + (BOOL)updateTripItem:(HMTripItem *)aTripItem;
