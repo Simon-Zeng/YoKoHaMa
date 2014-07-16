@@ -16,6 +16,7 @@
 
 #import "HMAddFeeView.h"
 #import "HMSumFeeView.h"
+#import "HMNavigationView.h"
 
 #import "HMFeeTableViewCell.h"
 
@@ -24,9 +25,7 @@
 
 @property (nonatomic, strong) HMFeeViewModel * viewModel;
 
-@property (nonatomic, strong) UIButton * backButton;
-@property (nonatomic, strong) UIButton * shareButton;
-
+@property (nonatomic, strong) HMNavigationView * navigationBar;
 @property (nonatomic, strong) HMAddFeeView * addFeeView;
 @property (nonatomic, strong) HMSumFeeView * sumFeeView;
 
@@ -53,30 +52,9 @@
     
     UIView * aView = [[UIView alloc] initWithFrame:bounds];
     
-    
-    UINavigationItem * topItem = [[UINavigationItem alloc] init];
-    
-    UIButton * backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"Button-Back"]
-                forState:UIControlStateNormal];
-    UIBarButtonItem * logoItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    
-    self.backButton = backButton;
-    
-    topItem.leftBarButtonItem = logoItem;
-    
-    UIButton * shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareButton setBackgroundImage:[UIImage imageNamed:@"Button-Share"]
-                 forState:UIControlStateNormal];
-    UIBarButtonItem * dotItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
-    self.shareButton = shareButton;
-    
-    topItem.rightBarButtonItem = dotItem;
-    
-    UINavigationBar * navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
-    navigationBar.items = @[topItem];
-    
-    [aView addSubview:navigationBar];
+    self.navigationBar = [[HMNavigationView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
+    self.navigationBar.shareButtonEnabled = YES;
+    [aView addSubview:self.navigationBar];
     
     self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 106)];
     [aView addSubview:self.addFeeView];
@@ -141,34 +119,22 @@
             [self.tableView reloadData];
         }
     }];
-    self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            @strongify(self);
-            
+    [self.navigationBar.backSignal subscribeNext:^(id x) {
+        @strongify(self);
+        if ([x boolValue])
+        {
             [self.viewModel back];
-            
-            // Delay this to avoid multi-touch on back button
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [subscriber sendCompleted];
-            });
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+        }
     }];
-    self.shareButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            @strongify(self);
+    
+    [self.navigationBar.shareSignal subscribeNext:^(id x) {
+        @strongify(self);
+        if ([x boolValue])
+        {
             UIImage * screenShot = [HMHelper screenShot:self.view];
             
             [self.viewModel shareImage:screenShot];
-            [subscriber sendCompleted];
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+        }
     }];
 }
 

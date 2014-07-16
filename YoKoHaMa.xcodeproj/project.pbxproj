@@ -75,6 +75,7 @@
 		A96EDFD51973D49D007715F4 /* fee.sql in Resources */ = {isa = PBXBuildFile; fileRef = A96EDFD31973D49D007715F4 /* fee.sql */; };
 		A96EDFD61973D49D007715F4 /* trip.sql in Resources */ = {isa = PBXBuildFile; fileRef = A96EDFD41973D49D007715F4 /* trip.sql */; };
 		A96EDFD91973D4C5007715F4 /* HMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFD81973D4C5007715F4 /* HMDatabaseQueue.m */; };
+		A9ACE9751976511600AAA7F3 /* HMNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9ACE9741976511600AAA7F3 /* HMNavigationView.m */; };
 		D1C53798B4004B9780F9FE09 /* libPods-YoKoHaMaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB773CEC68F4410B4B73FB0 /* libPods-YoKoHaMaTests.a */; };
 /* End PBXBuildFile section */
 
@@ -213,6 +214,8 @@
 		A96EDFD41973D49D007715F4 /* trip.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = trip.sql; sourceTree = "<group>"; };
 		A96EDFD71973D4C5007715F4 /* HMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDatabaseQueue.h; sourceTree = "<group>"; };
 		A96EDFD81973D4C5007715F4 /* HMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDatabaseQueue.m; sourceTree = "<group>"; };
+		A9ACE9731976511600AAA7F3 /* HMNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNavigationView.h; sourceTree = "<group>"; };
+		A9ACE9741976511600AAA7F3 /* HMNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMNavigationView.m; sourceTree = "<group>"; };
 		ADB773CEC68F4410B4B73FB0 /* libPods-YoKoHaMaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YoKoHaMaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71CEFF9604A4D5889E14A2C /* Pods-YoKoHaMaTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoKoHaMaTests.xcconfig"; path = "Pods/Pods-YoKoHaMaTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -523,6 +526,8 @@
 				530AE1EB19711A67002D69FD /* HMListMenuView.m */,
 				530AE1ED19711A8F002D69FD /* HMGridContentView.h */,
 				530AE1EE19711A8F002D69FD /* HMGridContentView.m */,
+				A9ACE9731976511600AAA7F3 /* HMNavigationView.h */,
+				A9ACE9741976511600AAA7F3 /* HMNavigationView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -810,6 +815,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53B239BB196AD2EF0071E92E /* UIImage+StackBlur.m in Sources */,
+				A9ACE9751976511600AAA7F3 /* HMNavigationView.m in Sources */,
 				53659CA01974B1560030F4CC /* HMTripInputView.m in Sources */,
 				5365ADE6196AC38900146C54 /* main.m in Sources */,
 				53659C83197409A40030F4CC /* HMFeeViewController.m in Sources */,

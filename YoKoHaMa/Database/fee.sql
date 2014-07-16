@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS Travels (
     averageCost INTEGER DEFAULT 0
 );
 
- -- Initialize data
+-- Initialize data
 

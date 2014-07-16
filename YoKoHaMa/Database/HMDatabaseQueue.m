@@ -34,14 +34,17 @@
 - (void)initialization
 {
     [self inDatabase:^(FMDatabase *db) {
-
-        NSString * tripSQLFilePath = [[NSBundle mainBundle] pathForResource:@"trip" ofType:@"sql"];
+        
+        NSString * tripSQLFilePath = [[NSBundle mainBundle] pathForResource:@"fee" ofType:@"sql"];
         
         NSArray * tripCommands = [self commandsFromFile:tripSQLFilePath];
         
         for (NSString * aCommand in tripCommands)
         {
-            [db executeUpdate:aCommand];
+            if (![aCommand hasPrefix:@"--"])
+            {
+                [db executeUpdate:aCommand];
+            }
         }
         
         NSString * feeSQLFilePath = [[NSBundle mainBundle] pathForResource:@"trip" ofType:@"sql"];
@@ -50,7 +53,36 @@
         
         for (NSString * aCommand in feeCommands)
         {
-            [db executeUpdate:aCommand];
+            if (![aCommand hasPrefix:@"--"] && ![aCommand hasPrefix:@"INSERT"])
+            {
+                [db executeUpdate:aCommand];
+            }
+        }
+        
+        
+        BOOL hasInitialized = NO;
+        
+        FMResultSet * result = [db executeQuery:@"SELECT COUNT(*) FROM Trips"];
+        
+        while ([result next])
+        {
+            NSInteger numberOfTrips = [result intForColumnIndex:0];
+            
+            if (numberOfTrips > 0)
+            {
+                hasInitialized = YES;
+            }
+        }
+        
+        if (!hasInitialized)
+        {
+            for (NSString * aCommand in feeCommands)
+            {
+                if ([aCommand hasPrefix:@"INSERT"])
+                {
+                    [db executeUpdate:aCommand];
+                }
+            }
         }
     }];
 }

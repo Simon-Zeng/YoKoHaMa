@@ -26,16 +26,20 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor colorWithRed:32.0/255
-                                               green:39.0/255
-                                                blue:72.0/255
-                                               alpha:1.0];
-
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, frame.size.width, frame.size.height/2)];
+        self.backgroundColor = [UIColor whiteColor];
+        
+        UIView * titleBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height/2)];
+        titleBackgroundView.backgroundColor = [UIColor colorWithRed:32.0/255
+                                                              green:39.0/255
+                                                               blue:72.0/255
+                                                              alpha:1.0];
+        
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, titleBackgroundView.bounds.size.width - 20, titleBackgroundView.bounds.size.height)];
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
         
-        [self addSubview:self.titleLabel];
+        [titleBackgroundView addSubview:self.titleLabel];
+        [self addSubview:titleBackgroundView];
         
         self.segmentedControl = [[UISegmentedControl alloc] initWithItems:(@[
                                                                              NSLocalizedString(@"1, 检查出行列表", nil),

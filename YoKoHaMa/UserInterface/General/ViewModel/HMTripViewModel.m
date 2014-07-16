@@ -43,6 +43,8 @@
         
         _updateContentSignal = [RACSubject subject];
         
+        _listMode = TripListModeCheck;
+        
         [self loadInitialData];
     }
     
@@ -87,6 +89,39 @@
 
 #pragma mark - Getters/Setters
 
+-(RACCommand *) saveCommand
+{
+    return [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            
+            // Save
+            
+            [subscriber sendCompleted];
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
+    }];
+}
+
+-(RACCommand *) recheckCommand
+{
+    @weakify(self);
+    return [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            @strongify(self);
+            
+            self.listMode = TripListModeCheck;
+            
+            [subscriber sendCompleted];
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
+        }];
+    }];
+}
 
 #pragma mark - Public Methods
 - (void)addItem:(HMItem *)aItem

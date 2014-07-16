@@ -9,6 +9,7 @@
 #import "HMWebViewController.h"
 
 #import "SVProgressHUD.h"
+#import "HMNavigationView.h"
 
 #import "HMHelper.h"
 #import "HMCommonViewModel.h"
@@ -17,6 +18,7 @@
 
 @property (nonatomic, strong) HMCommonViewModel * viewModel;
 
+@property (nonatomic, strong) HMNavigationView * navigationBar;
 @property (nonatomic, strong) UIWebView * webView;
 
 @end
@@ -37,29 +39,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    UINavigationItem * topItem = [[UINavigationItem alloc] init];
-    
-    
-    UIButton * backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"Button-Back"]
-                          forState:UIControlStateNormal];
-    UIBarButtonItem * logoItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    
-    topItem.leftBarButtonItem = logoItem;
-    
-    UIButton * shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareButton setImage:[UIImage imageNamed:@"Button-Share"]
-                forState:UIControlStateNormal];
-    UIBarButtonItem * dotItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
-    
-    topItem.rightBarButtonItem = dotItem;
-    
     CGRect bounds = self.view.bounds;
-    UINavigationBar * navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
-    navigationBar.items = @[topItem];
     
-    [self.view addSubview:navigationBar];
+    self.navigationBar = [[HMNavigationView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
+    self.navigationBar.shareButtonEnabled = YES;
+    [self.view addSubview:self.navigationBar];
     
     UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, bounds.size.height-44)];
     webView.delegate = self;
@@ -69,34 +53,20 @@
     self.webView = webView;
     
     @weakify(self);
-    backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            @strongify(self);
-            
+    [self.navigationBar.backSignal subscribeNext:^(id x) {
+        @strongify(self);
+        if ([x boolValue])
+        {
             [self.viewModel back];
-            
-            // Delay this to avoid multi-touch on back button
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [subscriber sendCompleted];
-            });
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+        }
     }];
     
-    shareButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            @strongify(self);
-            
+    [self.navigationBar.shareSignal subscribeNext:^(id x) {
+        @strongify(self);
+        if ([x boolValue])
+        {
             [self.viewModel shareURLString:self.webView.request.URL.absoluteString];
-            [subscriber sendCompleted];
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+        }
     }];
 }
 

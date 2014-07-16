@@ -14,10 +14,21 @@
 @class HMTripItem;
 @class HMTrip;
 
+typedef NS_ENUM(NSUInteger, TripListMode){
+    TripListModeCheck,
+    TripListModeAdd,
+    TripListModeDone
+};
+
 @interface HMTripViewModel : HMBasicViewModel
 
-@property (nonatomic, strong, readonly) HMTrip * trip;
+@property (nonatomic, readonly) HMTrip * trip;
 @property (nonatomic, readonly) RACSignal * updateContentSignal;
+
+@property (nonatomic, readonly) RACCommand * saveCommand;
+@property (nonatomic, readonly) RACCommand * recheckCommand;
+
+@property (nonatomic, assign) TripListMode listMode;
 
 - (instancetype)initWithTripIdentifier:(NSNumber *)tid;
 

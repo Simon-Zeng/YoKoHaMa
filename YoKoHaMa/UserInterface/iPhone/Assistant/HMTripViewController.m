@@ -18,23 +18,16 @@
 
 #import "HMTripStepView.h"
 #import "HMTripInputView.h"
+#import "HMNavigationView.h"
 
 #import "HMTripCheckItemTableViewCell.h"
 #import "HMTripAddItemTableViewCell.h"
 #import "HMTripListItemTableViewCell.h"
 
-typedef NS_ENUM(NSUInteger, TripListMode){
-    TripListModeCheck,
-    TripListModeAdd,
-    TripListModeDone
-};
-
 @interface HMTripViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, assign) TripListMode listMode;
+@property (nonatomic, strong) HMNavigationView * navigationBar;
 
-@property (nonatomic, strong) UIButton * backButton;
-@property (nonatomic, strong) UIButton * shareButton;
 @property (nonatomic, strong) UIButton * saveButton;
 @property (nonatomic, strong) UIButton * recheckButton;
 
@@ -65,30 +58,9 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     
     UIView * aView = [[UIView alloc] initWithFrame:bounds];
     
-    
-    UINavigationItem * topItem = [[UINavigationItem alloc] init];
-
-    UIButton * backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"Button-Back"]
-                forState:UIControlStateNormal];
-    UIBarButtonItem * logoItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    
-    self.backButton = backButton;
-    
-    topItem.leftBarButtonItem = logoItem;
-    
-    UIButton * shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareButton setImage:[UIImage imageNamed:@"Button-Share"]
-                 forState:UIControlStateNormal];
-    UIBarButtonItem * dotItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
-    self.shareButton = shareButton;
-    
-    topItem.rightBarButtonItem = dotItem;
-    
-    UINavigationBar * navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
-    navigationBar.items = @[topItem];
-    
-    [aView addSubview:navigationBar];
+    self.navigationBar = [[HMNavigationView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
+    self.navigationBar.shareButtonEnabled = YES;
+    [aView addSubview:self.navigationBar];
     
     self.stepView = [[HMTripStepView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 60)];
     [aView addSubview:self.stepView];
@@ -107,17 +79,37 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.contentInset = UIEdgeInsetsZero;
     
+    // Table Header View
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width, 30)];
     UILabel * tableHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width-20, 30)];
     tableHeaderLabel.text = NSLocalizedString(@"您已添加的检查项目", nil);
     tableHeaderLabel.font = [UIFont systemFontOfSize:13.0];
-//    tableHeaderLabel.textColor = [UIColor whiteColor];
     [headerView addSubview:tableHeaderLabel];
     self.tableView.tableHeaderView = headerView;
     self.tableHeaderLabel = tableHeaderLabel;
-    self.tableView.backgroundColor = [UIColor whiteColor];
+    
+    // Table Footer View
+    UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width, 34)];
+    self.saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.saveButton setTitle:NSLocalizedString(@"保存", nil)
+                     forState:UIControlStateNormal];
+    self.saveButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
+    self.saveButton.frame = CGRectMake(90, 3, 60, 28);
+    
+    [footerView addSubview:self.saveButton];
+    
+    self.recheckButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.recheckButton setTitle:NSLocalizedString(@"重新检查", nil)
+                     forState:UIControlStateNormal];
+    self.recheckButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
+    self.recheckButton.frame = CGRectMake(90, 3, 80, 28);
+    
+    [footerView addSubview:self.recheckButton];
+    
+    self.tableView.tableHeaderView = footerView;
     
     [aView addSubview:self.tableView];
     
@@ -133,7 +125,7 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     [self.stepView.changeStepSignal subscribeNext:^(id x) {
         @strongify(self);
         TripListMode listMode = (TripListMode)[x longLongValue];
-        self.listMode = listMode;
+        self.viewModel.listMode = listMode;
     }];
     
     [self.inputView.addTripItemSignal subscribeNext:^(id x) {
@@ -155,35 +147,46 @@ typedef NS_ENUM(NSUInteger, TripListMode){
             self.tableView.frame = tableViewFrame;
         });
     }];
-    
-    self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            @strongify(self);
-            
+    [self.navigationBar.backSignal subscribeNext:^(id x) {
+        @strongify(self);
+        if ([x boolValue])
+        {
             [self.viewModel back];
-            
-            // Delay this to avoid multi-touch on back button
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [subscriber sendCompleted];
-            });
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+        }
     }];
-    self.shareButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            @strongify(self);
+    
+    [self.navigationBar.shareSignal subscribeNext:^(id x) {
+        @strongify(self);
+        if ([x boolValue])
+        {
             UIImage * screenShot = [HMHelper screenShot:self.view];
             
             [self.viewModel shareImage:screenShot];
-            [subscriber sendCompleted];
+        }
+    }];
+    
+    [RACObserve(self.viewModel, listMode) subscribeNext:^(id x) {
+        @strongify(self);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            TripListMode mode = (TripListMode)[x longLongValue];
+            switch (mode)
+            {
+                case TripListModeCheck:
+                {
+                    self.tableHeaderLabel.text = NSLocalizedString(@"请在您需要的选项打勾", nil);
+                }
+                    break;
+                default:
+                {
+                    self.tableHeaderLabel.text = NSLocalizedString(@"您已添加的项目", nil);
+                }
+                    
+                    break;
+            }
             
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
+            [self updateLayout];
+            [self.tableView reloadData];
+        });
     }];
 }
 
@@ -192,7 +195,6 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     [super viewWillAppear:animated];
     
     [self.stepView setSelectedIndex:0];
-    self.listMode = TripListModeCheck;
     
     self.stepView.title = [NSString stringWithFormat:@"%@出行列表", self.viewModel.trip.name];
 }
@@ -214,35 +216,12 @@ typedef NS_ENUM(NSUInteger, TripListMode){
  }
  */
 
-- (void)setListMode:(TripListMode)listMode
-{
-    if (_listMode != listMode)
-    {
-        _listMode = listMode;
-    }
-    
-    switch (listMode)
-    {
-        case TripListModeCheck:
-        {
-            self.tableHeaderLabel.text = NSLocalizedString(@"请在您需要的选项打勾", nil);
-        }
-            break;
-        default:
-        {
-            self.tableHeaderLabel.text = NSLocalizedString(@"您已添加的项目", nil);
-        }
-
-            break;
-    }
-    
-    [self updateLayout];
-    [self.tableView reloadData];
-}
 
 - (void)updateLayout
 {
-    if (_listMode == TripListModeAdd)
+    TripListMode mode = self.viewModel.listMode;
+    
+    if (mode == TripListModeAdd)
     {
         self.inputView.inputFieldHidden = NO;
     }
@@ -251,20 +230,22 @@ typedef NS_ENUM(NSUInteger, TripListMode){
         self.inputView.inputFieldHidden = YES;
     }
     
-    if (_listMode == TripListModeCheck)
+    if (mode == TripListModeCheck)
     {
-        self.shareButton.hidden = YES;
+        self.navigationBar.shareButtonEnabled = NO;
     }
     else
     {
-        self.shareButton.hidden = NO;
+        self.navigationBar.shareButtonEnabled = YES;
     }
 }
 
 #pragma mark - UITableViewDelegate
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.listMode == TripListModeAdd)
+    TripListMode mode = self.viewModel.listMode;
+    
+    if (mode == TripListModeAdd)
     {
         return UITableViewCellEditingStyleDelete;
     }
@@ -274,13 +255,31 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.listMode == TripListModeAdd &&
+    TripListMode mode = self.viewModel.listMode;
+    
+    if (mode == TripListModeAdd &&
         editingStyle == UITableViewCellEditingStyleDelete)
     {
         HMTripItem * anItem = [self.viewModel itemAtIndexPath:indexPath];
         
         [self.viewModel removeTripItem:anItem];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HMTripItem * tripItem = [self.viewModel itemAtIndexPath:indexPath];
+    
+    if ([tripItem.state boolValue])
+    {
+        tripItem.state = @0;
+    }
+    else
+    {
+        tripItem.state = @1;
+    }
+    
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - UITableViewDataSource
@@ -300,7 +299,9 @@ typedef NS_ENUM(NSUInteger, TripListMode){
     
     HMTripItem * tripItem = [self.viewModel itemAtIndexPath:indexPath];
     
-    switch (self.listMode)
+    TripListMode mode = self.viewModel.listMode;
+    
+    switch (mode)
     {
         case TripListModeCheck:
         {
@@ -343,6 +344,5 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 {
     return [self.viewModel titleForSection:section];
 }
-
 
 @end
