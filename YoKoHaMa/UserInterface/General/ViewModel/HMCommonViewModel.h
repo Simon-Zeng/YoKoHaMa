@@ -16,11 +16,13 @@
 @property (nonatomic, strong) NSNumber * catID;
 
 @property (nonatomic, strong, readonly) RACSignal * refreshFocusSignal;
+@property (nonatomic, strong, readonly) RACSignal * refreshRoutesSignal;
+@property (nonatomic, strong, readonly) RACSignal * refreshRoadsSignal;
 @property (nonatomic, strong, readonly) RACSignal * refreshTripsSignal;
 
-- (RACSignal *)refreshTypesSignalForCID:(NSNumber *)cid;
+- (void)showRoute:(NSNumber *)routeIdentifier;
+- (void)showRoad:(NSNumber *)roadIdentifier;
 
-- (void)showListFor:(NSString *)stype withCatID:(NSNumber *)cid;
 - (void)showDetailForFocus:(HMFocus *)focus;
 
 - (void)showDetailForListCommand:(NSString *)command;

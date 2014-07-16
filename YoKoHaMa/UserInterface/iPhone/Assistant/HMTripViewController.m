@@ -10,7 +10,6 @@
 
 #import "HMTrip.h"
 #import "HMItem.h"
-#import "HMTripItem.h"
 
 #import "HMHelper.h"
 
@@ -19,6 +18,7 @@
 #import "HMTripStepView.h"
 #import "HMTripInputView.h"
 #import "HMNavigationView.h"
+#import "HMTripHeaderView.h"
 
 #import "HMTripCheckItemTableViewCell.h"
 #import "HMTripAddItemTableViewCell.h"
@@ -29,7 +29,6 @@
 @property (nonatomic, strong) HMNavigationView * navigationBar;
 
 @property (nonatomic, strong) UIButton * saveButton;
-@property (nonatomic, strong) UIButton * recheckButton;
 
 @property (nonatomic, strong) HMTripStepView * stepView;
 @property (nonatomic, strong) HMTripInputView * inputView;
@@ -69,13 +68,15 @@
     [aView addSubview:self.inputView];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.inputView.frame), bounds.size.width, bounds.size.height-44)
-                                                  style:UITableViewStyleGrouped];
+                                                  style:UITableViewStylePlain];
     [self.tableView registerClass:[HMTripAddItemTableViewCell class]
            forCellReuseIdentifier:@"AddCell"];
     [self.tableView registerClass:[HMTripCheckItemTableViewCell class]
            forCellReuseIdentifier:@"CheckCell"];
     [self.tableView registerClass:[HMTripListItemTableViewCell class]
            forCellReuseIdentifier:@"ListCell"];
+    [self.tableView registerClass:[HMTripHeaderView class]
+forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -87,6 +88,8 @@
     UILabel * tableHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width-20, 30)];
     tableHeaderLabel.text = NSLocalizedString(@"您已添加的检查项目", nil);
     tableHeaderLabel.font = [UIFont systemFontOfSize:13.0];
+    tableHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    tableHeaderLabel.textColor = [UIColor redColor];
     [headerView addSubview:tableHeaderLabel];
     self.tableView.tableHeaderView = headerView;
     self.tableHeaderLabel = tableHeaderLabel;
@@ -94,22 +97,14 @@
     // Table Footer View
     UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width, 34)];
     self.saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.saveButton setTitle:NSLocalizedString(@"保存", nil)
+    [self.saveButton setTitle:NSLocalizedString(@"下一步，添加自定义项", nil)
                      forState:UIControlStateNormal];
     self.saveButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
-    self.saveButton.frame = CGRectMake(90, 3, 60, 28);
+    self.saveButton.frame = CGRectMake(80, 3, 160, 28);
     
     [footerView addSubview:self.saveButton];
     
-    self.recheckButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.recheckButton setTitle:NSLocalizedString(@"重新检查", nil)
-                     forState:UIControlStateNormal];
-    self.recheckButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
-    self.recheckButton.frame = CGRectMake(90, 3, 80, 28);
-    
-    [footerView addSubview:self.recheckButton];
-    
-    self.tableView.tableHeaderView = footerView;
+    self.tableView.tableFooterView = footerView;
     
     [aView addSubview:self.tableView];
     
@@ -126,13 +121,18 @@
         @strongify(self);
         TripListMode listMode = (TripListMode)[x longLongValue];
         self.viewModel.listMode = listMode;
+        [self.stepView setSelectedIndex:listMode];
     }];
     
     [self.inputView.addTripItemSignal subscribeNext:^(id x) {
         @strongify(self);
-        if ([x isKindOfClass:[HMItem class]])
+        if ([x isKindOfClass:[NSString class]] && [x length] > 0)
         {
-            [self.viewModel addItem:x];
+            HMItem * anItem = [[HMItem alloc] init];
+            anItem.identifier = nil;
+            anItem.name = x;
+            
+            [self.viewModel addItem:anItem];
         }
     }];
     [self.inputView.frameChangedSignal subscribeNext:^(id x) {
@@ -165,9 +165,18 @@
         }
     }];
     
+    [self.viewModel.updateContentSignal subscribeNext:^(id x) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            @strongify(self);
+            [self.tableView reloadData];
+        });
+    }];
+    
     [RACObserve(self.viewModel, listMode) subscribeNext:^(id x) {
         @strongify(self);
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self.view endEditing:YES];
+            
             TripListMode mode = (TripListMode)[x longLongValue];
             switch (mode)
             {
@@ -188,6 +197,8 @@
             [self.tableView reloadData];
         });
     }];
+    
+    self.saveButton.rac_command = self.viewModel.saveCommand;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -227,15 +238,18 @@
     }
     else
     {
-        self.inputView.inputFieldHidden = YES;
-    }
+        self.inputView.inputFieldHidden = YES;    }
     
     if (mode == TripListModeCheck)
     {
+        self.tableView.tableHeaderView.hidden = NO;
+        self.tableView.tableFooterView.hidden = NO;
         self.navigationBar.shareButtonEnabled = NO;
     }
     else
     {
+        self.tableView.tableHeaderView.hidden = YES;
+        self.tableView.tableFooterView.hidden = YES;
         self.navigationBar.shareButtonEnabled = YES;
     }
 }
@@ -260,15 +274,15 @@
     if (mode == TripListModeAdd &&
         editingStyle == UITableViewCellEditingStyleDelete)
     {
-        HMTripItem * anItem = [self.viewModel itemAtIndexPath:indexPath];
+        HMItem * anItem = [self.viewModel itemAtIndexPath:indexPath];
         
-        [self.viewModel removeTripItem:anItem];
+        [self.viewModel removeItem:anItem];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMTripItem * tripItem = [self.viewModel itemAtIndexPath:indexPath];
+    HMItem * tripItem = [self.viewModel itemAtIndexPath:indexPath];
     
     if ([tripItem.state boolValue])
     {
@@ -297,7 +311,7 @@
 {
     UITableViewCell * cell = nil;
     
-    HMTripItem * tripItem = [self.viewModel itemAtIndexPath:indexPath];
+    HMItem * tripItem = [self.viewModel itemAtIndexPath:indexPath];
     
     TripListMode mode = self.viewModel.listMode;
     
@@ -340,9 +354,17 @@
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [self.viewModel titleForSection:section];
+    CGRect bounds = tableView.bounds;
+    
+    HMTripHeaderView * headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"TripHeader"];
+    headerView.frame = CGRectMake(0, 0, bounds.size.width, 44);
+//    headerView.contentView.backgroundColor = [UIColor redColor];
+    headerView.textLabel.text = [self.viewModel titleForSection:section];
+    headerView.textLabel.textColor = [UIColor grayColor];
+    
+    return headerView;
 }
 
 @end

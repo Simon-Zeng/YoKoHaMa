@@ -15,12 +15,14 @@
 @property (nonatomic, strong) NSNumber * identifier;
 @property (nonatomic, strong) NSNumber * categoryIdentifier;
 @property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSNumber * state;
 
 @end
 
 @interface HMItemCategory : NSObject<HMEntity>
 
 @property (nonatomic, strong) NSNumber * identifier;
+@property (nonatomic, strong) NSNumber * tripIdentifier;
 @property (nonatomic, strong) NSString * name;
 
 @end

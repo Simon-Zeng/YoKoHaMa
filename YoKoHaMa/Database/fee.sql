@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Fees (
     travelIdentifier INTEGER NOT NULL,
     name TEXT NOT NULL,
     cost INTEGER DEFAULT 0,
-    desc TEXT DEFAULT '',
+    desc TEXT DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS Travels (

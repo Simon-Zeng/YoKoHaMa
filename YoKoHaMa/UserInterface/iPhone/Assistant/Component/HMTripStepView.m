@@ -49,14 +49,21 @@
         self.segmentedControl.frame = CGRectMake(0, frame.size.height/2, frame.size.width, frame.size.height/2);
         self.segmentedControl.tintColor = [UIColor whiteColor];
         [self.segmentedControl setTitleTextAttributes:(@{
+                                                         NSForegroundColorAttributeName: [UIColor blackColor],
                                                          NSFontAttributeName: [UIFont systemFontOfSize:12]
                                                          })
                                              forState:UIControlStateSelected];
         [self.segmentedControl setTitleTextAttributes:(@{
+                                                         NSForegroundColorAttributeName: [UIColor whiteColor],
                                                          NSFontAttributeName: [UIFont systemFontOfSize:12]
                                                          })
                                              forState:UIControlStateNormal];
-        
+        [self.segmentedControl setBackgroundImage:[UIImage imageNamed:@"Button-Background"]
+                                         forState:UIControlStateNormal
+                                       barMetrics:UIBarMetricsDefault];
+        [self.segmentedControl setBackgroundImage:[UIImage imageNamed:@"Button-Blank"]
+                                         forState:UIControlStateSelected
+                                       barMetrics:UIBarMetricsDefault];
         [self addSubview:self.segmentedControl];
         
         self.changeStepSignal = [RACSubject subject];

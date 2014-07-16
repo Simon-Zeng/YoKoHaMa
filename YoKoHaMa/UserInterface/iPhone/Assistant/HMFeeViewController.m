@@ -113,11 +113,13 @@
     [self.viewModel.updateContentSignal subscribeNext:^(id x) {
         @strongify(self);
         
-        if ([x isKindOfClass:[NSArray class]])
-        {
-            [self.sumFeeView updateWithFees:x];
-            [self.tableView reloadData];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([x isKindOfClass:[NSArray class]])
+            {
+                [self.sumFeeView updateWithFees:x];
+                [self.tableView reloadData];
+            }
+        });
     }];
     [self.navigationBar.backSignal subscribeNext:^(id x) {
         @strongify(self);

@@ -28,7 +28,7 @@
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+        titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
         
         [self.contentView addSubview:titleLabel];
         

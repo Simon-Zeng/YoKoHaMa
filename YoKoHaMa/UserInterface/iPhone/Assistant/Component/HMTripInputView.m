@@ -8,7 +8,7 @@
 
 #import "HMTripInputView.h"
 
-@interface HMTripInputView ()
+@interface HMTripInputView ()<UITextFieldDelegate>
 
 @property (nonatomic, strong, readwrite) RACSubject * addTripItemSignal;
 
@@ -39,9 +39,10 @@
         
         [self addSubview:self.nameLabel];
         
-        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(10, 25, 230, 24)];
+        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(10, 25, 260, 24)];
         self.nameField.borderStyle = UITextBorderStyleRoundedRect;
         self.nameField.returnKeyType = UIReturnKeyDone;
+        self.nameField.delegate = self;
         [self addSubview:self.nameField];
         
         self.addButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -97,6 +98,13 @@
     return self.nameLabel.text;
 }
 
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return NO;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

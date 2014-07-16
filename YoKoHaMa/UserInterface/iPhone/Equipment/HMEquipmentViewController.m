@@ -12,6 +12,8 @@
 #import "HMListMenuView.h"
 #import "HMGridContentView.h"
 
+#import "HMRoad.h"
+
 #import "HMCommonViewModel.h"
 
 @interface HMEquipmentViewController ()
@@ -82,7 +84,7 @@
         NSLog(@"Error in refreshing focus: %@", error);
     }];
     
-    [[self.viewModel refreshTypesSignalForCID:@33] subscribeNext:^(id x) {
+    [self.viewModel.refreshRoadsSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.gridContent updateWithEntities:x];
     } error:^(NSError *error) {
@@ -107,9 +109,8 @@
     [self.gridContent.openSignal subscribeNext:^(id x) {
         @strongify(self);
         NSLog(@"Content Menu selected: %@", x);
-        HMFocus * focus = (HMFocus *)x;
-        [self.viewModel showListFor:focus.name
-                          withCatID:focus.identifier];
+        HMRoad * road = (HMRoad *)x;
+        [self.viewModel showRoad:road.identifier];
     }];
 }
 

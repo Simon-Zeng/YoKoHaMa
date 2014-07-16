@@ -14,6 +14,9 @@
 #import "HMTrip.h"
 #import "HMTripDao.h"
 
+#import "HMRoute.h"
+#import "HMRoad.h"
+
 #import "HMNetwork.h"
 
 #import "HMFeeViewController.h"
@@ -54,6 +57,70 @@
         }];
     }];
 }
+- (RACSignal *)refreshRoutesSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        NSMutableArray * allRoutes = [[NSMutableArray alloc] init];
+        
+        NSArray * routeNames = @[@"北上广城市周边", @"探险自驾", @"人文之路", @"民俗之路", @"休闲之路"];
+        
+        for (int i = 0; i < routeNames.count; i++) {
+            HMRoute * route = [[HMRoute alloc] init];
+            route.identifier = @(i);
+            route.name = routeNames[i];
+            
+            [allRoutes addObject:route];
+        }
+        
+        // Add search
+        HMRoute * route = [[HMRoute alloc] init];
+        route.identifier = nil;
+        route.name = NSLocalizedString(@"搜索", nil);
+        [allRoutes addObject:route];
+        
+        [subscriber sendNext:allRoutes];
+        
+        [subscriber sendCompleted];
+        
+        return [RACDisposable disposableWithBlock:^{
+            
+        }];
+    }];
+}
+
+- (RACSignal *)refreshRoadsSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        NSMutableArray * allRoads = [[NSMutableArray alloc] init];
+        
+        NSArray * roadNames = @[@"冰雪路面", @"雨水路面", @"高速公路", @"泥泞路面"];
+        
+        for (int i = 0; i < roadNames.count; i++) {
+            HMRoad * road = [[HMRoad alloc] init];
+            road.identifier = @(i);
+            road.name = roadNames[i];
+            
+            [allRoads addObject:road];
+        }
+//        
+//        // Add search
+//        HMRoad * road = [[HMRoad alloc] init];
+//        road.identifier = nil;
+//        road.name = NSLocalizedString(@"搜索", nil);
+//        [allRoads addObject:road];
+        
+        [subscriber sendNext:allRoads];
+        
+        [subscriber sendCompleted];
+        
+        return [RACDisposable disposableWithBlock:^{
+            
+        }];
+    }];
+}
+
 
 - (RACSignal *)refreshTripsSignal
 {
@@ -71,66 +138,16 @@
     }];
 }
 
-
-- (RACSignal *)refreshTypesSignalForCID:(NSNumber *)cid
-{
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
-        RACSignal * signal = [[HMAPI apiCenter] refreshTypesForCategory:cid];
-        
-        RACDisposable * disposable = [signal subscribeNext:^(id x) {
-            if ([x isKindOfClass:[NSArray class]])
-            {
-                NSArray * response = (NSArray *)x;
-                NSMutableArray * array = [NSMutableArray array];
-                
-                for (int i=0; i < response.count; i++)
-                {
-                    HMFocus * focus = [HMFocus focusFromDictionary:[response objectAtIndex:i]];
-                    [array addObject:focus];
-                }
-                
-#if DEBUG
-                if (array.count == 0)
-                {
-                    NSInteger numberOfFocuses = arc4random()%6 +1;
-                    for (int i = 0; i< numberOfFocuses; i++)
-                    {
-                        HMFocus * focus = [[HMFocus alloc] init];
-                        
-                        focus.name = [NSString stringWithFormat:@"Item %d", i ];
-                        focus.identifier = @(i);
-                        focus.imageURLString = nil;
-                        
-                        [array addObject:focus];
-                    }
-                }
-#endif
-                
-                [subscriber sendNext:array];
-            }
-            else
-            {
-                [subscriber sendNext:nil];
-            }
-        } error:^(NSError *error) {
-            [subscriber sendError:error];
-        }];
-        
-        return [RACDisposable disposableWithBlock:^{
-            [disposable dispose];
-        }];
-    }];
-}
-
-
-
-- (void)showListFor:(NSString *)stype withCatID:(NSNumber *)cid
+- (void)showRoute:(NSNumber *)routeIdentifier
 {
     NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
     
-    NSString * pathComponent = [NSString stringWithFormat:@"/index.php?a=lists&catid=%@&stype=%@", cid, stype];
-
+    NSMutableString * pathComponent = [NSMutableString stringWithString:@"/index.php?a=lists&catid=1"];
+    if (routeIdentifier)
+    {
+        [pathComponent appendFormat:@"&stype=%@", routeIdentifier];
+    }
+    
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     
@@ -140,6 +157,23 @@
     
     [webViewController loadURL:[NSURL URLWithString:urlString]];
 
+}
+
+- (void)showRoad:(NSNumber *)roadIdentifier
+{
+    NSString * baseURLString = [HMNetwork sharedNetwork].baseURL.absoluteString;
+    
+    NSString * pathComponent = [NSString stringWithFormat:@"/index.php?a=lists&catid=32&stype=%@", roadIdentifier];
+    
+    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
+    
+    
+    HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+    
+    [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
+    
+    [webViewController loadURL:[NSURL URLWithString:urlString]];
+  
 }
 
 - (void)showDetailForFocus:(HMFocus *)focus

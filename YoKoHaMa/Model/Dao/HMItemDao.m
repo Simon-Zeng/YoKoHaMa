@@ -16,9 +16,9 @@
 {
     __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO Items (identifier, categoryIdentifier, name) VALUES (:identifier, :categoryIdentifier, :name)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO Items (categoryIdentifier, name, state) VALUES (:categoryIdentifier, :name, :state)"
           withParameterDictionary:(@{
-                                     @"identifier": aItem.identifier,
+                                     @"state": aItem.state,
                                      @"categoryIdentifier": aItem.categoryIdentifier,
                                      @"name": aItem.name
                                      })];
@@ -86,12 +86,14 @@
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
         saved = [db executeUpdate:(@"UPDATE Items SET \n"
                                    @"   categoryIdentifier = :categoryIdentifier, \n"
-                                   @"   name = :name \n"
+                                   @"   name = :name, \n"
+                                   @"   state = :state, \n"
                                    @"WHERE identifier == :identifier \n")
           withParameterDictionary:(@{
                                      @"identifier": aItem.identifier,
                                      @"categoryIdentifier": aItem.categoryIdentifier,
-                                     @"name": aItem.name
+                                     @"name": aItem.name,
+                                     @"state": aItem.state
                                      })];
     }];
     
@@ -134,9 +136,9 @@
 {
     __block NSNumber * insertId = nil;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
-        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO ItemCategories (identifier, name) VALUES (:identifier, :name)"
+        BOOL saved = [db executeUpdate:@"INSERT OR REPLACE INTO ItemCategories (tripIdentifier, name) VALUES (:tripIdentifier, :name)"
           withParameterDictionary:(@{
-                                     @"identifier": aItemCategory.identifier,
+                                     @"tripIdentifier": aItemCategory.tripIdentifier,
                                      @"name": aItemCategory.name
                                      })];
         
@@ -149,7 +151,7 @@
     return insertId;
 }
 
-+ (HMItemCategory *)ItemCategoryWithIdentifier:(NSNumber *)identifier
++ (HMItemCategory *)itemCategoryWithIdentifier:(NSNumber *)identifier
 {
     __block HMItemCategory * aItemCategory = nil;
     
@@ -164,6 +166,7 @@
             aItemCategory = [[HMItemCategory alloc] init];
             
             aItemCategory.identifier = [resultSet objectForColumnName:@"identifier"];
+            aItemCategory.tripIdentifier = [resultSet objectForColumnName:@"tripIdentifier"];
             aItemCategory.name = [resultSet objectForColumnName:@"name"];
         }
     }];
@@ -171,15 +174,42 @@
     return aItemCategory;
 }
 
++ (NSArray *)itemCategoriesWithTripIdentifier:(NSNumber *)tid
+{
+    NSMutableArray * items = [NSMutableArray array];
+    
+    [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
+        FMResultSet * resultSet = [db executeQuery:@"SELECT * FROM ItemCategories WHERE tripIdentifier == :tripIdentifier"
+                           withParameterDictionary:(@{
+                                                      @"tripIdentifier": tid
+                                                      })];
+        
+        while ([resultSet next])
+        {
+            HMItemCategory * aItem = [[HMItemCategory alloc] init];
+            
+            aItem.identifier = [resultSet objectForColumnName:@"identifier"];
+            aItem.tripIdentifier = [resultSet objectForColumnName:@"tripIdentifier"];
+            aItem.name = [resultSet objectForColumnName:@"name"];
+            
+            [items addObject:aItem];
+        }
+    }];
+    
+    return items;
+}
+
 + (BOOL)updateItemCategory:(HMItemCategory *)aItemCategory
 {
     __block BOOL saved = NO;
     [[HMDatabaseQueue sharedDBQueue] inDatabase:^(FMDatabase *db) {
         saved = [db executeUpdate:(@"UPDATE ItemCategories SET \n"
+                                   @"   tripIdentifier == :tripIdentifier, \n"
                                    @"   name = :name \n"
                                    @"WHERE identifier == :identifier \n")
           withParameterDictionary:(@{
                                      @"identifier": aItemCategory.identifier,
+                                     @"tripIdentifier": aItemCategory.tripIdentifier,
                                      @"name": aItemCategory.name
                                      })];
     }];

@@ -12,8 +12,6 @@
 #import "HMItemDao.h"
 #import "HMTrip.h"
 #import "HMTripDao.h"
-#import "HMTripItem.h"
-#import "HMTripItemDao.h"
 
 @interface HMTripViewModel ()
 
@@ -21,8 +19,10 @@
 @property (nonatomic, strong) NSMutableDictionary * itemsMap;
 @property (nonatomic, strong) NSArray * dataSource;
 
-@property (nonatomic, strong) NSMutableDictionary * cachedTripItems;
-@property (nonatomic, strong) NSMutableDictionary * cachedItemCategories;
+@property (nonatomic, strong) NSMutableDictionary * cachedTripCategories;
+@property (nonatomic, strong) NSNumber * customCategoryIdentifier;
+
+@property (nonatomic, strong) NSArray * sectionKeys;
 
 @property (nonatomic, strong, readwrite) RACSubject * updateContentSignal;
 
@@ -38,8 +38,7 @@
         self.itemsMap = [[NSMutableDictionary alloc] init];
         self.dataSource = nil;
         
-        self.cachedTripItems = [[NSMutableDictionary alloc] init];
-        self.cachedItemCategories = [[NSMutableDictionary alloc] init];
+        self.cachedTripCategories = [[NSMutableDictionary alloc] init];
         
         _updateContentSignal = [RACSubject subject];
         
@@ -53,26 +52,22 @@
 
 - (void)loadInitialData
 {
-    NSArray * allItems = [HMTripItemDao itemsWithTripIdentifier:self.trip.identifier];
-    NSArray * allTripItems = [HMTripItemDao tripItemsWithTripIdentifier:self.trip.identifier];
+    NSArray * allTripCategories = [HMItemCategoryDao itemCategoriesWithTripIdentifier:self.trip.identifier];
     
-    for (HMTripItem * aTripItem in allTripItems)
+    for (HMItemCategory * aTripCategory in allTripCategories)
     {
-        [self.cachedTripItems setObject:aTripItem forKey:aTripItem.itemIdentifier];
-    }
-    
-    for (HMItem * anItem in allItems)
-    {
-        NSMutableArray * itemsGroup = [self.itemsMap objectForKey:anItem.categoryIdentifier];
+        [self.cachedTripCategories setObject:aTripCategory forKey:aTripCategory.identifier];
         
-        if (!itemsGroup)
+        if ([aTripCategory.name isEqual:@"自定义"])
         {
-            itemsGroup = [[NSMutableArray alloc] init];
+            self.customCategoryIdentifier = aTripCategory.identifier;
         }
         
-        [itemsGroup addObject:anItem];
+        NSArray * itemsInCategory = [HMItemDao itemsWithCategoryIdentifier:aTripCategory.identifier];
         
-        [self.itemsMap setObject:itemsGroup forKey:anItem.categoryIdentifier];
+        NSMutableArray * itemsGroup = [NSMutableArray arrayWithArray:itemsInCategory];
+        
+        [self.itemsMap setObject:itemsGroup forKey:aTripCategory.identifier];
     }
     
     [self reloadData];
@@ -80,39 +75,54 @@
 
 - (void)reloadData
 {
-    self.dataSource = [self.itemsMap keysSortedByValueUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    self.sectionKeys = [[self.itemsMap allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [obj1 compare:obj2];
     }];
+    
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    
+    for (NSNumber * cid in self.sectionKeys)
+    {
+        if (_listMode == TripListModeCheck)
+        {
+            [array addObject:self.itemsMap[cid]];
+        }
+        else
+        {
+            // Only show those state = 1;
+            NSPredicate * precidate = [NSPredicate predicateWithFormat:@"SELF.state == %@", @1];
+            NSArray * filtered = [NSArray arrayWithArray:[self.itemsMap[cid] filteredArrayUsingPredicate:precidate]];
+            
+            [array addObject:filtered];
+        }
+    }
+    
+    self.dataSource = array;
     
     [(RACSubject *)_updateContentSignal sendNext:self.dataSource];
 }
 
 #pragma mark - Getters/Setters
 
--(RACCommand *) saveCommand
+- (void)setListMode:(TripListMode)listMode
 {
-    return [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            
-            // Save
-            
-            [subscriber sendCompleted];
-            
-            return [RACDisposable disposableWithBlock:^{
-                
-            }];
-        }];
-    }];
+    if (_listMode != listMode)
+    {
+        _listMode = listMode;
+        
+        [self reloadData];
+    }
 }
 
--(RACCommand *) recheckCommand
+-(RACCommand *) saveCommand
 {
     @weakify(self);
     return [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            
             @strongify(self);
             
-            self.listMode = TripListModeCheck;
+            self.listMode = TripListModeAdd;
             
             [subscriber sendCompleted];
             
@@ -128,6 +138,8 @@
 {
     if (!aItem.identifier)
     {
+        aItem.categoryIdentifier = self.customCategoryIdentifier;
+        aItem.state = @1;
         NSNumber * identifier = [HMItemDao saveItem:aItem];
         aItem.identifier = identifier;
     }
@@ -146,22 +158,21 @@
     [self reloadData];
 }
 
-- (void)removeTripItem:(HMTripItem *)aTripItem
+- (void)removeItem:(HMItem *)anItem
 {
-    HMItem * anItem = [HMItemDao itemWithIdentifier:aTripItem.itemIdentifier];
-    
-    if (anItem)
+    if (anItem.categoryIdentifier.longLongValue == 0)
     {
-        NSMutableArray * itemsGroup = [self.itemsMap objectForKey:anItem.categoryIdentifier];
-        
-        if (itemsGroup)
-        {
-            [itemsGroup removeObject:anItem];
-        }
-        
-        [self reloadData];
-
+        [HMItemDao deleteItemWithIdentifier:anItem.identifier];
     }
+    
+    NSMutableArray * itemsGroup = [self.itemsMap objectForKey:anItem.categoryIdentifier];
+    
+    if (itemsGroup)
+    {
+        [itemsGroup removeObject:anItem];
+    }
+
+    [self reloadData];
 }
 
 #pragma mark -
@@ -177,23 +188,11 @@
 
 - (NSString *)titleForSection:(NSInteger)section
 {
-    HMItem * aItem = nil;
-    
-    if (section < self.itemsMap.count)
+    if (section < self.sectionKeys.count)
     {
-        NSArray * itemsInSection = [self.dataSource objectAtIndex:section];
-        aItem = [itemsInSection firstObject];
-    }
-    
-    if (aItem)
-    {
-        HMItemCategory * category = [self.cachedItemCategories objectForKey:aItem.categoryIdentifier];
+        NSNumber * itemCategoryIdentifier = [self.sectionKeys objectAtIndex:section];
         
-        if (!category)
-        {
-            category = [HMItemCategoryDao ItemCategoryWithIdentifier:aItem.categoryIdentifier];
-            [self.cachedItemCategories setObject:category forKey:aItem.identifier];
-        }
+        HMItemCategory * category = [self.cachedTripCategories objectForKey:itemCategoryIdentifier];
         
         return category.name;
     }
@@ -203,36 +202,11 @@
     }
 }
 
-- (HMTripItem *)itemAtIndexPath:(NSIndexPath *)indexPath
+- (HMItem *)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMItem * aItem = nil;
+    HMItem * aItem = [[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
-    if (indexPath.section < self.itemsMap.count)
-    {
-        NSArray * itemsInSection = [self.dataSource objectAtIndex:indexPath.section];
-        if (indexPath.row < itemsInSection.count)
-        {
-            aItem = [itemsInSection objectAtIndex:indexPath.row];
-        }
-    }
-    
-    if (aItem)
-    {
-        HMTripItem * aTripItem = [self.cachedTripItems objectForKey:aItem.identifier];
-        
-        if (!aTripItem)
-        {
-            aTripItem = [HMTripItemDao tripItemWithTripIdentifier:self.trip.identifier
-                                                   itemIdentifier:aItem.identifier];
-            [self.cachedTripItems setObject:aTripItem forKey:aItem.identifier];
-        }
-        
-        return aTripItem;
-    }
-    else
-    {
-        return nil;
-    }
+    return aItem;
 }
 
 

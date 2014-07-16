@@ -11,7 +11,6 @@
 #import "HMBasicViewModel.h"
 
 @class HMItem;
-@class HMTripItem;
 @class HMTrip;
 
 typedef NS_ENUM(NSUInteger, TripListMode){
@@ -26,19 +25,18 @@ typedef NS_ENUM(NSUInteger, TripListMode){
 @property (nonatomic, readonly) RACSignal * updateContentSignal;
 
 @property (nonatomic, readonly) RACCommand * saveCommand;
-@property (nonatomic, readonly) RACCommand * recheckCommand;
 
 @property (nonatomic, assign) TripListMode listMode;
 
 - (instancetype)initWithTripIdentifier:(NSNumber *)tid;
 
 - (void)addItem:(HMItem *)aItem;
-- (void)removeTripItem:(HMTripItem *)aTripItem;
+- (void)removeItem:(HMItem *)aItem;
 
 #pragma mark -
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsInSection:(NSInteger)section;
 - (NSString *)titleForSection:(NSInteger)section;
-- (HMTripItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (HMItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

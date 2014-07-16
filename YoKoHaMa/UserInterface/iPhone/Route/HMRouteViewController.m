@@ -12,6 +12,8 @@
 #import "HMListMenuView.h"
 #import "HMGridContentView.h"
 
+#import "HMRoute.h"
+
 #import "HMCommonViewModel.h"
 
 @interface HMRouteViewController ()
@@ -76,7 +78,7 @@
         NSLog(@"Error in refreshing focus: %@", error);
     }];
     
-    [[self.viewModel refreshTypesSignalForCID:@33] subscribeNext:^(id x) {
+    [self.viewModel.refreshRoutesSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.gridContent updateWithEntities:x];
     } error:^(NSError *error) {
@@ -101,9 +103,8 @@
     [self.gridContent.openSignal subscribeNext:^(id x) {
         @strongify(self);
         NSLog(@"Content Menu selected: %@", x);
-        HMFocus * focus = (HMFocus *)x;
-        [self.viewModel showListFor:focus.name
-                          withCatID:focus.identifier];
+        HMRoute * route = (HMRoute *)x;
+        [self.viewModel showRoute:route.identifier];
     }];
 
 }

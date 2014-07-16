@@ -34,7 +34,7 @@
         [self.backButton setBackgroundImage:[UIImage imageNamed:@"Button-Back"]
                               forState:UIControlStateNormal];
         [self.backButton sizeToFit];
-        self.backButton.frame = CGRectMake(8, 3, 68, 18);
+        self.backButton.frame = CGRectMake(8, 16, 90, 12);
         [self addSubview:self.backButton];
         
         self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -42,8 +42,8 @@
                                     forState:UIControlStateNormal];
         [self.shareButton sizeToFit];
         
-        self.backButton.frame = CGRectMake(frame.size.width - 45 - 8, 3, 45, 18);
-        [self addSubview:self.backButton];
+        self.shareButton.frame = CGRectMake(frame.size.width - 22 - 10, 16, 22, 12);
+        [self addSubview:self.shareButton];
         
         self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
             return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {

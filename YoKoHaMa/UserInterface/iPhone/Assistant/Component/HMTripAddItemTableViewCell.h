@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class HMTripItem;
+@class HMItem;
 
 @interface HMTripAddItemTableViewCell : UITableViewCell
 
-- (void)updateWithItem:(HMTripItem *)anItem;
+- (void)updateWithItem:(HMItem *)anItem;
 
 @end

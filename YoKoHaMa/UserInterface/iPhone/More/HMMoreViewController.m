@@ -8,6 +8,8 @@
 
 #import "HMMoreViewController.h"
 
+#import "HMNetwork.h"
+
 @interface HMMoreViewController ()<UIWebViewDelegate>
 
 @property (nonatomic, strong) UIWebView * webView;
@@ -37,7 +39,9 @@
     
     self.webView = webView;
     
-    [self loadURL:[NSURL URLWithString:@"http://youke.feelpoid.com/more.html"]];
+    NSString * urlString = [[HMNetwork sharedNetwork].baseURL.absoluteString stringByAppendingPathComponent:@"/more.html"];
+    
+    [self loadURL:[NSURL URLWithString:urlString]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +61,20 @@
 }
 */
 #pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if (navigationType == UIWebViewNavigationTypeLinkClicked)
+    {
+        NSURL * url = request.URL;
+        
+        [[UIApplication sharedApplication] openURL:url];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)

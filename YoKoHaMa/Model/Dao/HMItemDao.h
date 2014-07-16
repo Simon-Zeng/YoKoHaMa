@@ -29,7 +29,8 @@
 
 + (NSNumber *)saveItemCategory:(HMItemCategory *)aItemCategory;
 
-+ (HMItemCategory *)ItemCategoryWithIdentifier:(NSNumber *)identifier;
++ (HMItemCategory *)itemCategoryWithIdentifier:(NSNumber *)identifier;
++ (NSArray *)itemCategoriesWithTripIdentifier:(NSNumber *)tid;
 
 + (BOOL)updateItemCategory:(HMItemCategory *)aItemCategory;
 

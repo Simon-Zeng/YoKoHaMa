@@ -8,7 +8,7 @@
 
 #import "HMTripAddItemTableViewCell.h"
 
-#import "HMTripItem.h"
+#import "HMItem.h"
 
 @implementation HMTripAddItemTableViewCell
 
@@ -34,9 +34,9 @@
     // Configure the view for the selected state
 }
 
-- (void)updateWithItem:(HMTripItem *)anItem
+- (void)updateWithItem:(HMItem *)anItem
 {
-    self.textLabel.text = anItem.itemName;
+    self.textLabel.text = anItem.name;
 }
 
 @end

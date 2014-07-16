@@ -35,7 +35,11 @@
         for (UIImage * image in images)
         {
             UIImageView * imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.contentMode = UIViewContentModeScaleToFill;
+            imageView.backgroundColor = [UIColor colorWithRed:30.0/255
+                                                        green:37.0/255
+                                                         blue:65.0/255
+                                                        alpha:1.0];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             [self.lauchImageViews addObject:imageView];
         }
@@ -51,6 +55,10 @@
         scrollView.bounces = NO;
         scrollView.scrollsToTop = NO;
         scrollView.delegate = self;
+        scrollView.backgroundColor = [UIColor colorWithRed:30.0/255
+                                                    green:37.0/255
+                                                     blue:65.0/255
+                                                    alpha:1.0];
         
         [self addSubview:scrollView];
         
