@@ -44,6 +44,43 @@
                 
                 [subscriber sendNext:focus];
             }
+            else if ([x isKindOfClass:[NSData class]])
+            {
+                NSString * xString = [[NSString alloc] initWithBytes:[x bytes]
+                                                              length:[x length]
+                                                            encoding:NSUTF8StringEncoding];
+                
+                NSString * responseString = [xString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                
+                NSArray * pieces = [responseString componentsSeparatedByString:@","];
+                
+                
+                HMFocus * focus = [[HMFocus alloc] init];
+                
+                for (NSString * aPair in pieces)
+                {
+                    NSArray * keyValues = [aPair componentsSeparatedByString:@":"];
+                    
+                    if (keyValues.count == 2)
+                    {
+                        NSString * key = keyValues[0];
+                        if ([key isEqual:@"id"])
+                        {
+                            focus.identifier = keyValues[1];
+                        }
+                        else if ([key isEqual:@"title"])
+                        {
+                            focus.name = keyValues[1];
+                        }
+                        else if ([key isEqual:@"image"])
+                        {
+                            focus.imageURLString = keyValues[1];
+                        }
+                    }
+                }
+                
+                [subscriber sendNext:focus];
+            }
             else
             {
                 [subscriber sendNext:nil];

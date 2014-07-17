@@ -16,13 +16,13 @@
 @implementation HMBasicViewModel
 
 
-- (RACSignal *)shareImage:(UIImage *)image
+- (RACSignal *)shareImage:(UIImage *)image message:(NSString *)message
 {
     RACSignal * signal = [RACSignal empty];
     
     [UMSocialSnsService presentSnsIconSheetView:[HMHelper rootNavigationController]
                                          appKey:kUMengAppKey
-                                      shareText:@""
+                                      shareText:message
                                      shareImage:image
                                 shareToSnsNames:@[UMShareToSina,UMShareToTencent]
                                        delegate:nil];
@@ -30,13 +30,13 @@
     return signal;
 }
 
-- (RACSignal *)shareURLString:(NSString *)string
+- (RACSignal *)shareURLString:(NSString *)string message:(NSString *)message
 {
     RACSignal * signal = [RACSignal empty];
     
     [UMSocialSnsService presentSnsIconSheetView:[HMHelper rootNavigationController]
                                          appKey:kUMengAppKey
-                                      shareText:string
+                                      shareText:message
                                      shareImage:nil
                                 shareToSnsNames:@[UMShareToSina,UMShareToTencent]
                                        delegate:nil];

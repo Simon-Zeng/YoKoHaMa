@@ -59,11 +59,11 @@
     self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 106)];
     [aView addSubview:self.addFeeView];
     
-    self.sumFeeView = [[HMSumFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 60)];
+    self.sumFeeView = [[HMSumFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 65)];
     [aView addSubview:self.sumFeeView];
     
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sumFeeView.frame) - 30, bounds.size.width, bounds.size.height-44)
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sumFeeView.frame), bounds.size.width, bounds.size.height-44)
                                                   style:UITableViewStyleGrouped];
     [self.tableView registerClass:[HMFeeTableViewCell class]
            forCellReuseIdentifier:@"Cell"];
@@ -133,9 +133,10 @@
         @strongify(self);
         if ([x boolValue])
         {
-            UIImage * screenShot = [HMHelper screenShot:self.view];
+            UIImage * screenShot = [HMHelper screenShot:self.view.window];
+            NSString * message = NSLocalizedString(@"我的出行费用", nil); ;
             
-            [self.viewModel shareImage:screenShot];
+            [self.viewModel shareImage:screenShot message:message];
         }
     }];
 }
@@ -194,6 +195,11 @@
     [cell updateWithFee:aFee];
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 34;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

@@ -160,16 +160,13 @@
 
 - (void)removeItem:(HMItem *)anItem
 {
-    if (anItem.categoryIdentifier.longLongValue == 0)
+    if (anItem.categoryIdentifier.longLongValue == self.customCategoryIdentifier.longLongValue)
     {
         [HMItemDao deleteItemWithIdentifier:anItem.identifier];
     }
-    
-    NSMutableArray * itemsGroup = [self.itemsMap objectForKey:anItem.categoryIdentifier];
-    
-    if (itemsGroup)
+    else
     {
-        [itemsGroup removeObject:anItem];
+        anItem.state = @0;
     }
 
     [self reloadData];

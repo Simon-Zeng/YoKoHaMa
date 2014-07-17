@@ -32,13 +32,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIWebView * webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    webView.delegate = self;
-    
-    [self.view addSubview:webView];
-    
-    self.webView = webView;
-    
     NSString * urlString = [[HMNetwork sharedNetwork].baseURL.absoluteString stringByAppendingPathComponent:@"/more.html"];
     
     [self loadURL:[NSURL URLWithString:urlString]];
@@ -60,6 +53,26 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (UIWebView *)webView
+{
+    if (!_webView)
+    {
+        CGRect bounds = self.view.bounds;
+        
+        UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, bounds.size.height-44)];
+        webView.scalesPageToFit = YES;
+        webView.delegate = self;
+        
+        [self.view addSubview:webView];
+        
+        self.webView = webView;
+    }
+    
+    return _webView;
+}
+
+
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {

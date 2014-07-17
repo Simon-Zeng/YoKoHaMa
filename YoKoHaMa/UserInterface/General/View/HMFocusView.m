@@ -8,6 +8,7 @@
 
 #import "HMFocusView.h"
 
+#import "HMNetwork.h"
 #import "UIImageView+WebCache.h"
 
 @interface HMFocusView ()
@@ -66,7 +67,9 @@
     {
         self.focus = focus;
         
-        [self.focusImageView setImageWithURL:[NSURL URLWithString:focus.imageURLString]
+        NSURL * baseURL = [HMNetwork sharedNetwork].baseURL;
+        
+        [self.focusImageView sd_setImageWithURL:[baseURL URLByAppendingPathComponent:focus.imageURLString]
                             placeholderImage:[UIImage imageNamed:@"Focus-Default"]];
     }
 }

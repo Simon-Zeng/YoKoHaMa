@@ -44,13 +44,7 @@
     self.navigationBar = [[HMNavigationView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
     self.navigationBar.shareButtonEnabled = YES;
     [self.view addSubview:self.navigationBar];
-    
-    UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, bounds.size.height-44)];
-    webView.delegate = self;
-    
-    [self.view addSubview:webView];
-    
-    self.webView = webView;
+
     
     @weakify(self);
     [self.navigationBar.backSignal subscribeNext:^(id x) {
@@ -65,7 +59,41 @@
         @strongify(self);
         if ([x boolValue])
         {
-            [self.viewModel shareURLString:self.webView.request.URL.absoluteString];
+            HMContentCategory category = self.category;
+            
+            NSString * message = nil;
+            NSString * urlLink = self.webView.request.URL.absoluteString;
+            
+            switch (category)
+            {
+                case HMContentCategoryRoute:
+                {
+                    message = [NSString stringWithFormat:NSLocalizedString(@"优科豪马自驾指南优路线推荐: %@", nil), urlLink];
+                }
+                    break;
+                case HMContentCategoryEquipment:
+                {
+                    message = [NSString stringWithFormat:NSLocalizedString(@"优科豪马自驾指南优设备推荐: %@", nil), urlLink];
+                }
+                    break;
+                case HMContentCategoryAssistant:
+                {
+                    message = [NSString stringWithFormat:NSLocalizedString(@"优科豪马自驾指南优助手推荐: %@", nil), urlLink];
+                }
+                    break;
+                case HMContentCategoryMore:
+                {
+                    message = [NSString stringWithFormat:NSLocalizedString(@"优科豪马自驾指南更多推荐: %@", nil), urlLink];
+                }
+                    break;
+                default:
+                    break;
+            }
+            
+            if (message)
+            {
+                [self.viewModel shareURLString:self.webView.request.URL.absoluteString message:message];
+            }
         }
     }];
 }
@@ -74,6 +102,24 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (UIWebView *)webView
+{
+    if (!_webView)
+    {
+        CGRect bounds = self.view.bounds;
+        
+        UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, bounds.size.height-44)];
+        webView.scalesPageToFit = YES;
+        webView.delegate = self;
+        
+        [self.view addSubview:webView];
+        
+        self.webView = webView;
+    }
+    
+    return _webView;
 }
 
 /*
@@ -89,6 +135,11 @@
 
 
 #pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)

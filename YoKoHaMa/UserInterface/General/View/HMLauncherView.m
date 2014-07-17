@@ -32,6 +32,14 @@
         self.autoresizesSubviews = YES;
         
         self.lauchImageViews = [[NSMutableArray alloc] init];
+        
+        UIViewContentMode contentMode = UIViewContentModeScaleAspectFit;
+        
+        if (images.count == 1)
+        {
+            contentMode = UIViewContentModeCenter;
+        }
+        
         for (UIImage * image in images)
         {
             UIImageView * imageView = [[UIImageView alloc] initWithImage:image];
@@ -39,7 +47,7 @@
                                                         green:37.0/255
                                                          blue:65.0/255
                                                         alpha:1.0];
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.contentMode = contentMode;
             
             [self.lauchImageViews addObject:imageView];
         }

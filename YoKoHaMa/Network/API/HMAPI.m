@@ -69,7 +69,7 @@
     
     if (catID)
     {
-        _getManager.responseSerializer = self.jsonResponseSerializer;
+        _getManager.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[self.jsonResponseSerializer]];
         
         NSString * urlString = [[HMNetwork sharedNetwork].baseURL.absoluteString stringByAppendingPathComponent:@"/index.php"];
         

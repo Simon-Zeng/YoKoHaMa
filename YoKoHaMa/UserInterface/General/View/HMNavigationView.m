@@ -31,18 +31,15 @@
         self.shareSignal = [RACSubject subject];
         
         self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.backButton setBackgroundImage:[UIImage imageNamed:@"Button-Back"]
+        [self.backButton setImage:[UIImage imageNamed:@"Button-Back"]
                               forState:UIControlStateNormal];
-        [self.backButton sizeToFit];
-        self.backButton.frame = CGRectMake(8, 16, 90, 12);
+        self.backButton.frame = CGRectMake(0, 4, 125, 36);
         [self addSubview:self.backButton];
         
         self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.shareButton setBackgroundImage:[UIImage imageNamed:@"Button-Share"]
+        [self.shareButton setImage:[UIImage imageNamed:@"Button-Share"]
                                     forState:UIControlStateNormal];
-        [self.shareButton sizeToFit];
-        
-        self.shareButton.frame = CGRectMake(frame.size.width - 22 - 10, 16, 22, 12);
+        self.shareButton.frame = CGRectMake(frame.size.width - 36 - 10, 4, 36, 36);
         [self addSubview:self.shareButton];
         
         self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {

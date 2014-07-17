@@ -159,9 +159,10 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
         @strongify(self);
         if ([x boolValue])
         {
-            UIImage * screenShot = [HMHelper screenShot:self.view];
+            UIImage * screenShot = [HMHelper screenShot:self.view.window];
+            NSString * message = NSLocalizedString(@"我的出行准备", nil); ;
             
-            [self.viewModel shareImage:screenShot];
+            [self.viewModel shareImage:screenShot message:message];
         }
     }];
     
@@ -244,13 +245,20 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     {
         self.tableView.tableHeaderView.hidden = NO;
         self.tableView.tableFooterView.hidden = NO;
-        self.navigationBar.shareButtonEnabled = NO;
     }
     else
     {
         self.tableView.tableHeaderView.hidden = YES;
         self.tableView.tableFooterView.hidden = YES;
+    }
+    
+    if (mode == TripListModeDone)
+    {
         self.navigationBar.shareButtonEnabled = YES;
+    }
+    else
+    {
+        self.navigationBar.shareButtonEnabled = NO;
     }
 }
 

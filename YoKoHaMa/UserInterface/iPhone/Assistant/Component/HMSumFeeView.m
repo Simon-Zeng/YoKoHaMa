@@ -66,7 +66,7 @@
         [self addSubview:self.calculateButton];
         
         
-        self.averageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.calculateButton.frame) + 10, CGRectGetMaxY(self.countLabel.frame) + 10, 120, 20)];
+        self.averageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.calculateButton.frame) + 10, CGRectGetMaxY(self.countLabel.frame) + 10, frame.size.width - CGRectGetMaxX(self.calculateButton.frame) - 10, 20)];
         self.averageLabel.font = [UIFont systemFontOfSize:12.0];
         self.averageLabel.text = NSLocalizedString(@"人均费用: 0 元", nil);
         [self addSubview:self.averageLabel];

@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, HMContentCategory)
+{
+    HMContentCategoryRoute,
+    HMContentCategoryEquipment,
+    HMContentCategoryAssistant,
+    HMContentCategoryMore
+};
+
 @interface HMWebViewController : UIViewController
+
+@property (nonatomic, assign) HMContentCategory category;
 
 - (void)loadURL:(NSURL *)url;
 
