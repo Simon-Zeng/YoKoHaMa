@@ -131,8 +131,8 @@
                                                            @strongify(self);
                                                            HMFee * aFee = [[HMFee alloc] init];
                                                            aFee.identifier = nil;
-                                                           aFee.name = self.nameField.text;
-                                                           aFee.desc = self.descField.text;
+                                                           aFee.name = [self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                                                           aFee.desc = self.descField.text? self.descField.text : @"";
                                                            aFee.cost = @(self.costField.text.longLongValue);
                                                            
                                                            [(RACSubject *)self.addFeeSignal sendNext:aFee];
@@ -152,11 +152,12 @@
 {
     RACSignal * signal = [RACSignal combineLatest:(@[
                                                      self.nameField.rac_textSignal,
-                                                     self.costField.rac_textSignal,
-                                                     self.descField.rac_textSignal
+                                                     self.costField.rac_textSignal
                                                      ])
-                                           reduce:^id(NSString * name, NSString * cost, NSString * desc){
-                                               if (name.length > 0 && cost.length > 0 && desc.length > 0)
+                                           reduce:^id(NSString * name, NSString * cost){
+                                               NSString * trimmedName = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                                               
+                                               if (trimmedName.length > 0 && cost.length > 0)
                                                {
                                                    return @(YES);
                                                }
