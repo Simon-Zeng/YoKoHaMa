@@ -8,7 +8,7 @@
 
 #import "UILabel+AttributedString.h"
 
-#import <objc/objc-runtime.h>
+#import <objc/runtime.h>
 
 NSString * const UILabelSelectedStringToAttributeKey = @"UILabelSelectedStringToAttributeKey";
 
