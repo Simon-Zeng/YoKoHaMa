@@ -64,6 +64,7 @@
 		53B239BB196AD2EF0071E92E /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B239B7196AD2EF0071E92E /* UIImage+StackBlur.m */; };
 		53B239BC196AD2EF0071E92E /* zoomPopupClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */; };
 		7208499E79454F1D84B73DF0 /* libPods-YoKoHaMa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */; };
+		A9219EDD198F2993001C9A20 /* UILabel+AttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A9219EDC198F2993001C9A20 /* UILabel+AttributedString.m */; };
 		A96EDFC21973D178007715F4 /* HMFeeDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFAF1973D178007715F4 /* HMFeeDao.m */; };
 		A96EDFC31973D178007715F4 /* HMItemDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFB11973D178007715F4 /* HMItemDao.m */; };
 		A96EDFC41973D178007715F4 /* HMTravelDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFB31973D178007715F4 /* HMTravelDao.m */; };
@@ -194,6 +195,8 @@
 		53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoomPopupClose@2x.png"; sourceTree = "<group>"; };
 		796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YoKoHaMa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D1E57026514EB090108446 /* Pods-YoKoHaMa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoKoHaMa.xcconfig"; path = "Pods/Pods-YoKoHaMa.xcconfig"; sourceTree = "<group>"; };
+		A9219EDB198F2993001C9A20 /* UILabel+AttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+AttributedString.h"; sourceTree = "<group>"; };
+		A9219EDC198F2993001C9A20 /* UILabel+AttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+AttributedString.m"; sourceTree = "<group>"; };
 		A96EDFAE1973D178007715F4 /* HMFeeDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFeeDao.h; sourceTree = "<group>"; };
 		A96EDFAF1973D178007715F4 /* HMFeeDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFeeDao.m; sourceTree = "<group>"; };
 		A96EDFB01973D178007715F4 /* HMItemDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMItemDao.h; sourceTree = "<group>"; };
@@ -369,6 +372,7 @@
 		5365ADDF196AC38900146C54 /* YoKoHaMa */ = {
 			isa = PBXGroup;
 			children = (
+				A9219ED9198F297A001C9A20 /* Categories */,
 				A96EDFD21973D49D007715F4 /* Database */,
 				5391979A1972D8380027FF55 /* Helper */,
 				530AE1BD19710E2C002D69FD /* Settings */,
@@ -623,6 +627,23 @@
 			path = Route;
 			sourceTree = "<group>";
 		};
+		A9219ED9198F297A001C9A20 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				A9219EDA198F297A001C9A20 /* UILabel+AttributedString */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		A9219EDA198F297A001C9A20 /* UILabel+AttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				A9219EDB198F2993001C9A20 /* UILabel+AttributedString.h */,
+				A9219EDC198F2993001C9A20 /* UILabel+AttributedString.m */,
+			);
+			path = "UILabel+AttributedString";
+			sourceTree = "<group>";
+		};
 		A96EDFAD1973D178007715F4 /* Dao */ = {
 			isa = PBXGroup;
 			children = (
@@ -824,6 +845,7 @@
 				53659CA01974B1560030F4CC /* HMTripInputView.m in Sources */,
 				5365ADE6196AC38900146C54 /* main.m in Sources */,
 				53659C83197409A40030F4CC /* HMFeeViewController.m in Sources */,
+				A9219EDD198F2993001C9A20 /* UILabel+AttributedString.m in Sources */,
 				53659C8B1974105F0030F4CC /* HMFeeTableViewCell.m in Sources */,
 				530AE1D7197117B1002D69FD /* HMEquipmentViewController.m in Sources */,
 				53B239BA196AD2EF0071E92E /* THZoomPopup.m in Sources */,

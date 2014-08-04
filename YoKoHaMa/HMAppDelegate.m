@@ -60,7 +60,7 @@
     [viewControllers addObject:routeViewController];
     
     HMEquipmentViewController * equipViewController = [[HMEquipmentViewController alloc] init];
-    equipViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"优设备", nil)
+    equipViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"优装备", nil)
                                                                    image:[UIImage imageNamed:@"Tab-Equipment"]
                                                            selectedImage:[UIImage imageNamed:@"Tab-Equipment"]];
     [viewControllers addObject:equipViewController];

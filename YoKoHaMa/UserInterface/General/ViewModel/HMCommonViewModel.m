@@ -189,6 +189,7 @@
     
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+    webViewController.title = NSLocalizedString(@"优路线", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -206,6 +207,7 @@
     
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+    webViewController.title = NSLocalizedString(@"优装备", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -260,6 +262,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+    webViewController.title = NSLocalizedString(@"优装备", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -275,6 +278,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+    webViewController.title = NSLocalizedString(@"优路线", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -290,6 +294,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+    webViewController.title = NSLocalizedString(@"优路线", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -300,6 +305,7 @@
 - (void)feeCalculate
 {
     HMFeeViewController * feeViewController = [[HMFeeViewController alloc] init];
+    feeViewController.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:feeViewController animated:YES];
 }
@@ -311,6 +317,7 @@
     
     HMTripViewController * tripViewController = [[HMTripViewController alloc] init];
     tripViewController.viewModel = viewModel;
+    tripViewController.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:tripViewController animated:YES];
 }

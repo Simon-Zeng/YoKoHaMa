@@ -8,6 +8,8 @@
 
 #import "HMSumFeeView.h"
 
+#import "UILabel+AttributedString.h"
+
 @interface HMSumFeeView ()
 
 @property (nonatomic, strong) UILabel * countLabel;
@@ -106,17 +108,27 @@
 {
     NSInteger count = fees.count;
     NSNumber * total = @([[fees valueForKeyPath:@"@sum.self.cost"] longLongValue]);
-    
-    self.countLabel.text = [NSString stringWithFormat:NSLocalizedString(@"已添加统计: %ld 项", nil), count];
-    self.sumLabel.text = [NSString stringWithFormat:NSLocalizedString(@"合计: %@ 元", nil), total];
+    float average = 0;
     
     if (self.membersCountField.text.length > 0)
     {
         NSInteger membersCount = self.membersCountField.text.intValue;
-        float average = total.longLongValue * 1.0 / membersCount;
-        
-        self.averageLabel.text = [NSString stringWithFormat:NSLocalizedString(@"人均费用: %.2f 元", nil), average];
+        average = total.longLongValue * 1.0 / membersCount;
     }
+    
+    self.countLabel.text = [NSString stringWithFormat:NSLocalizedString(@"已添加统计: %ld 项", nil), count];
+    self.sumLabel.text = [NSString stringWithFormat:NSLocalizedString(@"合计: %@ 元", nil), total];
+    self.averageLabel.text = [NSString stringWithFormat:NSLocalizedString(@"人均费用: %.2f 元", nil), average];
+    
+    // Attributed string
+    [self.countLabel setToAttributeText:[NSString stringWithFormat:@"%ld", (long)count]];
+    [self.countLabel color:[UIColor redColor]];
+    
+    [self.sumLabel setToAttributeText:[NSString stringWithFormat:@"%@", total]];
+    [self.sumLabel color:[UIColor redColor]];
+    
+    [self.averageLabel setToAttributeText:[NSString stringWithFormat:@"%.2f", average]];
+    [self.averageLabel color:[UIColor redColor]];
     
     [self.membersCountField resignFirstResponder];
 }

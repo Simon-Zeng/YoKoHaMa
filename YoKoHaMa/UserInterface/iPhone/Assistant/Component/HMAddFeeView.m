@@ -80,7 +80,7 @@
         
         self.addFeeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         self.addFeeButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button-Background"]];
-        [self.addFeeButton setTitle:NSLocalizedString(@"+                 添加计算                 ", nil)
+        [self.addFeeButton setTitle:NSLocalizedString(@"添加计算", nil)
                            forState:UIControlStateNormal];
         [self.addFeeButton setTitleColor:[UIColor whiteColor]
                                 forState:UIControlStateNormal];

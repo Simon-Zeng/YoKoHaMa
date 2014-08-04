@@ -88,7 +88,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     UILabel * tableHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width-20, 30)];
     tableHeaderLabel.text = NSLocalizedString(@"您已添加的检查项目", nil);
     tableHeaderLabel.font = [UIFont systemFontOfSize:13.0];
-    tableHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    tableHeaderLabel.textAlignment = NSTextAlignmentLeft;
     tableHeaderLabel.textColor = [UIColor redColor];
     [headerView addSubview:tableHeaderLabel];
     self.tableView.tableHeaderView = headerView;
@@ -241,7 +241,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     {
         self.inputView.inputFieldHidden = YES;    }
     
-    if (mode == TripListModeCheck)
+    if (mode == TripListModeCheck || mode == TripListModeDone)
     {
         self.tableView.tableHeaderView.hidden = NO;
         self.tableView.tableFooterView.hidden = NO;
@@ -252,7 +252,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
         self.tableView.tableFooterView.hidden = YES;
     }
     
-    if (mode == TripListModeDone)
+    if (mode == TripListModeDone || mode == TripListModeAdd)
     {
         self.navigationBar.shareButtonEnabled = YES;
     }
@@ -273,6 +273,11 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     }
     
     return UITableViewCellEditingStyleNone;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

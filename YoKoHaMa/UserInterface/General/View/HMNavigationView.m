@@ -39,7 +39,7 @@
         self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.shareButton setImage:[UIImage imageNamed:@"Button-Share"]
                                     forState:UIControlStateNormal];
-        self.shareButton.frame = CGRectMake(frame.size.width - 36 - 10, 4, 36, 36);
+        self.shareButton.frame = CGRectMake(frame.size.width - 36 - 5, 4, 36, 36);
         [self addSubview:self.shareButton];
         
         self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {

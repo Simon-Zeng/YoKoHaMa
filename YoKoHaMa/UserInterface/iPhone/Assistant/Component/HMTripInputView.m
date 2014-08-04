@@ -34,8 +34,9 @@
         
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 3, frame.size.width, 20)];
         self.nameLabel.font = [UIFont systemFontOfSize:13.0];
+        self.nameLabel.textAlignment = NSTextAlignmentLeft;
         self.nameLabel.text = NSLocalizedString(@"请添加自定义项", nil);
-        self.nameLabel.textColor = [UIColor grayColor];
+        self.nameLabel.textColor = [UIColor redColor];
         
         [self addSubview:self.nameLabel];
         
