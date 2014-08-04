@@ -105,15 +105,15 @@
     CGRect bounds = self.bounds;
     
     CGRect titleFrame = bounds;
-    titleFrame.origin.x += 8.0f;
-    titleFrame.size.width -= 8.0f;
+    titleFrame.origin.x += 5.0f;
+    titleFrame.size.width -= 5.0f;
     
     self.titleLabel.frame = titleFrame;
     
     
     CGRect optionsFrame = self.optionsContainer.bounds;
     optionsFrame.size.height = bounds.size.height;
-    optionsFrame.origin.x = bounds.size.width - CGRectGetWidth(optionsFrame) - 10.0f;
+    optionsFrame.origin.x = bounds.size.width - CGRectGetWidth(optionsFrame) - 5.0f;
     optionsFrame.origin.y = truncf((bounds.size.height- optionsFrame.size.height)/2);
     
     self.optionsContainer.frame = optionsFrame;

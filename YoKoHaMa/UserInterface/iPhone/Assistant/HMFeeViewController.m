@@ -15,6 +15,7 @@
 #import "HMHelper.h"
 
 #import "HMAddFeeView.h"
+#import "HMSubtitleView.h"
 #import "HMSumFeeView.h"
 #import "HMNavigationView.h"
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) HMFeeViewModel * viewModel;
 
 @property (nonatomic, strong) HMNavigationView * navigationBar;
+@property (nonatomic, strong) HMSubtitleView * subtitleView;
 @property (nonatomic, strong) HMAddFeeView * addFeeView;
 @property (nonatomic, strong) HMSumFeeView * sumFeeView;
 
@@ -56,7 +58,11 @@
     self.navigationBar.shareButtonEnabled = YES;
     [aView addSubview:self.navigationBar];
     
-    self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 106)];
+    self.subtitleView = [[HMSubtitleView alloc] initWithFrame:CGRectMake(0, 44, bounds.size.width, 30)];
+    [self.subtitleView setTitle:NSLocalizedString(@"花销统计", nil)];
+    [aView addSubview:self.subtitleView];
+    
+    self.addFeeView = [[HMAddFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.subtitleView.frame), bounds.size.width, 106)];
     [aView addSubview:self.addFeeView];
     
     self.sumFeeView = [[HMSumFeeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.addFeeView.frame), bounds.size.width, 65)];
@@ -82,6 +88,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationBar.title = self.title;
     
     @weakify(self);
     // Do any additional setup after loading the view.

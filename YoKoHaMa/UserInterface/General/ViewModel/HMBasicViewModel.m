@@ -24,7 +24,7 @@
                                          appKey:kUMengAppKey
                                       shareText:message
                                      shareImage:image
-                                shareToSnsNames:@[UMShareToSina,UMShareToTencent]
+                                shareToSnsNames:@[UMShareToSina,UMShareToWechatSession]
                                        delegate:nil];
     
     return signal;
@@ -38,7 +38,7 @@
                                          appKey:kUMengAppKey
                                       shareText:message
                                      shareImage:nil
-                                shareToSnsNames:@[UMShareToSina,UMShareToTencent]
+                                shareToSnsNames:@[UMShareToSina,UMShareToWechatSession]
                                        delegate:nil];
     
     return signal;

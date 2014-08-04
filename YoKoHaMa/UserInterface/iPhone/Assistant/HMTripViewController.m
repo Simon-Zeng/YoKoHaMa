@@ -86,7 +86,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     // Table Header View
     UIView * headerView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width, 30)];
     UILabel * tableHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, bounds.size.width-20, 30)];
-    tableHeaderLabel.text = NSLocalizedString(@"您已添加的检查项目", nil);
+    tableHeaderLabel.text = NSLocalizedString(@"您已检查的出行列表", nil);
     tableHeaderLabel.font = [UIFont systemFontOfSize:13.0];
     tableHeaderLabel.textAlignment = NSTextAlignmentLeft;
     tableHeaderLabel.textColor = [UIColor redColor];
@@ -115,6 +115,8 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationBar.title = self.title;
     
     @weakify(self);
     [self.stepView.changeStepSignal subscribeNext:^(id x) {
@@ -179,6 +181,9 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
             [self.view endEditing:YES];
             
             TripListMode mode = (TripListMode)[x longLongValue];
+            
+            [self.stepView setSelectedIndex:mode];
+            
             switch (mode)
             {
                 case TripListModeCheck:
@@ -188,7 +193,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
                     break;
                 default:
                 {
-                    self.tableHeaderLabel.text = NSLocalizedString(@"您已添加的项目", nil);
+                    self.tableHeaderLabel.text = NSLocalizedString(@"您已检查的出行列表", nil);
                 }
                     
                     break;
@@ -239,12 +244,29 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     }
     else
     {
-        self.inputView.inputFieldHidden = YES;    }
+        self.inputView.inputFieldHidden = YES;
+    }
     
     if (mode == TripListModeCheck || mode == TripListModeDone)
     {
         self.tableView.tableHeaderView.hidden = NO;
         self.tableView.tableFooterView.hidden = NO;
+
+        if (mode == TripListModeDone)
+        {
+            self.tableView.tableFooterView.hidden = YES;
+        }
+        
+        if (mode == TripListModeCheck)
+        {
+            [self.saveButton setTitle:NSLocalizedString(@"下一步，添加自定义项", nil)
+                             forState:UIControlStateNormal];
+        }
+        else
+        {
+            [self.saveButton setTitle:NSLocalizedString(@"重新检查", nil)
+                             forState:UIControlStateNormal];
+        }
     }
     else
     {

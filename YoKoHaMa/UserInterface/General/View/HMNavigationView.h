@@ -10,6 +10,8 @@
 
 @interface HMNavigationView : UIView
 
+@property (nonatomic, strong) NSString * title;
+
 @property (nonatomic, strong, readonly) RACSignal * backSignal;
 @property (nonatomic, strong, readonly) RACSignal * shareSignal;
 

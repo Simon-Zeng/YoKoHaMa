@@ -46,7 +46,7 @@
     topItem.rightBarButtonItem = dotItem;
     
     CGRect bounds = self.view.bounds;
-    UINavigationBar * navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(-5, 0, bounds.size.width+10, 44)];
+    UINavigationBar * navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(-10, 0, bounds.size.width+20, 44)];
     navigationBar.items = @[topItem];
     
     [self.view addSubview:navigationBar];

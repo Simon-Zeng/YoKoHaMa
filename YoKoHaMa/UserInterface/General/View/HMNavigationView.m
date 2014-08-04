@@ -13,6 +13,7 @@
 @property (nonatomic, strong, readwrite) RACSubject * backSignal;
 @property (nonatomic, strong, readwrite) RACSubject * shareSignal;
 
+@property (nonatomic, strong) UILabel * titleLalel;
 @property (nonatomic, strong) UIButton * backButton;
 @property (nonatomic, strong) UIButton * shareButton;
 
@@ -30,16 +31,22 @@
         self.backSignal = [RACSubject subject];
         self.shareSignal = [RACSubject subject];
         
+        self.titleLalel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.titleLalel.backgroundColor = [UIColor clearColor];
+        self.titleLalel.textColor = [UIColor whiteColor];
+        self.titleLalel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.titleLalel];
+        
         self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.backButton setImage:[UIImage imageNamed:@"Button-Back"]
                               forState:UIControlStateNormal];
-        self.backButton.frame = CGRectMake(0, 4, 125, 36);
+        self.backButton.frame = CGRectMake(0, 4, 100, 36);
         [self addSubview:self.backButton];
         
         self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.shareButton setImage:[UIImage imageNamed:@"Button-Share"]
                                     forState:UIControlStateNormal];
-        self.shareButton.frame = CGRectMake(frame.size.width - 36 - 5, 4, 36, 36);
+        self.shareButton.frame = CGRectMake(frame.size.width - 36 + 3, 4, 36, 36);
         [self addSubview:self.shareButton];
         
         self.backButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -85,6 +92,11 @@
     {
         self.shareButton.hidden = YES;
     }
+}
+
+- (void)setTitle:(NSString *)title
+{
+    self.titleLalel.text = title;
 }
 
 /*

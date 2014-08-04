@@ -122,7 +122,14 @@
             
             @strongify(self);
             
-            self.listMode = TripListModeAdd;
+            if (self.listMode == TripListModeCheck)
+            {
+                self.listMode = TripListModeAdd;
+            }
+            else
+            {
+                self.listMode = TripListModeCheck;
+            }
             
             [subscriber sendCompleted];
             

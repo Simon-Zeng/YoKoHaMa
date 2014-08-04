@@ -39,10 +39,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     CGRect bounds = self.view.bounds;
     
     self.navigationBar = [[HMNavigationView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
     self.navigationBar.shareButtonEnabled = YES;
+    self.navigationBar.title = self.title;
+
     [self.view addSubview:self.navigationBar];
 
     

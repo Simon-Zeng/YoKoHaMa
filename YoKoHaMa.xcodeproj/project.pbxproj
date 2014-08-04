@@ -63,6 +63,7 @@
 		53B239BA196AD2EF0071E92E /* THZoomPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B239B5196AD2EF0071E92E /* THZoomPopup.m */; };
 		53B239BB196AD2EF0071E92E /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B239B7196AD2EF0071E92E /* UIImage+StackBlur.m */; };
 		53B239BC196AD2EF0071E92E /* zoomPopupClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */; };
+		53FFFD13198FAF20007FB5C1 /* HMSubtitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFFD12198FAF20007FB5C1 /* HMSubtitleView.m */; };
 		7208499E79454F1D84B73DF0 /* libPods-YoKoHaMa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */; };
 		A9219EDD198F2993001C9A20 /* UILabel+AttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A9219EDC198F2993001C9A20 /* UILabel+AttributedString.m */; };
 		A96EDFC21973D178007715F4 /* HMFeeDao.m in Sources */ = {isa = PBXBuildFile; fileRef = A96EDFAF1973D178007715F4 /* HMFeeDao.m */; };
@@ -193,6 +194,8 @@
 		53B239B6196AD2EF0071E92E /* UIImage+StackBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+StackBlur.h"; sourceTree = "<group>"; };
 		53B239B7196AD2EF0071E92E /* UIImage+StackBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+StackBlur.m"; sourceTree = "<group>"; };
 		53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoomPopupClose@2x.png"; sourceTree = "<group>"; };
+		53FFFD11198FAF20007FB5C1 /* HMSubtitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSubtitleView.h; sourceTree = "<group>"; };
+		53FFFD12198FAF20007FB5C1 /* HMSubtitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSubtitleView.m; sourceTree = "<group>"; };
 		796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YoKoHaMa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D1E57026514EB090108446 /* Pods-YoKoHaMa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoKoHaMa.xcconfig"; path = "Pods/Pods-YoKoHaMa.xcconfig"; sourceTree = "<group>"; };
 		A9219EDB198F2993001C9A20 /* UILabel+AttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+AttributedString.h"; sourceTree = "<group>"; };
@@ -539,6 +542,8 @@
 				530AE1EE19711A8F002D69FD /* HMGridContentView.m */,
 				A9ACE9731976511600AAA7F3 /* HMNavigationView.h */,
 				A9ACE9741976511600AAA7F3 /* HMNavigationView.m */,
+				53FFFD11198FAF20007FB5C1 /* HMSubtitleView.h */,
+				53FFFD12198FAF20007FB5C1 /* HMSubtitleView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -871,6 +876,7 @@
 				530AE1D119711795002D69FD /* HMLauncherViewController.m in Sources */,
 				530AE1E919711A47002D69FD /* HMFocusView.m in Sources */,
 				A96EDFC81973D178007715F4 /* HMItem.m in Sources */,
+				53FFFD13198FAF20007FB5C1 /* HMSubtitleView.m in Sources */,
 				530AE1BC19710D29002D69FD /* HMAPI.m in Sources */,
 				531D68241976CEA8009C89D4 /* HMRoad.m in Sources */,
 				53659C9A19741FAD0030F4CC /* HMSumFeeView.m in Sources */,
