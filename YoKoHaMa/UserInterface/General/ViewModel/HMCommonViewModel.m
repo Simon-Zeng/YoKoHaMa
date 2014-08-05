@@ -278,7 +278,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优路线", nil);
+    webViewController.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -294,7 +294,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优路线", nil);
+    webViewController.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
