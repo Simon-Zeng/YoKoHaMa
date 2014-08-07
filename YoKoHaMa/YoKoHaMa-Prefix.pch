@@ -35,7 +35,7 @@
 
 #define kServericeName @"com.conggen.yokohama"
 
-#define kUMengAppKey @"53526bc156240b09ef0853af"
+#define kUMengAppKey @"53b582e356240b990102d25a"
 
-#define kWeChatAppID @"wx793ae5a616200019"
+#define kWeChatAppID @"wx6f7a8cfea08d9bc4"
 #define kWeChatCallBackURL @"http://www.umeng.com/social"

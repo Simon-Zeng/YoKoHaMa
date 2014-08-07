@@ -9,11 +9,12 @@
 #import "HMFeeViewModel.h"
 
 #import "HMFee.h"
-#import "HMTravel.h"
+#import "HMFeeDao.h"
+//#import "HMTravel.h"
 
 @interface HMFeeViewModel ()
 
-@property (nonatomic, strong) HMTravel * travel;
+@property (nonatomic, strong) NSNumber * travelIdentifier;
 @property (nonatomic, strong) NSMutableArray * fees;
 
 
@@ -27,7 +28,7 @@
 {
     if (self = [super init])
     {
-        self.travel = nil;
+        self.travelIdentifier = tid? tid : @0;
         self.fees = [[NSMutableArray alloc] init];
         
         _updateContentSignal = [RACSubject subject];
@@ -68,7 +69,11 @@
 #pragma mark - Public Methods
 - (void)addFee:(HMFee *)aFee
 {
+    aFee.travelIdentifier = self.travelIdentifier;
+    
     [self.fees addObject:aFee];
+    
+    [HMFeeDao saveFee:aFee];
     
     [(RACSubject *)_updateContentSignal sendNext:self.fees];
 }
@@ -77,9 +82,20 @@
 {
     [self.fees removeObject:aFee];
     
+    [HMFeeDao deleteFeeWithIdentifier:aFee.identifier];
+    
     [(RACSubject *)_updateContentSignal sendNext:self.fees];
 }
 
+
+- (void)loadSavedFee
+{
+    NSArray * fees = [HMFeeDao feesWithTravelIdentifier:self.travelIdentifier];
+    
+    [self.fees addObjectsFromArray:fees];
+    
+    [(RACSubject *)_updateContentSignal sendNext:self.fees];
+}
 
 - (RACSignal *)travelIsValidSignal
 {

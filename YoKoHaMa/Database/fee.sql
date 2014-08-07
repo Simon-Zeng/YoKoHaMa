@@ -2,7 +2,7 @@
 
 CREATE TABLE IF NOT EXISTS Fees (
     identifier INTEGER PRIMARY KEY AUTOINCREMENT,
-    travelIdentifier INTEGER NOT NULL,
+    travelIdentifier INTEGER DEFAULT 0,
     name TEXT NOT NULL,
     cost INTEGER DEFAULT 0,
     desc TEXT DEFAULT ''

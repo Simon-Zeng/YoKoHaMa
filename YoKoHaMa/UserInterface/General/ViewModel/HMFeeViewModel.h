@@ -23,6 +23,7 @@
 - (void)removeFee:(HMFee *)aFee;
 
 
+- (void)loadSavedFee;
 
 #pragma mark - 
 - (NSInteger)numberOfFees;

@@ -22,7 +22,7 @@
 #import "HMFeeTableViewCell.h"
 
 
-@interface HMFeeViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface HMFeeViewController ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) HMFeeViewModel * viewModel;
 
@@ -91,6 +91,11 @@
     
     self.navigationBar.title = self.title;
     
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(hideKeyboard:)];
+    tap.delegate = self;
+    [self.view addGestureRecognizer:tap];
+    
     @weakify(self);
     // Do any additional setup after loading the view.
     [self.addFeeView.addFeeSignal subscribeNext:^(id x) {
@@ -147,6 +152,14 @@
             [self.viewModel shareImage:screenShot message:message];
         }
     }];
+    
+    // Load old saved fee
+    [self.viewModel loadSavedFee];
+}
+
+- (void)hideKeyboard:(UITapGestureRecognizer *)recognizer
+{
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning

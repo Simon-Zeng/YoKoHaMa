@@ -39,7 +39,7 @@
         [self addSubview:self.countLabel];
         
         
-        self.sumLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 8, 130, 20)];
+        self.sumLabel = [[UILabel alloc] initWithFrame:CGRectMake(162, 8, 130, 20)];
         self.sumLabel.font = [UIFont systemFontOfSize:12.0];
         self.sumLabel.text = nil;
         [self addSubview:self.sumLabel];
