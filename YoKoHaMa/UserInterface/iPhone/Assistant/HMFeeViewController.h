@@ -10,6 +10,10 @@
 
 #import "HMViewController.h"
 
+@class HMFeeViewModel;
+
 @interface HMFeeViewController : HMViewController
+
+@property (nonatomic, strong, readonly) HMFeeViewModel * viewModel;
 
 @end

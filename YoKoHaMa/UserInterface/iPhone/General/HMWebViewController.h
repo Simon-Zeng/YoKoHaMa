@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "HMCommonViewModel.h"
+
 typedef NS_ENUM(NSUInteger, HMContentCategory)
 {
     HMContentCategoryRoute,
@@ -18,7 +20,12 @@ typedef NS_ENUM(NSUInteger, HMContentCategory)
 
 @interface HMWebViewController : UIViewController
 
+@property (nonatomic, strong, readonly) HMCommonViewModel * viewModel;
 @property (nonatomic, assign) HMContentCategory category;
+
+
+@property (nonatomic, strong, readonly) UIWebView * webView;
+
 
 - (void)loadURL:(NSURL *)url;
 

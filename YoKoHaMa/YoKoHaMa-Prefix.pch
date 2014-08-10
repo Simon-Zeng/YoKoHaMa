@@ -38,4 +38,5 @@
 #define kUMengAppKey @"53b582e356240b990102d25a"
 
 #define kWeChatAppID @"wx6f7a8cfea08d9bc4"
-#define kWeChatCallBackURL @"http://www.umeng.com/social"
+#define kWeChatCallBackURL @"http://youke.feelpoid.com/weixin/down.html"
+

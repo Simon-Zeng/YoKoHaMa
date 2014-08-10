@@ -13,13 +13,25 @@
 
 #import "HMHelper.h"
 
+#import "UMSocialWechatHandler.h"
+
 @implementation HMBasicViewModel
 
 
-- (RACSignal *)shareImage:(UIImage *)image message:(NSString *)message
+- (RACSignal *)shareImage:(UIImage *)image callbackURLString:(NSString *)urlString message:(NSString *)message
 {
     RACSignal * signal = [RACSignal empty];
     
+    //设置微信AppId，和分享url
+    if(urlString)
+    {
+        [UMSocialWechatHandler setWXAppId:kWeChatAppID url:urlString];
+    }
+    else
+    {
+        [UMSocialWechatHandler setWXAppId:kWeChatAppID url:kWeChatCallBackURL];
+    }
+
     [UMSocialSnsService presentSnsIconSheetView:[HMHelper rootNavigationController]
                                          appKey:kUMengAppKey
                                       shareText:message
@@ -30,10 +42,20 @@
     return signal;
 }
 
-- (RACSignal *)shareURLString:(NSString *)string message:(NSString *)message
+- (RACSignal *)shareURLString:(NSString *)string callbackURLString:(NSString *)urlString message:(NSString *)message
 {
     RACSignal * signal = [RACSignal empty];
     
+    //设置微信AppId，和分享url
+    if(urlString)
+    {
+        [UMSocialWechatHandler setWXAppId:kWeChatAppID url:urlString];
+    }
+    else
+    {
+        [UMSocialWechatHandler setWXAppId:kWeChatAppID url:kWeChatCallBackURL];
+    }
+
     [UMSocialSnsService presentSnsIconSheetView:[HMHelper rootNavigationController]
                                          appKey:kUMengAppKey
                                       shareText:message

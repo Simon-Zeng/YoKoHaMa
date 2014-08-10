@@ -34,6 +34,7 @@
 		531D68241976CEA8009C89D4 /* HMRoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D68231976CEA8009C89D4 /* HMRoad.m */; };
 		531D68261976E652009C89D4 /* trip.sql in Resources */ = {isa = PBXBuildFile; fileRef = 531D68251976E652009C89D4 /* trip.sql */; };
 		5358B4281976BF95003D8F20 /* HMTripHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358B4271976BF95003D8F20 /* HMTripHeaderView.m */; };
+		536018901997C7CF00AFA1B8 /* HMRouteSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5360188F1997C7CF00AFA1B8 /* HMRouteSearchViewController.m */; };
 		53659C83197409A40030F4CC /* HMFeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53659C82197409A40030F4CC /* HMFeeViewController.m */; };
 		53659C8719740BEA0030F4CC /* HMTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53659C8619740BEA0030F4CC /* HMTripViewController.m */; };
 		53659C8B1974105F0030F4CC /* HMFeeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53659C8A1974105F0030F4CC /* HMFeeTableViewCell.m */; };
@@ -63,6 +64,7 @@
 		53B239BA196AD2EF0071E92E /* THZoomPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B239B5196AD2EF0071E92E /* THZoomPopup.m */; };
 		53B239BB196AD2EF0071E92E /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B239B7196AD2EF0071E92E /* UIImage+StackBlur.m */; };
 		53B239BC196AD2EF0071E92E /* zoomPopupClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */; };
+		53FB60D31997CCDE00CF36F3 /* HMSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB60D21997CCDE00CF36F3 /* HMSearchView.m */; };
 		53FFFD13198FAF20007FB5C1 /* HMSubtitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFFD12198FAF20007FB5C1 /* HMSubtitleView.m */; };
 		7208499E79454F1D84B73DF0 /* libPods-YoKoHaMa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */; };
 		A9219EDD198F2993001C9A20 /* UILabel+AttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A9219EDC198F2993001C9A20 /* UILabel+AttributedString.m */; };
@@ -143,6 +145,8 @@
 		531D68251976E652009C89D4 /* trip.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = trip.sql; sourceTree = "<group>"; };
 		5358B4261976BF95003D8F20 /* HMTripHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTripHeaderView.h; sourceTree = "<group>"; };
 		5358B4271976BF95003D8F20 /* HMTripHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTripHeaderView.m; sourceTree = "<group>"; };
+		5360188E1997C7CF00AFA1B8 /* HMRouteSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRouteSearchViewController.h; sourceTree = "<group>"; };
+		5360188F1997C7CF00AFA1B8 /* HMRouteSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRouteSearchViewController.m; sourceTree = "<group>"; };
 		53659C81197409A40030F4CC /* HMFeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFeeViewController.h; sourceTree = "<group>"; };
 		53659C82197409A40030F4CC /* HMFeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFeeViewController.m; sourceTree = "<group>"; };
 		53659C8519740BEA0030F4CC /* HMTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTripViewController.h; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 		53B239B6196AD2EF0071E92E /* UIImage+StackBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+StackBlur.h"; sourceTree = "<group>"; };
 		53B239B7196AD2EF0071E92E /* UIImage+StackBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+StackBlur.m"; sourceTree = "<group>"; };
 		53B239B8196AD2EF0071E92E /* zoomPopupClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoomPopupClose@2x.png"; sourceTree = "<group>"; };
+		53FB60D11997CCDE00CF36F3 /* HMSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSearchView.h; sourceTree = "<group>"; };
+		53FB60D21997CCDE00CF36F3 /* HMSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSearchView.m; sourceTree = "<group>"; };
 		53FFFD11198FAF20007FB5C1 /* HMSubtitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSubtitleView.h; sourceTree = "<group>"; };
 		53FFFD12198FAF20007FB5C1 /* HMSubtitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSubtitleView.m; sourceTree = "<group>"; };
 		796626B707534A64A97261D7 /* libPods-YoKoHaMa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YoKoHaMa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -626,10 +632,22 @@
 		53B239CA196AD8510071E92E /* Route */ = {
 			isa = PBXGroup;
 			children = (
+				53FB60D01997CB7900CF36F3 /* Components */,
 				530AE1DB197117F7002D69FD /* HMRouteViewController.h */,
 				530AE1DC197117F7002D69FD /* HMRouteViewController.m */,
+				5360188E1997C7CF00AFA1B8 /* HMRouteSearchViewController.h */,
+				5360188F1997C7CF00AFA1B8 /* HMRouteSearchViewController.m */,
 			);
 			path = Route;
+			sourceTree = "<group>";
+		};
+		53FB60D01997CB7900CF36F3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				53FB60D11997CCDE00CF36F3 /* HMSearchView.h */,
+				53FB60D21997CCDE00CF36F3 /* HMSearchView.m */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		A9219ED9198F297A001C9A20 /* Categories */ = {
@@ -846,6 +864,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53B239BB196AD2EF0071E92E /* UIImage+StackBlur.m in Sources */,
+				536018901997C7CF00AFA1B8 /* HMRouteSearchViewController.m in Sources */,
 				A9ACE9751976511600AAA7F3 /* HMNavigationView.m in Sources */,
 				53659CA01974B1560030F4CC /* HMTripInputView.m in Sources */,
 				5365ADE6196AC38900146C54 /* main.m in Sources */,
@@ -896,6 +915,7 @@
 				530AE1D4197117A4002D69FD /* HMAssistantViewController.m in Sources */,
 				530AE1FD1972518A002D69FD /* HMCollectionViewLayout.m in Sources */,
 				530AE1EF19711A8F002D69FD /* HMGridContentView.m in Sources */,
+				53FB60D31997CCDE00CF36F3 /* HMSearchView.m in Sources */,
 				A96EDFD11973D18D007715F4 /* HMFeeViewModel.m in Sources */,
 				A96EDFC41973D178007715F4 /* HMTravelDao.m in Sources */,
 				530AE1F919716462002D69FD /* HMGridMenuViewCell.m in Sources */,
@@ -1023,7 +1043,7 @@
 				INFOPLIST_FILE = "YoKoHaMa/YoKoHaMa-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D2447BF8-2935-4B11-93B3-94E7D87CACF7";
+				PROVISIONING_PROFILE = "4C240BF1-7FF2-49D1-BFB2-4EF68C4AA018";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1041,7 +1061,7 @@
 				INFOPLIST_FILE = "YoKoHaMa/YoKoHaMa-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D2447BF8-2935-4B11-93B3-94E7D87CACF7";
+				PROVISIONING_PROFILE = "4C240BF1-7FF2-49D1-BFB2-4EF68C4AA018";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

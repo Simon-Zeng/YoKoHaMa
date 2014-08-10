@@ -16,10 +16,10 @@
 
 @interface HMWebViewController ()<UIWebViewDelegate>
 
-@property (nonatomic, strong) HMCommonViewModel * viewModel;
+@property (nonatomic, strong, readwrite) HMCommonViewModel * viewModel;
 
 @property (nonatomic, strong) HMNavigationView * navigationBar;
-@property (nonatomic, strong) UIWebView * webView;
+@property (nonatomic, strong, readwrite) UIWebView * webView;
 
 @end
 
@@ -44,7 +44,7 @@
     
     self.navigationBar = [[HMNavigationView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 44)];
     self.navigationBar.shareButtonEnabled = YES;
-    self.navigationBar.title = self.title;
+    self.navigationBar.title = self.viewModel.title;
 
     [self.view addSubview:self.navigationBar];
 
@@ -95,7 +95,7 @@
             
             if (message)
             {
-                [self.viewModel shareURLString:self.webView.request.URL.absoluteString message:message];
+                [self.viewModel shareURLString:self.webView.request.URL.absoluteString callbackURLString:self.webView.request.URL.absoluteString message:message];
             }
         }
     }];

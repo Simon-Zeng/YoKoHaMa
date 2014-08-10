@@ -28,9 +28,6 @@
     
     [UMSocialData setAppKey:kUMengAppKey];
     
-    //设置微信AppId，和分享url
-    [UMSocialWechatHandler setWXAppId:kWeChatAppID url:kWeChatCallBackURL];
-    
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBackground"]
                                        forBarMetrics:UIBarMetricsDefault];
     [[UILabel appearance] setTextColor:[UIColor whiteColor]];

@@ -24,7 +24,7 @@
 
 @interface HMFeeViewController ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) HMFeeViewModel * viewModel;
+@property (nonatomic, strong, readwrite) HMFeeViewModel * viewModel;
 
 @property (nonatomic, strong) HMNavigationView * navigationBar;
 @property (nonatomic, strong) HMSubtitleView * subtitleView;
@@ -89,7 +89,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationBar.title = self.title;
+    self.navigationBar.title = self.viewModel.title;
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                            action:@selector(hideKeyboard:)];
@@ -149,7 +149,7 @@
             UIImage * screenShot = [HMHelper screenShot:self.view.window];
             NSString * message = NSLocalizedString(@"我的出行费用", nil); ;
             
-            [self.viewModel shareImage:screenShot message:message];
+            [self.viewModel shareImage:screenShot callbackURLString:nil message:message];
         }
     }];
     

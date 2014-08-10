@@ -12,9 +12,11 @@
 
 @interface HMBasicViewModel : RVMViewModel
 
-- (RACSignal *)shareImage:(UIImage *)image message:(NSString *)message;
+@property (nonatomic, strong) NSString * title;
 
-- (RACSignal *)shareURLString:(NSString *)string message:(NSString *)message;
+- (RACSignal *)shareImage:(UIImage *)image callbackURLString:(NSString *)urlString message:(NSString *)message;
+
+- (RACSignal *)shareURLString:(NSString *)string callbackURLString:(NSString *)urlString message:(NSString *)message;
 
 - (void)back;
 

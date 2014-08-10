@@ -116,7 +116,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationBar.title = self.title;
+    self.navigationBar.title = self.viewModel.title;
     
     @weakify(self);
     [self.stepView.changeStepSignal subscribeNext:^(id x) {
@@ -164,7 +164,7 @@ forHeaderFooterViewReuseIdentifier:@"TripHeader"];
             UIImage * screenShot = [HMHelper screenShot:self.view.window];
             NSString * message = NSLocalizedString(@"我的出行准备", nil); ;
             
-            [self.viewModel shareImage:screenShot message:message];
+            [self.viewModel shareImage:screenShot callbackURLString:nil message:message];
         }
     }];
     

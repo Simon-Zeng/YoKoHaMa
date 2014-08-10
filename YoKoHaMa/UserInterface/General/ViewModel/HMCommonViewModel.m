@@ -19,9 +19,11 @@
 
 #import "HMNetwork.h"
 
+#import "HMFeeViewModel.h"
 #import "HMFeeViewController.h"
 #import "HMTripViewController.h"
 #import "HMWebViewController.h"
+#import "HMRouteSearchViewController.h"
 
 #import "HMTripViewModel.h"
 
@@ -113,7 +115,7 @@
         // Add search
         HMRoute * route = [[HMRoute alloc] init];
         route.identifier = nil;
-        route.name = NSLocalizedString(@"搜索", nil);
+        route.name = NSLocalizedString(@"路线搜索", nil);
         [allRoutes addObject:route];
         
         [subscriber sendNext:allRoutes];
@@ -145,7 +147,7 @@
 //        // Add search
 //        HMRoad * road = [[HMRoad alloc] init];
 //        road.identifier = nil;
-//        road.name = NSLocalizedString(@"搜索", nil);
+//        road.name = NSLocalizedString(@"路线搜索", nil);
 //        [allRoads addObject:road];
         
         [subscriber sendNext:allRoads];
@@ -183,18 +185,31 @@
     if (routeIdentifier)
     {
         [pathComponent appendFormat:@"&stype=%@", routeIdentifier];
+        
+        
+        NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
+        
+        
+        HMWebViewController * webViewController = [[HMWebViewController alloc] init];
+        webViewController.viewModel.title = NSLocalizedString(@"优路线", nil);
+        
+        [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
+        
+        [webViewController loadURL:[NSURL URLWithString:urlString]];
     }
-    
-    NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
-    
-    
-    HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优路线", nil);
-    
-    [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
-    
-    [webViewController loadURL:[NSURL URLWithString:urlString]];
-
+    else
+    {
+        
+        NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
+        
+        
+        HMRouteSearchViewController * webViewController = [[HMRouteSearchViewController alloc] init];
+        webViewController.viewModel.title = NSLocalizedString(@"优路线", nil);
+        
+        [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
+        
+        [webViewController loadURL:[NSURL URLWithString:urlString]];
+    }
 }
 
 - (void)showRoad:(NSNumber *)roadIdentifier
@@ -207,7 +222,7 @@
     
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优装备", nil);
+    webViewController.viewModel.title = NSLocalizedString(@"优装备", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -262,7 +277,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优装备", nil);
+    webViewController.viewModel.title = NSLocalizedString(@"优装备", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -278,7 +293,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优助手", nil);
+    webViewController.viewModel.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -294,7 +309,7 @@
     NSString * urlString = [baseURLString stringByAppendingPathComponent:pathComponent];
     
     HMWebViewController * webViewController = [[HMWebViewController alloc] init];
-    webViewController.title = NSLocalizedString(@"优助手", nil);
+    webViewController.viewModel.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:webViewController animated:YES];
     
@@ -305,7 +320,7 @@
 - (void)feeCalculate
 {
     HMFeeViewController * feeViewController = [[HMFeeViewController alloc] init];
-    feeViewController.title = NSLocalizedString(@"优助手", nil);
+    feeViewController.viewModel.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:feeViewController animated:YES];
 }
@@ -317,7 +332,7 @@
     
     HMTripViewController * tripViewController = [[HMTripViewController alloc] init];
     tripViewController.viewModel = viewModel;
-    tripViewController.title = NSLocalizedString(@"优助手", nil);
+    tripViewController.viewModel.title = NSLocalizedString(@"优助手", nil);
     
     [[HMHelper rootNavigationController] pushViewController:tripViewController animated:YES];
 }
