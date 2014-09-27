@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  用户引导页控制器
+ */
 @interface HMLauncherViewController : UIViewController
 
 @end

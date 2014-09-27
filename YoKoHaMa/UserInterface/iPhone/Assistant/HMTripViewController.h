@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class HMTripViewModel;
-
+/**
+ *  出行列表视图控制器
+ */
 @interface HMTripViewController : UIViewController
-
+/**
+ *  出行列表ViewModel
+ */
 @property (nonatomic, strong) HMTripViewModel * viewModel;
 
 @end

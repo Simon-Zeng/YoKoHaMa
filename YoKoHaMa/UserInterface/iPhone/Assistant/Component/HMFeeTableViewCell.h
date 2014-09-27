@@ -9,9 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @class HMFee;
-
+/**
+ *  花销统计表格单元
+ */
 @interface HMFeeTableViewCell : UITableViewCell
-
+/**
+ *  @brief 更新表格内容
+ *
+ *  @param aFee 花销
+ */
 - (void)updateWithFee:(HMFee *)aFee;
 
 @end

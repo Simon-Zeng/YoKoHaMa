@@ -11,9 +11,13 @@
 #import "HMViewController.h"
 
 @class HMFeeViewModel;
-
+/**
+ *  花销统计视图控制器
+ */
 @interface HMFeeViewController : HMViewController
-
+/**
+ *  花销统计ViewModel
+ */
 @property (nonatomic, strong, readonly) HMFeeViewModel * viewModel;
 
 @end

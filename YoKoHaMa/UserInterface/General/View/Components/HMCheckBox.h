@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  勾选按钮
+ */
 @interface HMCheckBox : UIButton
 
 @end

@@ -7,7 +7,9 @@
 //
 
 #import "HMWebViewController.h"
-
+/**
+ *  优路线搜索视图控制器
+ */
 @interface HMRouteSearchViewController : HMWebViewController
 
 @end

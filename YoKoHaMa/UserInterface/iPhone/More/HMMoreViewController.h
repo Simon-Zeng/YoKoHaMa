@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  更多页视图控制器
+ */
 @interface HMMoreViewController : UIViewController
 
 @end

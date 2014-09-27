@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  自定义标签页控制器
+ */
 @interface HMTabBarController : UITabBarController
 
 @end

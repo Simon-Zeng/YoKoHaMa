@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  普通视图控制器基类
+ */
 @interface HMViewController : UIViewController
 
 @end

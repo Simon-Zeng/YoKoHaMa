@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Documentation.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
 		<key>YoKoHaMa.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>531D5A1219D5AB2000DD3D0F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>5365ADD5196AC38900146C54</key>
 		<dict>
 			<key>primary</key>

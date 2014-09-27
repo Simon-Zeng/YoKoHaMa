@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  九宫格菜单界面布局控制
+ */
 @interface HMCollectionViewLayout : UICollectionViewFlowLayout
 
 @end

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "HMViewController.h"
-
+/**
+ *  优路线视图控制器
+ */
 @interface HMRouteViewController : HMViewController
 
 @end

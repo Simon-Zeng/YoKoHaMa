@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #import "HMTravel.h"
-
+/**
+ *  HMTravel对象的数据库访问适配器
+ */
 @interface HMTravelDao : NSObject
 
 + (NSNumber *)saveTravel:(HMTravel *)aTravel;

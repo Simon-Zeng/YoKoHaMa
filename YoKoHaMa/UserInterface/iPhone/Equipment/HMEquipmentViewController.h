@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "HMViewController.h"
-
+/**
+ *  优装备视图控制器
+ */
 @interface HMEquipmentViewController : HMViewController
 
 @end

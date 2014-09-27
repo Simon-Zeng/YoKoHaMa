@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  九宫格菜单单元格
+ */
 @interface HMGridMenuViewCell : UICollectionViewCell
-
+/**
+ *  菜单选项名称
+ */
 @property (nonatomic, strong) NSString * title;
 
 @end

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/**
+ *  自定义导航控制器
+ */
 @interface HMNavigationController : UINavigationController
 
 @end

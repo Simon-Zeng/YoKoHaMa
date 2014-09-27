@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #import "HMItem.h"
-
+/**
+ *  HMItem对象的数据库访问适配器
+ */
 @interface HMItemDao : NSObject
 
 + (NSNumber *)saveItem:(HMItem *)aItem;
@@ -24,7 +26,9 @@
 
 @end
 
-
+/**
+ *  HMItemCategory对象的数据库访问适配器
+ */
 @interface HMItemCategoryDao : NSObject
 
 + (NSNumber *)saveItemCategory:(HMItemCategory *)aItemCategory;

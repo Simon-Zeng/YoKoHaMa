@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #import "HMTrip.h"
-
+/**
+ *  HMTrip对象的数据库访问适配器
+ */
 @interface HMTripDao : NSObject
 
 + (NSNumber *)saveTrip:(HMTrip *)aTrip;
